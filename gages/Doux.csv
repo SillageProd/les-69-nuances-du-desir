@@ -1,0 +1,70 @@
+ID,Type de case,Libellé,Icône,Titre,Description,Minuteur (s),Pour qui,Actif
+D01,default,Case normale,💋,Souffle dans la nuque,Approche tes lèvres de la nuque de ton/ta partenaire et souffle doucement pendant 15 secondes avant d'y déposer un baiser.,15,Tous,OUI
+D02,default,Case normale,💋,Regard magnétique,"Plongez vos yeux l'un dans l'autre sans parler ni rire pendant 30 secondes, mains entrelacées.",30,Tous,OUI
+D03,default,Case normale,💋,Compliment murmuré,"Chuchote à son oreille ce que tu préfères physiquement chez lui/elle, avec une voix suave.",0,Tous,OUI
+D04,default,Case normale,💋,Caresse du visage,"Dessine du bout des doigts les contours de son visage, de ses pommettes et de ses lèvres.",20,Tous,OUI
+D05,default,Case normale,💋,Danse lente,Collez-vous l'un contre l'autre et balancez-vous langoureusement.,30,Tous,OUI
+D06,default,Case normale,💋,Esquimau,Frottez doucement vos nez l'un contre l'autre puis échangez un baiser du bout des lèvres.,0,Tous,OUI
+D07,default,Case normale,💋,Main dans les cheveux,Glisse lentement tes doigts dans ses cheveux et masse son cuir chevelu.,30,Tous,OUI
+D08,default,Case normale,💋,Trois mots doux,"Dis-lui trois mots qui le/la décrivent, en le/la regardant droit dans les yeux.",0,Tous,OUI
+D09,default,Case normale,💋,Baiser sur la paupière,Demande-lui de fermer les yeux et dépose un baiser léger sur chacune de ses paupières.,0,Tous,OUI
+D10,default,Case normale,💋,Câlin immobile,"Serrez-vous fort dans les bras, sans bouger, en respirant au même rythme.",30,Tous,OUI
+D11,default,Case normale,💋,Le premier souvenir,Raconte-lui le moment exact où tu as eu envie de l'embrasser pour la première fois.,0,Tous,OUI
+D12,default,Case normale,💋,Doigts entrelacés,"Effleure sa main, puis entrelace lentement tes doigts aux siens, un par un.",20,Tous,OUI
+D13,default,Case normale,💋,Lèvres frôlées,"Approche tes lèvres des siennes à un millimètre, sans les toucher, pendant 10 secondes. Puis embrasse-le/la.",10,Tous,OUI
+D14,default,Case normale,💋,Baiser dans le cou,"Dépose trois baisers lents dans son cou, de l'oreille jusqu'à l'épaule.",0,Tous,OUI
+D15,default,Case normale,💋,Surnom secret,Invente un petit surnom tendre pour ton/ta partenaire et utilise-le jusqu'à ton prochain tour.,0,Tous,OUI
+D16,default,Case normale,💋,Joue contre joue,Pose ta joue contre la sienne et murmure-lui ce dont tu as envie ce soir.,0,Tous,OUI
+D17,default,Case normale,💋,Pieds nus,"Retire tes chaussures et tes chaussettes, puis caresse ses pieds avec les tiens.",20,Tous,OUI
+D18,default,Case normale,💋,Le slow imaginaire,Fredonne une chanson qui vous rappelle un souvenir et invite-le/la à danser.,30,Tous,OUI
+D19,default,Case normale,💋,Bisou papillon,Fais battre tes cils contre sa joue comme des ailes de papillon.,10,Tous,OUI
+D20,default,Case normale,💋,Assis sur les genoux,Installe-toi sur ses genoux jusqu'à ton prochain tour.,0,Tous,OUI
+D21,default,Case normale,💋,Le dos qui frissonne,"Fais courir tes doigts le long de sa colonne vertébrale, par-dessus ses vêtements.",20,Tous,OUI
+D22,default,Case normale,💋,Promesse,"Promets-lui une attention que tu lui offriras cette semaine (petit-déjeuner au lit, massage...).",0,Tous,OUI
+D23,default,Case normale,💋,Mains chaudes,"Frotte tes mains l'une contre l'autre pour les réchauffer, puis pose-les sur ses joues.",0,Tous,OUI
+D24,default,Case normale,💋,Baiser du bout du nez,"Embrasse le bout de son nez, puis son menton, puis ses lèvres.",0,Tous,OUI
+D25,default,Case normale,💋,Front contre front,"Posez vos fronts l'un contre l'autre, yeux fermés, et respirez ensemble.",30,Tous,OUI
+D26,default,Case normale,💋,Le lobe,Mordille très doucement le lobe de son oreille.,0,Tous,OUI
+D27,default,Case normale,💋,Le mot interdit,"Choisis un mot que ton/ta partenaire n'a plus le droit de prononcer. S'il/elle le dit, il/elle te doit un baiser.",0,Tous,OUI
+D28,default,Case normale,💋,Sourire volé,"Fais-le/la sourire sans le/la toucher et sans parler, seulement avec ton regard.",30,Tous,OUI
+D29,default,Case normale,💋,Bras autour de la taille,Enlace sa taille par derrière et pose ton menton sur son épaule.,20,Tous,OUI
+D30,default,Case normale,💋,Déclaration,"Termine cette phrase à voix haute : « Ce que je préfère quand on est seuls, c'est... »",0,Tous,OUI
+D31,plus,Flèche avance,↗️,Élan de tendresse,Ton désir te propulse en avant ! Offre un baiser passionné sur les lèvres de ton/ta partenaire.,0,Tous,OUI
+D32,plus,Flèche avance,↗️,Complicité gourmande,Avance avec grâce et embrasse délicatement le creux de son poignet et sa paume.,0,Tous,OUI
+D33,plus,Flèche avance,↗️,Cœur qui bat,Pose ta main sur son cœur et laisse-le/la poser la sienne sur le tien.,15,Tous,OUI
+D34,plus,Flèche avance,↗️,Vent favorable,Tu avances ! Choisis où ton/ta partenaire doit t'embrasser.,0,Tous,OUI
+D35,plus,Flèche avance,↗️,Petit prince,Profite de ton élan : ton/ta partenaire te fait un baisemain cérémonieux.,0,Tous,OUI
+D36,plus,Flèche avance,↗️,Douce victoire,Tu avances ! Reçois un câlin aussi long que tu le désires.,0,Tous,OUI
+D37,minus,Flèche recul,↙️,Doux contretemps,"Petit pas en arrière : retire un accessoire ou un vêtement léger, ou laisse ton/ta partenaire choisir lequel.",0,Tous,OUI
+D38,minus,Flèche recul,↙️,Gage taquin,"Pour te faire pardonner ce recul, embrasse trois endroits différents de son visage.",0,Tous,OUI
+D39,minus,Flèche recul,↙️,Excuses officielles,Tu recules ! Demande pardon à ton/ta partenaire de la façon la plus charmante possible.,0,Tous,OUI
+D40,minus,Flèche recul,↙️,Petit retard,"Retire tes chaussettes ou un bijou, au choix de ton/ta partenaire.",0,Tous,OUI
+D41,minus,Flèche recul,↙️,Le recul du cœur,"Pour ce faux pas, offre-lui un compliment sincère qu'il/elle n'a jamais entendu.",0,Tous,OUI
+D42,minus,Flèche recul,↙️,Prisonnier tendre,Tu recules : garde tes mains sur ses genoux jusqu'à ton prochain tour.,0,Tous,OUI
+D43,feather,Plume,🪶,La plume de soie,"Du bout des ongles ou d'un tissu doux, effleure lentement ses avant-bras et son cou.",30,Tous,OUI
+D44,feather,Plume,🪶,Plume sur le visage,"Avec une plume, un pinceau ou le bout des doigts, effleure son visage les yeux fermés.",30,Tous,OUI
+D45,feather,Plume,🪶,Lettres invisibles,Écris un mot dans son dos du bout du doigt. Il/elle doit le deviner.,0,Tous,OUI
+D46,feather,Plume,🪶,Frisson des poignets,"Effleure l'intérieur de ses poignets et de ses coudes, très lentement.",25,Tous,OUI
+D47,feather,Plume,🪶,Souffle léger,Remplace la plume par ton souffle : parcours son cou et sa nuque.,20,Tous,OUI
+D48,feather,Plume,🪶,Le chemin des mains,Effleure le dessus de ses mains puis remonte jusqu'aux épaules.,30,Tous,OUI
+D49,kiss,Baiser,💋,Baiser langoureux,"Un baiser profond et lent, en tenant doucement sa nuque.",20,Tous,OUI
+D50,kiss,Baiser,💋,Baiser de cinéma,Fais-le/la basculer légèrement en arrière comme dans un vieux film et embrasse-le/la.,0,Tous,OUI
+D51,kiss,Baiser,💋,Baiser au ralenti,"Embrassez-vous au ralenti, comme si le temps s'était arrêté.",20,Tous,OUI
+D52,kiss,Baiser,💋,Mille baisers,Couvre son visage de petits baisers rapides.,15,Tous,OUI
+D53,kiss,Baiser,💋,Baiser surprise,Ton/ta partenaire ferme les yeux. Embrasse-le/la quand il/elle s'y attend le moins.,0,Tous,OUI
+D54,kiss,Baiser,💋,Lèvre du bas,"Embrasse uniquement sa lèvre inférieure, tendrement.",15,Tous,OUI
+D55,massage,Massage,💆,Détente des épaules,Masse lentement ses épaules et sa nuque pour faire monter la détente.,45,Tous,OUI
+D56,massage,Massage,💆,Massage des mains,"Masse sa main, doigt par doigt, puis la paume.",40,Tous,OUI
+D57,massage,Massage,💆,Massage des pieds,Masse ses pieds avec douceur et attention.,45,Tous,OUI
+D58,massage,Massage,💆,Les tempes,"Masse ses tempes en petits cercles lents, les yeux fermés.",30,Tous,OUI
+D59,massage,Massage,💆,Le dos,"Masse son dos par-dessus ses vêtements, du bas vers la nuque.",45,Tous,OUI
+D60,massage,Massage,💆,Massage du visage,"Masse son front, ses joues et sa mâchoire du bout des doigts.",30,Tous,OUI
+D61,truth,Vérité ou défi,🎭,Vérité ou défi doux,Vérité : quel est ton plus beau souvenir romantique avec moi ? Défi : embrasse-moi là où j'ai un grain de beauté.,0,Tous,OUI
+D62,truth,Vérité ou défi,🎭,Vérité ou défi : première fois,Vérité : qu'as-tu pensé de moi la première fois que tu m'as vu(e) ? Défi : refais-moi la scène de notre premier baiser.,0,Tous,OUI
+D63,truth,Vérité ou défi,🎭,Vérité ou défi : talent,Vérité : quel est mon plus grand charme ? Défi : fais-moi une déclaration en chanson.,0,Tous,OUI
+D64,truth,Vérité ou défi,🎭,Vérité ou défi : rêve,Vérité : quel voyage romantique rêves-tu de faire avec moi ? Défi : embrasse-moi dans une autre langue.,0,Tous,OUI
+D65,truth,Vérité ou défi,🎭,Vérité ou défi : tenue,Vérité : quelle tenue préfères-tu me voir porter ? Défi : mime ce que tu ressens quand je la porte.,0,Tous,OUI
+D66,truth,Vérité ou défi,🎭,Vérité ou défi : tendresse,Vérité : quel petit geste de moi te fait craquer ? Défi : refais-le-moi maintenant.,0,Tous,OUI
+D67,goose,Oie,🦢,L'oie complice,L'oie double ton lancer ! Profite de cet élan pour lui murmurer une promesse pour ce soir.,0,Tous,OUI
+D68,goose,Oie,🦢,L'oie romantique,Lancer doublé ! Offre-lui un baiser pour chaque case parcourue (maximum 10).,0,Tous,OUI
+D69,goose,Oie,🦢,L'oie gourmande,Lancer doublé ! Ton/ta partenaire te doit une petite douceur de ton choix.,0,Tous,OUI
