@@ -231,6 +231,15 @@
         .menu-row:active { transform: scale(0.98); }
         .menu-ico { width: 2rem; height: 2rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
         .menu-pill { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 9999px; background: rgba(184, 29, 67, 0.55); color: #fff; }
+        .tenue-note { display: flex; align-items: center; gap: 0.5rem; margin: -0.5rem 0 1rem; padding: 0.45rem 0.6rem; border-radius: 0.9rem;
+            background: rgba(18, 4, 10, 0.75); border: 1px dashed rgba(243, 213, 181, 0.3); font-size: 0.72rem; color: rgba(254, 205, 211, 0.9); line-height: 1.3; }
+        .tenue-note.hidden { display: none; }
+        .tenue-btn { flex-shrink: 0; padding: 0.3rem 0.65rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.1); color: #f3d5b5; font-weight: 700; font-size: 0.7rem; }
+        .tenue-btn.on { background: #b81d43; color: #fff; }
+        .tenue-card { padding: 0.75rem; border-radius: 1rem; background: rgba(18, 4, 10, 0.85); border: 1px solid rgba(243, 213, 181, 0.18); }
+        .tenue-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.55rem; }
+        .tenue-chip { padding: 0.35rem 0.7rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: rgba(184, 29, 67, 0.55); color: #fff; border: 1px solid rgba(243, 213, 181, 0.35); }
+        .tenue-chip.off { background: transparent; color: rgba(254, 205, 211, 0.55); text-decoration: line-through; border-style: dashed; }
         .menu-pill.off { background: rgba(255, 255, 255, 0.1); color: rgba(254, 205, 211, 0.7); }
         @media (max-width: 370px) { #board-hint { display: none; } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -442,6 +451,7 @@
                     <p id="challenge-desc-ipad" class="text-sm text-rose-100/90 leading-relaxed mb-4">
                         Regardez-vous intensément dans les yeux pendant 10 secondes, échangez un baiser prometteur et lancez le dé pour entamer votre ascension vers la case 69.
                     </p>
+                    <div id="challenge-tenue-ipad" class="tenue-note hidden"></div>
 
                     <!-- Minuteur circulaire iPad -->
                     <div id="timer-box-ipad" class="hidden mb-4 p-3 rounded-2xl bg-[#12040a]/90 border border-[#f3d5b5]/30 flex items-center justify-between">
@@ -519,6 +529,7 @@
         <p id="challenge-desc-mobile" class="text-sm text-rose-100/95 leading-relaxed mb-4">
             Regardez-vous intensément dans les yeux pendant 10 secondes, échangez un baiser prometteur et lancez le dé.
         </p>
+                    <div id="challenge-tenue-mobile" class="tenue-note hidden"></div>
 
         <!-- Minuteur intégré sur le tiroir iPhone -->
         <div id="timer-box-mobile" class="hidden mb-4 p-3 rounded-2xl bg-[#12040a] border border-[#f3d5b5]/35 flex items-center justify-between">
@@ -560,6 +571,9 @@
                 </button>
                 <button onclick="closeModal('modal-menu'); openModal('modal-setup');" class="menu-row">
                     <span class="menu-ico">👥</span><span class="flex-1 text-left">Joueurs, prénoms &amp; pions</span><span id="menu-players-count" class="menu-pill">2</span>
+                </button>
+                <button onclick="closeModal('modal-menu'); openModal('modal-tenues');" class="menu-row">
+                    <span class="menu-ico">👕</span><span class="flex-1 text-left">Tenues des joueurs</span><span class="text-rose-200/60">›</span>
                 </button>
                 <button onclick="closeModal('modal-menu'); openModal('modal-rules');" class="menu-row">
                     <span class="menu-ico">📜</span><span class="flex-1 text-left">Règles du jeu</span><span class="text-rose-200/60">›</span>
@@ -662,12 +676,29 @@
 
                 <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">De 2 à 4 joueurs :</strong> chacun joue à tour de rôle. Chaque gage désigne un partenaire (« Avec … ») parmi les autres joueurs, et les gages réservés à une femme ou à un homme ne tombent que sur la bonne personne.</p>
 
+                <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">Tenues :</strong> le jeu retient ce que chacun a déjà retiré. Les vêtements tombent dans l'ordre (le haut ou le pantalon avant les sous-vêtements), et un gage qui demande d'être nu ne sort qu'une fois les vêtements retirés. Correction possible dans Menu › Tenues.</p>
+
+                <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">Jamais deux fois le même gage :</strong> un gage déjà sorti ne revient plus de la partie.</p>
+
                 <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">Règle du rebond (Case 69) :</strong> Il faut atteindre 69 pile. Tout excédent vous fait reculer du surplus.</p>
             </div>
 
             <button onclick="closeModal('modal-rules')" class="btn-rosegold w-full mt-5 py-3 rounded-2xl text-sm">
                 Retourner au jeu
             </button>
+        </div>
+    </div>
+
+    <!-- MODALE : TENUES DES JOUEURS (vêtements encore portés) -->
+    <div id="modal-tenues" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="ios-glass rounded-3xl max-w-md w-full p-5 border border-[#f3d5b5]/40 shadow-2xl max-h-[85dvh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]">Tenues</h2>
+                <button onclick="closeModal('modal-tenues')" class="text-rose-200 text-xl p-1" aria-label="Fermer">✕</button>
+            </div>
+            <p class="text-xs text-rose-200/80 mb-3">Le jeu note ce que chacun retire et ne propose que des gages logiques. Touchez un vêtement pour corriger (barré = retiré).</p>
+            <div id="tenues-list" class="space-y-2"></div>
+            <button onclick="closeModal('modal-tenues')" class="btn-rosegold w-full mt-4 py-3 rounded-2xl text-sm">Retour au jeu</button>
         </div>
     </div>
 
@@ -745,6 +776,7 @@
             ],
             currentPlayerIdx: 0,
             intensity: "coquin",
+            usedGages: [],
             isMoving: false,
             soundEnabled: true,
             autoFollowCamera: true,
@@ -758,6 +790,7 @@
                     players: state.players,
                     currentPlayerIdx: state.currentPlayerIdx,
                     intensity: state.intensity,
+                    usedGages: state.usedGages,
                     soundEnabled: state.soundEnabled,
                     autoFollowCamera: state.autoFollowCamera
                 };
@@ -776,8 +809,10 @@
                         name: p.name || PLAYER_DEFAULTS[i].name,
                         sex: p.sex === "f" || p.sex === "h" ? p.sex : PLAYER_DEFAULTS[i].sex,
                         avatar: p.avatar || PLAYER_DEFAULTS[i].avatar,
-                        pos: Math.min(TOTAL_CASES, Math.max(1, p.pos || 1))
+                        pos: Math.min(TOTAL_CASES, Math.max(1, p.pos || 1)),
+                        off: Array.isArray(p.off) ? p.off.filter(k => TENUE_ITEMS[k]) : []
                     }));
+                    state.usedGages = Array.isArray(saved.usedGages) ? saved.usedGages : [];
                     state.currentPlayerIdx = (saved.currentPlayerIdx || 0) % state.players.length;
                     hasSavedGame = true;
                     state.intensity = saved.intensity || "coquin";
@@ -834,217 +869,307 @@
         // Types : default, plus, minus, feather, kiss, massage, truth, goose — Pour qui : Tous / Elle / Lui
         const GAGES = {
             doux: [
-                ["default","Souffle dans la nuque","Approche tes lèvres de la nuque de ton/ta partenaire et souffle doucement pendant 15 secondes avant d'y déposer un baiser.",15,"Tous"],
-                ["default","Regard magnétique","Plongez vos yeux l'un dans l'autre sans parler ni rire pendant 30 secondes, mains entrelacées.",30,"Tous"],
-                ["default","Compliment murmuré","Chuchote à son oreille ce que tu préfères physiquement chez lui/elle, avec une voix suave.",0,"Tous"],
-                ["default","Caresse du visage","Dessine du bout des doigts les contours de son visage, de ses pommettes et de ses lèvres.",20,"Tous"],
-                ["default","Danse lente","Collez-vous l'un contre l'autre et balancez-vous langoureusement.",30,"Tous"],
-                ["default","Esquimau","Frottez doucement vos nez l'un contre l'autre puis échangez un baiser du bout des lèvres.",0,"Tous"],
-                ["default","Main dans les cheveux","Glisse lentement tes doigts dans ses cheveux et masse son cuir chevelu.",30,"Tous"],
-                ["default","Trois mots doux","Dis-lui trois mots qui le/la décrivent, en le/la regardant droit dans les yeux.",0,"Tous"],
-                ["default","Baiser sur la paupière","Demande-lui de fermer les yeux et dépose un baiser léger sur chacune de ses paupières.",0,"Tous"],
-                ["default","Câlin immobile","Serrez-vous fort dans les bras, sans bouger, en respirant au même rythme.",30,"Tous"],
-                ["default","Le premier souvenir","Raconte-lui le moment exact où tu as eu envie de l'embrasser pour la première fois.",0,"Tous"],
-                ["default","Doigts entrelacés","Effleure sa main, puis entrelace lentement tes doigts aux siens, un par un.",20,"Tous"],
-                ["default","Lèvres frôlées","Approche tes lèvres des siennes à un millimètre, sans les toucher, pendant 10 secondes. Puis embrasse-le/la.",10,"Tous"],
-                ["default","Baiser dans le cou","Dépose trois baisers lents dans son cou, de l'oreille jusqu'à l'épaule.",0,"Tous"],
-                ["default","Surnom secret","Invente un petit surnom tendre pour ton/ta partenaire et utilise-le jusqu'à ton prochain tour.",0,"Tous"],
-                ["default","Joue contre joue","Pose ta joue contre la sienne et murmure-lui ce dont tu as envie ce soir.",0,"Tous"],
-                ["default","Pieds nus","Retire tes chaussures et tes chaussettes, puis caresse ses pieds avec les tiens.",20,"Tous"],
-                ["default","Le slow imaginaire","Fredonne une chanson qui vous rappelle un souvenir et invite-le/la à danser.",30,"Tous"],
-                ["default","Bisou papillon","Fais battre tes cils contre sa joue comme des ailes de papillon.",10,"Tous"],
-                ["default","Assis sur les genoux","Installe-toi sur ses genoux jusqu'à ton prochain tour.",0,"Tous"],
-                ["default","Le dos qui frissonne","Fais courir tes doigts le long de sa colonne vertébrale, par-dessus ses vêtements.",20,"Tous"],
-                ["default","Promesse","Promets-lui une attention que tu lui offriras cette semaine (petit-déjeuner au lit, massage...).",0,"Tous"],
-                ["default","Mains chaudes","Frotte tes mains l'une contre l'autre pour les réchauffer, puis pose-les sur ses joues.",0,"Tous"],
-                ["default","Baiser du bout du nez","Embrasse le bout de son nez, puis son menton, puis ses lèvres.",0,"Tous"],
-                ["default","Front contre front","Posez vos fronts l'un contre l'autre, yeux fermés, et respirez ensemble.",30,"Tous"],
-                ["default","Le lobe","Mordille très doucement le lobe de son oreille.",0,"Tous"],
-                ["default","Le mot interdit","Choisis un mot que ton/ta partenaire n'a plus le droit de prononcer. S'il/elle le dit, il/elle te doit un baiser.",0,"Tous"],
-                ["default","Sourire volé","Fais-le/la sourire sans le/la toucher et sans parler, seulement avec ton regard.",30,"Tous"],
-                ["default","Bras autour de la taille","Enlace sa taille par derrière et pose ton menton sur son épaule.",20,"Tous"],
-                ["default","Déclaration","Termine cette phrase à voix haute : « Ce que je préfère quand on est seuls, c'est... »",0,"Tous"],
-                ["plus","Élan de tendresse","Ton désir te propulse en avant ! Offre un baiser passionné sur les lèvres de ton/ta partenaire.",0,"Tous"],
-                ["plus","Complicité gourmande","Avance avec grâce et embrasse délicatement le creux de son poignet et sa paume.",0,"Tous"],
-                ["plus","Cœur qui bat","Pose ta main sur son cœur et laisse-le/la poser la sienne sur le tien.",15,"Tous"],
-                ["plus","Vent favorable","Tu avances ! Choisis où ton/ta partenaire doit t'embrasser.",0,"Tous"],
-                ["plus","Petit prince","Profite de ton élan : ton/ta partenaire te fait un baisemain cérémonieux.",0,"Tous"],
-                ["plus","Douce victoire","Tu avances ! Reçois un câlin aussi long que tu le désires.",0,"Tous"],
-                ["minus","Doux contretemps","Petit pas en arrière : retire un accessoire ou un vêtement léger, ou laisse ton/ta partenaire choisir lequel.",0,"Tous"],
-                ["minus","Gage taquin","Pour te faire pardonner ce recul, embrasse trois endroits différents de son visage.",0,"Tous"],
-                ["minus","Excuses officielles","Tu recules ! Demande pardon à ton/ta partenaire de la façon la plus charmante possible.",0,"Tous"],
-                ["minus","Petit retard","Retire tes chaussettes ou un bijou, au choix de ton/ta partenaire.",0,"Tous"],
-                ["minus","Le recul du cœur","Pour ce faux pas, offre-lui un compliment sincère qu'il/elle n'a jamais entendu.",0,"Tous"],
-                ["minus","Prisonnier tendre","Tu recules : garde tes mains sur ses genoux jusqu'à ton prochain tour.",0,"Tous"],
-                ["feather","La plume de soie","Du bout des ongles ou d'un tissu doux, effleure lentement ses avant-bras et son cou.",30,"Tous"],
-                ["feather","Plume sur le visage","Avec une plume, un pinceau ou le bout des doigts, effleure son visage les yeux fermés.",30,"Tous"],
-                ["feather","Lettres invisibles","Écris un mot dans son dos du bout du doigt. Il/elle doit le deviner.",0,"Tous"],
-                ["feather","Frisson des poignets","Effleure l'intérieur de ses poignets et de ses coudes, très lentement.",25,"Tous"],
-                ["feather","Souffle léger","Remplace la plume par ton souffle : parcours son cou et sa nuque.",20,"Tous"],
-                ["feather","Le chemin des mains","Effleure le dessus de ses mains puis remonte jusqu'aux épaules.",30,"Tous"],
-                ["kiss","Baiser langoureux","Un baiser profond et lent, en tenant doucement sa nuque.",20,"Tous"],
-                ["kiss","Baiser de cinéma","Fais-le/la basculer légèrement en arrière comme dans un vieux film et embrasse-le/la.",0,"Tous"],
-                ["kiss","Baiser au ralenti","Embrassez-vous au ralenti, comme si le temps s'était arrêté.",20,"Tous"],
-                ["kiss","Mille baisers","Couvre son visage de petits baisers rapides.",15,"Tous"],
-                ["kiss","Baiser surprise","Ton/ta partenaire ferme les yeux. Embrasse-le/la quand il/elle s'y attend le moins.",0,"Tous"],
-                ["kiss","Lèvre du bas","Embrasse uniquement sa lèvre inférieure, tendrement.",15,"Tous"],
-                ["massage","Détente des épaules","Masse lentement ses épaules et sa nuque pour faire monter la détente.",45,"Tous"],
-                ["massage","Massage des mains","Masse sa main, doigt par doigt, puis la paume.",40,"Tous"],
-                ["massage","Massage des pieds","Masse ses pieds avec douceur et attention.",45,"Tous"],
-                ["massage","Les tempes","Masse ses tempes en petits cercles lents, les yeux fermés.",30,"Tous"],
-                ["massage","Le dos","Masse son dos par-dessus ses vêtements, du bas vers la nuque.",45,"Tous"],
-                ["massage","Massage du visage","Masse son front, ses joues et sa mâchoire du bout des doigts.",30,"Tous"],
-                ["truth","Vérité ou défi doux","Vérité : quel est ton plus beau souvenir romantique avec moi ? Défi : embrasse-moi là où j'ai un grain de beauté.",0,"Tous"],
-                ["truth","Vérité ou défi : première fois","Vérité : qu'as-tu pensé de moi la première fois que tu m'as vu(e) ? Défi : refais-moi la scène de notre premier baiser.",0,"Tous"],
-                ["truth","Vérité ou défi : talent","Vérité : quel est mon plus grand charme ? Défi : fais-moi une déclaration en chanson.",0,"Tous"],
-                ["truth","Vérité ou défi : rêve","Vérité : quel voyage romantique rêves-tu de faire avec moi ? Défi : embrasse-moi dans une autre langue.",0,"Tous"],
-                ["truth","Vérité ou défi : tenue","Vérité : quelle tenue préfères-tu me voir porter ? Défi : mime ce que tu ressens quand je la porte.",0,"Tous"],
-                ["truth","Vérité ou défi : tendresse","Vérité : quel petit geste de moi te fait craquer ? Défi : refais-le-moi maintenant.",0,"Tous"],
-                ["goose","L'oie complice","L'oie double ton lancer ! Profite de cet élan pour lui murmurer une promesse pour ce soir.",0,"Tous"],
-                ["goose","L'oie romantique","Lancer doublé ! Offre-lui un baiser pour chaque case parcourue (maximum 10).",0,"Tous"],
-                ["goose","L'oie gourmande","Lancer doublé ! Ton/ta partenaire te doit une petite douceur de ton choix.",0,"Tous"]
+                ["default","Souffle dans la nuque","Approche tes lèvres de la nuque de ton/ta partenaire et souffle doucement pendant 15 secondes avant d'y déposer un baiser.",15,"Tous",""],
+                ["default","Regard magnétique","Plongez vos yeux l'un dans l'autre sans parler ni rire pendant 30 secondes, mains entrelacées.",30,"Tous",""],
+                ["default","Compliment murmuré","Chuchote à son oreille ce que tu préfères physiquement chez lui/elle, avec une voix suave.",0,"Tous",""],
+                ["default","Caresse du visage","Dessine du bout des doigts les contours de son visage, de ses pommettes et de ses lèvres.",20,"Tous",""],
+                ["default","Danse lente","Collez-vous l'un contre l'autre et balancez-vous langoureusement.",30,"Tous",""],
+                ["default","Esquimau","Frottez doucement vos nez l'un contre l'autre puis échangez un baiser du bout des lèvres.",0,"Tous",""],
+                ["default","Main dans les cheveux","Glisse lentement tes doigts dans ses cheveux et masse son cuir chevelu.",30,"Tous",""],
+                ["default","Trois mots doux","Dis-lui trois mots qui le/la décrivent, en le/la regardant droit dans les yeux.",0,"Tous",""],
+                ["default","Baiser sur la paupière","Demande-lui de fermer les yeux et dépose un baiser léger sur chacune de ses paupières.",0,"Tous",""],
+                ["default","Câlin immobile","Serrez-vous fort dans les bras, sans bouger, en respirant au même rythme.",30,"Tous",""],
+                ["default","Le premier souvenir","Raconte-lui le moment exact où tu as eu envie de l'embrasser pour la première fois.",0,"Tous",""],
+                ["default","Doigts entrelacés","Effleure sa main, puis entrelace lentement tes doigts aux siens, un par un.",20,"Tous",""],
+                ["default","Lèvres frôlées","Approche tes lèvres des siennes à un millimètre, sans les toucher, pendant 10 secondes. Puis embrasse-le/la.",10,"Tous",""],
+                ["default","Baiser dans le cou","Dépose trois baisers lents dans son cou, de l'oreille jusqu'à l'épaule.",0,"Tous",""],
+                ["default","Surnom secret","Invente un petit surnom tendre pour ton/ta partenaire et utilise-le jusqu'à ton prochain tour.",0,"Tous",""],
+                ["default","Joue contre joue","Pose ta joue contre la sienne et murmure-lui ce dont tu as envie ce soir.",0,"Tous",""],
+                ["default","Pieds nus","Retire tes chaussures et tes chaussettes, puis caresse ses pieds avec les tiens.",20,"Tous",""],
+                ["default","Le slow imaginaire","Fredonne une chanson qui vous rappelle un souvenir et invite-le/la à danser.",30,"Tous",""],
+                ["default","Bisou papillon","Fais battre tes cils contre sa joue comme des ailes de papillon.",10,"Tous",""],
+                ["default","Assis sur les genoux","Installe-toi sur ses genoux jusqu'à ton prochain tour.",0,"Tous",""],
+                ["default","Le dos qui frissonne","Fais courir tes doigts le long de sa colonne vertébrale, par-dessus ses vêtements.",20,"Tous","Partenaire avec haut"],
+                ["default","Promesse","Promets-lui une attention que tu lui offriras cette semaine (petit-déjeuner au lit, massage...).",0,"Tous",""],
+                ["default","Mains chaudes","Frotte tes mains l'une contre l'autre pour les réchauffer, puis pose-les sur ses joues.",0,"Tous",""],
+                ["default","Baiser du bout du nez","Embrasse le bout de son nez, puis son menton, puis ses lèvres.",0,"Tous",""],
+                ["default","Front contre front","Posez vos fronts l'un contre l'autre, yeux fermés, et respirez ensemble.",30,"Tous",""],
+                ["default","Le lobe","Mordille très doucement le lobe de son oreille.",0,"Tous",""],
+                ["default","Le mot interdit","Choisis un mot que ton/ta partenaire n'a plus le droit de prononcer. S'il/elle le dit, il/elle te doit un baiser.",0,"Tous",""],
+                ["default","Sourire volé","Fais-le/la sourire sans le/la toucher et sans parler, seulement avec ton regard.",30,"Tous",""],
+                ["default","Bras autour de la taille","Enlace sa taille par derrière et pose ton menton sur son épaule.",20,"Tous",""],
+                ["default","Déclaration","Termine cette phrase à voix haute : « Ce que je préfère quand on est seuls, c'est... »",0,"Tous",""],
+                ["plus","Élan de tendresse","Ton désir te propulse en avant ! Offre un baiser passionné sur les lèvres de ton/ta partenaire.",0,"Tous",""],
+                ["plus","Complicité gourmande","Avance avec grâce et embrasse délicatement le creux de son poignet et sa paume.",0,"Tous",""],
+                ["plus","Cœur qui bat","Pose ta main sur son cœur et laisse-le/la poser la sienne sur le tien.",15,"Tous",""],
+                ["plus","Vent favorable","Choisis où ton/ta partenaire doit t'embrasser.",0,"Tous",""],
+                ["plus","Petit prince","Profite de ton élan : ton/ta partenaire te fait un baisemain cérémonieux.",0,"Tous",""],
+                ["plus","Douce victoire","Tu avances ! Reçois un câlin aussi long que tu le désires.",0,"Tous",""],
+                ["minus","Doux contretemps","Petit pas en arrière : retire un accessoire (bijou, montre, chaussettes...) ou laisse ton/ta partenaire choisir lequel.",0,"Tous",""],
+                ["minus","Gage taquin","Pour te faire pardonner ce recul, embrasse trois endroits différents de son visage.",0,"Tous",""],
+                ["minus","Excuses officielles","Tu recules ! Demande pardon à ton/ta partenaire de la façon la plus charmante possible.",0,"Tous",""],
+                ["minus","Petit retard","Retire tes chaussettes ou un bijou, au choix de ton/ta partenaire.",0,"Tous",""],
+                ["minus","Le recul du cœur","Pour ce faux pas, offre-lui un compliment sincère qu'il/elle n'a jamais entendu.",0,"Tous",""],
+                ["minus","Prisonnier tendre","Tu recules : garde tes mains sur ses genoux jusqu'à ton prochain tour.",0,"Tous",""],
+                ["feather","La plume de soie","Du bout des ongles ou d'un tissu doux, effleure lentement ses avant-bras et son cou.",30,"Tous",""],
+                ["feather","Plume sur le visage","Avec une plume, un pinceau ou le bout des doigts, effleure son visage les yeux fermés.",30,"Tous",""],
+                ["feather","Lettres invisibles","Écris un mot dans son dos du bout du doigt. Il/elle doit le deviner.",0,"Tous",""],
+                ["feather","Frisson des poignets","Effleure l'intérieur de ses poignets et de ses coudes, très lentement.",25,"Tous",""],
+                ["feather","Souffle léger","Remplace la plume par ton souffle : parcours son cou et sa nuque.",20,"Tous",""],
+                ["feather","Le chemin des mains","Effleure le dessus de ses mains puis remonte jusqu'aux épaules.",30,"Tous",""],
+                ["kiss","Baiser langoureux","Un baiser profond et lent, en tenant doucement sa nuque.",20,"Tous",""],
+                ["kiss","Baiser de cinéma","Fais-le/la basculer légèrement en arrière comme dans un vieux film et embrasse-le/la.",0,"Tous",""],
+                ["kiss","Baiser au ralenti","Embrassez-vous au ralenti, comme si le temps s'était arrêté.",20,"Tous",""],
+                ["kiss","Mille baisers","Couvre son visage de petits baisers rapides.",15,"Tous",""],
+                ["kiss","Baiser surprise","Ton/ta partenaire ferme les yeux. Embrasse-le/la quand il/elle s'y attend le moins.",0,"Tous",""],
+                ["kiss","Lèvre du bas","Embrasse uniquement sa lèvre inférieure, tendrement.",15,"Tous",""],
+                ["massage","Détente des épaules","Masse lentement ses épaules et sa nuque pour faire monter la détente.",45,"Tous",""],
+                ["massage","Massage des mains","Masse sa main, doigt par doigt, puis la paume.",40,"Tous",""],
+                ["massage","Massage des pieds","Masse ses pieds avec douceur et attention.",45,"Tous",""],
+                ["massage","Les tempes","Masse ses tempes en petits cercles lents, les yeux fermés.",30,"Tous",""],
+                ["massage","Le dos","Masse son dos par-dessus ses vêtements, du bas vers la nuque.",45,"Tous","Partenaire avec haut"],
+                ["massage","Massage du visage","Masse son front, ses joues et sa mâchoire du bout des doigts.",30,"Tous",""],
+                ["truth","Vérité ou défi doux","Vérité : quel est ton plus beau souvenir romantique avec moi ? Défi : embrasse-moi là où j'ai un grain de beauté.",0,"Tous",""],
+                ["truth","Vérité ou défi : première fois","Vérité : qu'as-tu pensé de moi la première fois que tu m'as vu(e) ? Défi : refais-moi la scène de notre premier baiser.",0,"Tous",""],
+                ["truth","Vérité ou défi : talent","Vérité : quel est mon plus grand charme ? Défi : fais-moi une déclaration en chanson.",0,"Tous",""],
+                ["truth","Vérité ou défi : rêve","Vérité : quel voyage romantique rêves-tu de faire avec moi ? Défi : embrasse-moi dans une autre langue.",0,"Tous",""],
+                ["truth","Vérité ou défi : tenue","Vérité : quelle tenue préfères-tu me voir porter ? Défi : mime ce que tu ressens quand je la porte.",0,"Tous",""],
+                ["truth","Vérité ou défi : tendresse","Vérité : quel petit geste de moi te fait craquer ? Défi : refais-le-moi maintenant.",0,"Tous",""],
+                ["goose","L'oie complice","L'oie double ton lancer ! Profite de cet élan pour lui murmurer une promesse pour ce soir.",0,"Tous",""],
+                ["goose","L'oie romantique","Lancer doublé ! Offre-lui un baiser pour chaque case parcourue (maximum 10).",0,"Tous",""],
+                ["goose","L'oie gourmande","Lancer doublé ! Ton/ta partenaire te doit une petite douceur de ton choix.",0,"Tous",""],
+                ["default","Le souffle chaud","Souffle doucement dans le creux de son cou jusqu'à lui donner des frissons.",15,"Tous",""],
+                ["default","Portrait chinois","Dis-lui quelle fleur, quelle chanson et quel parfum il/elle serait, et pourquoi.",0,"Tous",""],
+                ["default","Main sur le cœur","Pose sa main sur ton cœur et dis-lui ce qui le fait battre plus vite.",0,"Tous",""],
+                ["default","Le chemin des baisers","Dépose cinq baisers sur sa main, en remontant jusqu'au poignet.",0,"Tous",""],
+                ["default","Regard tendre","Regarde-le/la sans parler et souris jusqu'à ce qu'il/elle rougisse.",30,"Tous",""],
+                ["default","Berceuse","Murmure-lui quelques mots doux à l'oreille, comme une berceuse.",20,"Tous",""],
+                ["default","Épaule offerte","Pose ta tête sur son épaule et laisse-le/la caresser tes cheveux.",30,"Tous",""],
+                ["default","Bisou dans la paume","Embrasse le creux de sa paume puis referme sa main dessus, comme un secret.",0,"Tous",""],
+                ["default","Trois qualités","Cite trois choses que tu admires chez lui/elle.",0,"Tous",""],
+                ["default","Revers de la main","Caresse sa joue avec le dos de ta main, très lentement.",15,"Tous",""],
+                ["default","Piano","Fais danser tes doigts sur son avant-bras comme sur un piano.",20,"Tous",""],
+                ["default","Le plus beau rendez-vous","Raconte ton plus beau souvenir d'un rendez-vous avec lui/elle.",0,"Tous",""],
+                ["default","Câlin par derrière","Enlace-le/la par derrière et berce-le/la doucement.",30,"Tous",""],
+                ["default","Le menton","Relève doucement son menton du bout des doigts et embrasse-le/la.",0,"Tous",""],
+                ["default","Ce que j'ai remarqué","Dis-lui à l'oreille ce que tu as remarqué de beau chez lui/elle aujourd'hui.",0,"Tous",""],
+                ["default","Coin des yeux","Embrasse le coin de ses yeux, d'un côté puis de l'autre.",0,"Tous",""],
+                ["default","Pieds contre pieds","Collez vos pieds l'un contre l'autre et échangez un sourire complice.",15,"Tous",""],
+                ["default","Douce nuque","Masse doucement sa nuque du bout des doigts.",30,"Tous",""],
+                ["default","Le vœu","Fais un vœu pour votre couple à voix haute.",0,"Tous",""],
+                ["default","Slow sans musique","Prends-le/la dans tes bras et dansez un slow sans musique.",30,"Tous",""],
+                ["default","Le cœur dessiné","Dessine un cœur du bout du doigt dans le creux de sa main.",0,"Tous",""],
+                ["default","Baisers aux tempes","Dépose un baiser sur chacune de ses tempes.",0,"Tous",""],
+                ["default","Le poète","Invente une phrase d'amour digne d'un poème et récite-la-lui.",0,"Tous",""],
+                ["default","Main dans la main","Gardez vos mains entrelacées jusqu'à ton prochain tour.",0,"Tous",""],
+                ["default","Coin des lèvres","Embrasse-le/la au coin des lèvres, puis de l'autre côté.",0,"Tous",""],
+                ["default","La confidence","Confie-lui une petite chose que tu n'as jamais osé lui dire.",0,"Tous",""],
+                ["default","Frisson du bras","Remonte du poignet à l'épaule du bout des doigts.",20,"Tous",""],
+                ["default","Front apaisé","Lisse son front et ses sourcils du bout des doigts, comme pour effacer sa journée.",20,"Tous",""],
+                ["default","Le pouls","Embrasse l'intérieur de son poignet et sens son pouls s'accélérer.",10,"Tous",""],
+                ["default","Le baiser promis","Promets-lui un baiser pour plus tard, et décris-le-lui en détail.",0,"Tous",""]
             ],
             coquin: [
-                ["default","Morsure légère","Embrasse son cou en descendant vers la clavicule et termine par une délicate morsure sur l'épaule.",20,"Tous"],
-                ["default","Les yeux bandés","Ton/ta partenaire ferme les yeux : embrasse-le/la où tu le désires sans qu'il/elle puisse te toucher.",30,"Tous"],
-                ["default","Frisson dorsal","Glisse tes mains sous son haut et caresse lentement le bas de son dos.",30,"Tous"],
-                ["default","L'art de dévoiler","Retire lentement un vêtement de ton choix en maintenant le contact visuel.",0,"Tous"],
-                ["default","Cartographie sensuelle","Parcours l'intérieur de ses cuisses du bout des doigts.",25,"Tous"],
-                ["default","Baisers papillons","Dépose une traînée de petits baisers depuis l'oreille jusqu'au creux de la poitrine.",20,"Tous"],
-                ["default","Déboutonnage","Défais lentement deux boutons (ou une fermeture) de son vêtement, avec les dents si tu oses.",0,"Tous"],
-                ["default","Mains baladeuses","Pendant 30 secondes, tes mains peuvent aller partout... par-dessus les vêtements.",30,"Tous"],
-                ["default","Murmure osé","Chuchote-lui à l'oreille la chose la plus coquine que tu aimerais lui faire ce soir.",0,"Tous"],
-                ["default","Le glaçon","Avec un glaçon (ou tes doigts froids), trace une ligne de sa nuque jusqu'au bas du dos.",20,"Tous"],
-                ["default","À califourchon","Installe-toi à califourchon sur lui/elle et embrasse son cou.",30,"Tous"],
-                ["default","Défilé","Fais un petit défilé sensuel devant lui/elle, en soulevant légèrement ton haut.",30,"Tous"],
-                ["default","Statue","Ton/ta partenaire ne doit plus bouger. Embrasse-le/la partout au-dessus de la ceinture.",30,"Tous"],
-                ["default","Sous le tissu","Glisse une main sous son t-shirt et caresse son ventre.",25,"Tous"],
-                ["default","Le chemin de la ceinture","Embrasse la ligne de sa ceinture d'une hanche à l'autre.",20,"Tous"],
-                ["default","Sa main, ton choix","Prends sa main et pose-la où tu as envie d'être touché(e).",20,"Tous"],
-                ["default","Les fesses","Caresse ses fesses à deux mains en l'embrassant.",20,"Tous"],
-                ["default","Ondulation","Colle-toi à lui/elle et ondule lentement des hanches contre son corps.",30,"Tous"],
-                ["default","Le dos nu","Retire-lui son haut et embrasse toute la longueur de son dos.",30,"Tous"],
-                ["default","Langue taquine","Effleure ses lèvres du bout de ta langue, sans l'embrasser.",15,"Tous"],
-                ["default","Mains liées","Tiens ses poignets au-dessus de sa tête et embrasse son cou.",25,"Tous"],
-                ["default","Sous-vêtement mystère","Décris à ton/ta partenaire les sous-vêtements que tu portes. Il/elle peut vérifier.",0,"Tous"],
-                ["default","La photo mentale","Retire un vêtement et prends la pose la plus sensuelle possible pendant 10 secondes.",10,"Tous"],
-                ["default","Bouche gourmande","Embrasse et mordille l'intérieur de son bras, du poignet jusqu'à l'aisselle.",20,"Tous"],
-                ["default","Le gémissement","Fais-lui entendre, à l'oreille, le son que tu fais quand tu as vraiment envie de lui/elle.",0,"Tous"],
-                ["default","Dos au mur","Plaque-le/la doucement contre un mur et embrasse-le/la avec fougue.",20,"Tous"],
-                ["default","Le nombril","Embrasse son nombril et descends de deux centimètres.",15,"Tous"],
-                ["default","Jambes croisées","Enroule tes jambes autour de sa taille pendant un long baiser.",20,"Tous"],
-                ["default","Interdit de toucher","Tu dois l'exciter en le/la touchant uniquement avec ta bouche, sans les mains.",30,"Tous"],
-                ["default","Échange de vêtement","Échangez une pièce de vêtement et gardez-la jusqu'à la fin de la partie.",0,"Tous"],
-                ["plus","Montée du désir","Quelle fougue ! Tu gagnes le droit de guider les mains de ton/ta partenaire où tu veux.",20,"Tous"],
-                ["plus","Accélération sensuelle","Tu bondis en avant ! Embrasse passionnément la zone la plus sensible de son cou.",0,"Tous"],
-                ["plus","Privilège","Tu avances ! Ton/ta partenaire retire le vêtement de ton choix.",0,"Tous"],
-                ["plus","Le trône","Tu avances : installe-toi confortablement et reçois des baisers sur le ventre.",20,"Tous"],
-                ["plus","Joker coquin","Garde ce joker : tu pourras refuser un gage plus tard dans la partie.",0,"Tous"],
-                ["plus","Aux commandes","Tu avances ! Pendant 30 secondes, ton/ta partenaire fait exactement ce que tu lui dis (dans les limites de la carte).",30,"Tous"],
-                ["minus","Caprice coquin","Tu recules ! Retire un vêtement ou laisse ton/ta partenaire te dégrafer / déboutonner une pièce.",0,"Tous"],
-                ["minus","Pénitence sensuelle","Pour ce recul, embrasse son ventre ou le bas de son dos.",15,"Tous"],
-                ["minus","Petite fessée","Tu recules ! Reçois une petite fessée taquine.",0,"Tous"],
-                ["minus","À genoux","Pour te faire pardonner, mets-toi à genoux et embrasse ses cuisses.",20,"Tous"],
-                ["minus","Sans les mains","Tu recules : jusqu'à ton prochain tour, tu ne peux plus utiliser tes mains.",0,"Tous"],
-                ["minus","Le vêtement perdu","Ton/ta partenaire choisit un vêtement que tu dois retirer.",0,"Tous"],
-                ["feather","Frisson de plume","Du bout de ta langue ou de doigts très légers, effleure son torse ou sa poitrine.",30,"Tous"],
-                ["feather","Plume sur les cuisses","Avec une plume ou le bout des doigts, effleure l'intérieur de ses cuisses.",30,"Tous"],
-                ["feather","Le ventre","Effleure son ventre nu du nombril jusqu'à la poitrine.",25,"Tous"],
-                ["feather","Les reins","Effleure le creux de ses reins et la naissance des fesses.",25,"Tous"],
-                ["feather","Plume aveugle","Yeux fermés, il/elle doit deviner quelle partie de son corps tu effleures.",30,"Tous"],
-                ["feather","Chatouille interdite","Effleure les zones où il/elle est chatouilleux(se). S'il/elle rit, il/elle retire un vêtement.",20,"Tous"],
-                ["kiss","Baiser volé","Assieds-toi sur ses genoux (ou attire-le/la contre toi) pour un baiser torride.",25,"Tous"],
-                ["kiss","Baiser glacé","Prends un glaçon en bouche puis embrasse son cou.",20,"Tous"],
-                ["kiss","Baiser au creux","Embrasse le creux de sa poitrine ou de son torse.",15,"Tous"],
-                ["kiss","Baiser de feu","Un baiser fougueux, mains dans ses cheveux, corps collés.",30,"Tous"],
-                ["kiss","Baiser à l'envers","Embrasse-le/la à l'envers, comme dans Spider-Man.",15,"Tous"],
-                ["kiss","Les hanches","Embrasse ses hanches, juste au-dessus de la ceinture.",20,"Tous"],
-                ["massage","Massage des hanches","Masse lentement le bas de son dos, ses hanches et ses fesses.",45,"Tous"],
-                ["massage","Massage à l'huile","Avec un peu d'huile ou de crème, masse son dos nu.",60,"Tous"],
-                ["massage","Les cuisses","Masse l'arrière de ses cuisses en remontant doucement.",45,"Tous"],
-                ["massage","Massage du torse","Masse son torse ou sa poitrine par-dessus ses sous-vêtements.",40,"Tous"],
-                ["massage","Assis sur lui/elle","Installe-toi sur son dos et masse ses épaules.",45,"Tous"],
-                ["massage","Massage avec les lèvres","Masse sa nuque uniquement avec tes lèvres.",30,"Tous"],
-                ["truth","Vérité ou défi coquin","Vérité : quelle partie de mon corps te fait le plus craquer ? Défi : retire un vêtement à l'autre avec tes dents ou d'une seule main.",0,"Tous"],
-                ["truth","Vérité ou défi : endroit","Vérité : quel est l'endroit le plus osé où tu aimerais qu'on fasse l'amour ? Défi : mime la scène.",0,"Tous"],
-                ["truth","Vérité ou défi : souvenir","Vérité : quel est notre moment le plus chaud ? Défi : recrée-en le début.",0,"Tous"],
-                ["truth","Vérité ou défi : rêve","Vérité : as-tu déjà rêvé de moi de façon coquine ? Défi : raconte le rêve à l'oreille.",0,"Tous"],
-                ["truth","Vérité ou défi : lingerie","Vérité : quelle lingerie ou tenue aimerais-tu me voir porter ? Défi : décris-la en me touchant.",0,"Tous"],
-                ["truth","Vérité ou défi : zone","Vérité : quelle est ta zone la plus sensible ? Défi : laisse-moi la trouver les yeux fermés.",0,"Tous"],
-                ["goose","L'oie coquine","Ton lancer est doublé ! Offre une caresse audacieuse avant de poursuivre ta route.",0,"Tous"],
-                ["goose","L'oie effrontée","Lancer doublé ! Ton/ta partenaire retire deux vêtements de ton choix.",0,"Tous"],
-                ["goose","L'oie gourmande","Lancer doublé ! Choisis une partie de son corps à embrasser.",20,"Tous"]
+                ["default","Morsure légère","Embrasse son cou en descendant vers la clavicule et termine par une délicate morsure sur l'épaule.",20,"Tous",""],
+                ["default","Les yeux bandés","Ton/ta partenaire ferme les yeux : embrasse-le/la où tu le désires sans qu'il/elle puisse te toucher.",30,"Tous",""],
+                ["default","Frisson dorsal","Glisse tes mains sous son haut et caresse lentement le bas de son dos.",30,"Tous","Partenaire avec haut"],
+                ["default","L'art de dévoiler","Retire lentement {ton vêtement} en maintenant le contact visuel.",0,"Tous",""],
+                ["default","Cartographie sensuelle","Parcours l'intérieur de ses cuisses du bout des doigts.",25,"Tous",""],
+                ["default","Baisers papillons","Dépose une traînée de petits baisers depuis l'oreille jusqu'au creux de la poitrine.",20,"Tous",""],
+                ["default","Déboutonnage","Défais lentement deux boutons (ou une fermeture) de son vêtement, avec les dents si tu oses.",0,"Tous","Partenaire avec haut"],
+                ["default","Mains baladeuses","Pendant 30 secondes, tes mains peuvent aller partout... par-dessus les vêtements.",30,"Tous","Partenaire avec haut"],
+                ["default","Murmure osé","Chuchote-lui à l'oreille la chose la plus coquine que tu aimerais lui faire ce soir.",0,"Tous",""],
+                ["default","Le glaçon","Avec un glaçon (ou tes doigts froids), trace une ligne de sa nuque jusqu'au bas du dos.",20,"Tous",""],
+                ["default","À califourchon","Installe-toi à califourchon sur lui/elle et embrasse son cou.",30,"Tous",""],
+                ["default","Défilé","Fais un petit défilé sensuel devant lui/elle, en soulevant légèrement ton haut.",30,"Tous","Joueur avec haut"],
+                ["default","Statue","Ton/ta partenaire ne doit plus bouger. Embrasse-le/la partout au-dessus de la ceinture.",30,"Tous",""],
+                ["default","Sous le tissu","Glisse une main sous son haut et caresse son ventre.",25,"Tous","Partenaire avec haut"],
+                ["default","Le chemin de la ceinture","Embrasse la ligne de sa ceinture d'une hanche à l'autre.",20,"Tous",""],
+                ["default","Sa main, ton choix","Prends sa main et pose-la où tu as envie d'être touché(e).",20,"Tous",""],
+                ["default","Les fesses","Caresse ses fesses à deux mains en l'embrassant.",20,"Tous",""],
+                ["default","Ondulation","Colle-toi à lui/elle et ondule lentement des hanches contre son corps.",30,"Tous",""],
+                ["default","Le dos nu","Retire-lui {son haut} et embrasse toute la longueur de son dos.",30,"Tous",""],
+                ["default","Langue taquine","Effleure ses lèvres du bout de ta langue, sans l'embrasser.",15,"Tous",""],
+                ["default","Mains liées","Tiens ses poignets au-dessus de sa tête et embrasse son cou.",25,"Tous",""],
+                ["default","Sous-vêtement mystère","Décris à ton/ta partenaire les sous-vêtements que tu portes. Il/elle peut vérifier.",0,"Tous",""],
+                ["default","La photo mentale","Retire {ton vêtement} et prends la pose la plus sensuelle possible pendant 10 secondes.",10,"Tous",""],
+                ["default","Bouche gourmande","Embrasse et mordille l'intérieur de son bras, du poignet jusqu'à l'aisselle.",20,"Tous",""],
+                ["default","Le gémissement","Fais-lui entendre, à l'oreille, le son que tu fais quand tu as vraiment envie de lui/elle.",0,"Tous",""],
+                ["default","Dos au mur","Plaque-le/la doucement contre un mur et embrasse-le/la avec fougue.",20,"Tous",""],
+                ["default","Le nombril","Embrasse son nombril et descends de deux centimètres.",15,"Tous",""],
+                ["default","Jambes croisées","Enroule tes jambes autour de sa taille pendant un long baiser.",20,"Tous",""],
+                ["default","Interdit de toucher","Tu dois l'exciter en le/la touchant uniquement avec ta bouche, sans les mains.",30,"Tous",""],
+                ["default","Échange de vêtement","Échangez une pièce de vêtement et gardez-la jusqu'à la fin de la partie.",0,"Tous",""],
+                ["plus","Montée du désir","Quelle fougue ! Tu gagnes le droit de guider les mains de ton/ta partenaire où tu veux.",20,"Tous",""],
+                ["plus","Accélération sensuelle","Tu bondis en avant ! Embrasse passionnément la zone la plus sensible de son cou.",0,"Tous",""],
+                ["plus","Privilège","Tu avances ! Ton/ta partenaire retire {son vêtement}.",0,"Tous",""],
+                ["plus","Le trône","Tu avances : installe-toi confortablement et reçois des baisers sur le ventre.",20,"Tous",""],
+                ["plus","Joker coquin","Garde ce joker : tu pourras refuser un gage plus tard dans la partie.",0,"Tous",""],
+                ["plus","Aux commandes","Tu avances ! Pendant 30 secondes, ton/ta partenaire fait exactement ce que tu lui dis (dans les limites de la carte).",30,"Tous",""],
+                ["minus","Caprice coquin","Tu recules ! Retire {ton vêtement} ou laisse ton/ta partenaire te l'enlever.",0,"Tous",""],
+                ["minus","Pénitence sensuelle","Pour ce recul, embrasse son ventre ou le bas de son dos.",15,"Tous",""],
+                ["minus","Petite fessée","Tu recules ! Reçois une petite fessée taquine.",0,"Tous",""],
+                ["minus","À genoux","Pour te faire pardonner, mets-toi à genoux et embrasse ses cuisses.",20,"Tous",""],
+                ["minus","Sans les mains","Tu recules : jusqu'à ton prochain tour, tu ne peux plus utiliser tes mains.",0,"Tous",""],
+                ["minus","Le vêtement perdu","Ton/ta partenaire exige que tu retires {ton vêtement}.",0,"Tous",""],
+                ["feather","Frisson de plume","Du bout de ta langue ou de doigts très légers, effleure son torse ou sa poitrine.",30,"Tous",""],
+                ["feather","Plume sur les cuisses","Avec une plume ou le bout des doigts, effleure l'intérieur de ses cuisses.",30,"Tous",""],
+                ["feather","Le ventre","Effleure son ventre nu du nombril jusqu'à la poitrine.",25,"Tous","Partenaire sans haut"],
+                ["feather","Les reins","Effleure le creux de ses reins et la naissance des fesses.",25,"Tous",""],
+                ["feather","Plume aveugle","Yeux fermés, il/elle doit deviner quelle partie de son corps tu effleures.",30,"Tous",""],
+                ["feather","Chatouille interdite","Effleure les zones où il/elle est chatouilleux(se). S'il/elle rit, il/elle retire {son vêtement}.",20,"Tous","Facultatif"],
+                ["kiss","Baiser volé","Assieds-toi sur ses genoux (ou attire-le/la contre toi) pour un baiser torride.",25,"Tous",""],
+                ["kiss","Baiser glacé","Prends un glaçon en bouche puis embrasse son cou.",20,"Tous",""],
+                ["kiss","Baiser au creux","Embrasse le creux de sa poitrine ou de son torse.",15,"Tous",""],
+                ["kiss","Baiser de feu","Un baiser fougueux, mains dans ses cheveux, corps collés.",30,"Tous",""],
+                ["kiss","Baiser à l'envers","Embrasse-le/la à l'envers, comme dans Spider-Man.",15,"Tous",""],
+                ["kiss","Les hanches","Embrasse ses hanches, juste au-dessus de la ceinture.",20,"Tous",""],
+                ["massage","Massage des hanches","Masse lentement le bas de son dos, ses hanches et ses fesses.",45,"Tous",""],
+                ["massage","Massage à l'huile","Avec un peu d'huile ou de crème, masse son dos nu.",60,"Tous","Partenaire sans haut"],
+                ["massage","Les cuisses","Masse l'arrière de ses cuisses en remontant doucement.",45,"Tous",""],
+                ["massage","Massage du torse","Masse son torse ou sa poitrine, par-dessus ses sous-vêtements ou à même la peau.",40,"Tous","Partenaire sans haut"],
+                ["massage","Assis sur lui/elle","Installe-toi sur son dos et masse ses épaules.",45,"Tous",""],
+                ["massage","Massage avec les lèvres","Masse sa nuque uniquement avec tes lèvres.",30,"Tous",""],
+                ["truth","Vérité ou défi coquin","Vérité : quelle partie de mon corps te fait le plus craquer ? Défi : retire-lui {son vêtement} avec tes dents ou d'une seule main.",0,"Tous","Facultatif"],
+                ["truth","Vérité ou défi : endroit","Vérité : quel est l'endroit le plus osé où tu aimerais qu'on fasse l'amour ? Défi : mime la scène.",0,"Tous",""],
+                ["truth","Vérité ou défi : souvenir","Vérité : quel est notre moment le plus chaud ? Défi : recrée-en le début.",0,"Tous",""],
+                ["truth","Vérité ou défi : rêve","Vérité : as-tu déjà rêvé de moi de façon coquine ? Défi : raconte le rêve à l'oreille.",0,"Tous",""],
+                ["truth","Vérité ou défi : lingerie","Vérité : quelle lingerie ou tenue aimerais-tu me voir porter ? Défi : décris-la en me touchant.",0,"Tous",""],
+                ["truth","Vérité ou défi : zone","Vérité : quelle est ta zone la plus sensible ? Défi : laisse-moi la trouver les yeux fermés.",0,"Tous",""],
+                ["goose","L'oie coquine","Ton lancer est doublé ! Offre une caresse audacieuse avant de poursuivre ta route.",0,"Tous",""],
+                ["goose","L'oie effrontée","Lancer doublé ! Ton/ta partenaire retire {ses 2 vêtements}.",0,"Tous",""],
+                ["goose","L'oie gourmande","Lancer doublé ! Choisis une partie de son corps à embrasser.",20,"Tous",""],
+                ["default","Strip au ralenti","Retire {ton vêtement} le plus lentement possible, en dansant.",30,"Tous",""],
+                ["default","Main experte","Retire-lui {son vêtement} sans jamais quitter ses lèvres.",0,"Tous",""],
+                ["default","Petites morsures","Mordille doucement sa lèvre inférieure, puis son cou.",20,"Tous",""],
+                ["default","Le souffle descendant","Souffle de son cou jusqu'à son nombril, sans le/la toucher.",20,"Tous",""],
+                ["default","Ventre gourmand","Couvre son ventre de baisers.",20,"Tous","Partenaire sans haut"],
+                ["default","Le dos offert","Embrasse son dos de la nuque jusqu'aux reins.",30,"Tous","Partenaire sans haut"],
+                ["default","Zones interdites","Caresse-le/la partout, sauf sur les zones intimes.",30,"Tous",""],
+                ["default","La ceinture","Défais sa ceinture (ou le bouton de son pantalon) avec une seule main.",0,"Tous","Partenaire avec bas"],
+                ["default","Mains sur les cuisses","Pose tes mains sur ses cuisses et remonte lentement, sans aller trop loin.",20,"Tous",""],
+                ["default","Voix grave","Dis-lui ce que tu vas lui faire tout à l'heure, d'une voix très basse.",0,"Tous",""],
+                ["default","Collé-serré","Colle ton corps au sien et laisse-le/la sentir ton désir.",20,"Tous",""],
+                ["default","Déshabillé du regard","Déshabille-le/la du regard, en décrivant à voix haute ce que tu imagines.",0,"Tous",""],
+                ["default","Le tour du nombril","Embrasse et lèche doucement le tour de son nombril.",15,"Tous","Partenaire sans haut"],
+                ["default","Poches arrière","Glisse tes mains dans les poches arrière de son pantalon et attire-le/la contre toi.",20,"Tous","Partenaire avec bas"],
+                ["default","Déshabillage à deux","Tu retires {ton vêtement}, puis tu lui retires {son vêtement}.",0,"Tous",""],
+                ["default","La cambrure","Fais-le/la se cambrer en caressant le creux de ses reins.",20,"Tous",""],
+                ["default","Son parfum","Respire son odeur du cou jusqu'à l'épaule, en la décrivant.",20,"Tous",""],
+                ["default","Mot coquin","Mordille son lobe et murmure-lui un mot coquin.",0,"Tous",""],
+                ["default","La pose sexy","Prends la pose la plus sexy possible et laisse-le/la te regarder sans te toucher.",15,"Tous",""],
+                ["default","Danse collée","Danse contre lui/elle, ses mains posées sur tes fesses.",30,"Tous",""],
+                ["default","Le creux des reins","Embrasse le creux de ses reins.",15,"Tous","Partenaire sans haut"],
+                ["default","À la limite du tissu","Embrasse le haut de sa poitrine ou de son torse, à la limite du tissu.",20,"Tous",""],
+                ["default","Le soupir","Embrasse son cou jusqu'à lui arracher un soupir.",30,"Tous",""],
+                ["default","Guide-moi","Il/elle guide tes mains sur son corps, par-dessus ses sous-vêtements.",25,"Tous","Partenaire en sous-vêtements"],
+                ["default","Zone offerte","Ton/ta partenaire choisit une zone de ton corps : offre-la-lui à embrasser.",0,"Tous",""],
+                ["default","Petit strip-tease","Retire {ton vêtement} en musique, comme dans un vrai strip-tease.",30,"Tous",""],
+                ["default","Haut des cuisses","Effleure le haut de ses cuisses, juste au bord de son sous-vêtement.",20,"Tous","Partenaire en sous-vêtements"],
+                ["default","L'attente","Approche tes lèvres des siennes, recule, et recommence trois fois avant de l'embrasser.",0,"Tous",""],
+                ["default","Sous le haut","Masse le bas de son dos en glissant tes mains sous son haut.",30,"Tous","Partenaire avec haut"],
+                ["default","Le secret coquin","Avoue-lui l'endroit où tu as déjà eu envie de lui sauter dessus.",0,"Tous",""]
             ],
             torride: [
-                ["default","Soumission temporaire","L'un garde les mains dans le dos tandis que l'autre l'embrasse et le caresse partout.",45,"Tous"],
-                ["default","Exploration intime","Glisse ta main sous ses sous-vêtements et caresse-le/la lentement.",30,"Tous"],
-                ["default","Dégustation","Embrasse et lèche délicatement sa poitrine ou son torse.",30,"Tous"],
-                ["default","Strip-tease express","Retire deux pièces de vêtement de manière ultra-sensuelle en ondulant devant lui/elle.",30,"Tous"],
-                ["default","Souffle chaud","Approche ta bouche tout près de son intimité (par-dessus le sous-vêtement) et souffle chaudement.",20,"Tous"],
-                ["default","Fantasme à voix haute","Décris en détail ce que tu aimerais lui faire dès que la partie sera terminée.",0,"Tous"],
-                ["default","Nu(e) intégral(e)","Retire tous tes vêtements, lentement, en le/la regardant. Tu restes ainsi jusqu'à ton prochain tour.",30,"Tous"],
-                ["default","Corps à corps","Peau contre peau, frottez-vous l'un contre l'autre sans vous embrasser.",30,"Tous"],
-                ["default","Le maître du jeu","Pendant 45 secondes, décide de chaque geste que ton/ta partenaire te fait.",45,"Tous"],
-                ["default","Bandeau","Bande-lui les yeux jusqu'à la fin de son prochain tour et caresse-le/la où tu veux.",30,"Tous"],
-                ["default","Langue de feu","Trace avec ta langue un chemin de son cou jusqu'à son nombril.",25,"Tous"],
-                ["default","À sa merci","Allonge-toi : ton/ta partenaire t'embrasse où il/elle veut, tu n'as pas le droit de bouger.",40,"Tous"],
-                ["default","Plaisir solo","Caresse-toi devant lui/elle, en le/la regardant dans les yeux.",30,"Tous"],
-                ["default","Le glaçon brûlant","Fais glisser un glaçon sur son corps nu, puis réchauffe chaque zone avec ta bouche.",40,"Tous"],
-                ["default","Mains guidées","Il/elle guide ta main exactement là et comme il/elle aime être touché(e).",30,"Tous"],
-                ["default","Intérieur des cuisses","Embrasse et mordille l'intérieur de ses cuisses, de plus en plus haut.",30,"Tous"],
-                ["default","Lap dance","Offre-lui une lap dance torride. Il/elle n'a pas le droit de te toucher.",45,"Tous"],
-                ["default","Le sous-vêtement aux dents","Retire-lui son dernier sous-vêtement uniquement avec les dents.",0,"Tous"],
-                ["default","Gémissements","Caresse-le/la jusqu'à lui arracher un gémissement.",30,"Tous"],
-                ["default","Position surprise","Choisis une position et prenez-la, habillés ou non, pendant 20 secondes.",20,"Tous"],
-                ["default","Contre le mur","Plaque-le/la contre un mur et fais-lui ressentir tout ton désir.",30,"Tous"],
-                ["default","Caresse lente","Caresse son intimité le plus lentement possible.",40,"Tous"],
-                ["default","Le confessionnal","Avoue-lui ton fantasme le plus secret, sans détour.",0,"Tous"],
-                ["default","Huile chaude","Verse un peu d'huile sur son corps et étale-la avec ton corps.",45,"Tous"],
-                ["default","Un seul doigt","Avec un seul doigt, fais-le/la frissonner où tu veux.",30,"Tous"],
-                ["default","Le tease ultime","Approche-toi de son intimité avec la bouche et arrête-toi à la dernière seconde. Trois fois.",0,"Tous"],
-                ["default","Miroir","Fais-lui exactement les mêmes caresses qu'il/elle te fait.",30,"Tous"],
-                ["default","Sans un bruit","Caresse-le/la intimement : il/elle ne doit faire aucun bruit. S'il/elle craque, il/elle a un gage de plus.",30,"Tous"],
-                ["default","Le jouet","Si vous en avez un, sortez un jouet et utilisez-le l'un sur l'autre.",45,"Tous"],
-                ["default","Récompense","Offre-lui la caresse dont il/elle rêve depuis le début de la partie.",45,"Tous"],
-                ["plus","Vague de plaisir","Tu bondis en avant ! L'autre partenaire doit retirer un sous-vêtement ou un vêtement immédiatement.",0,"Tous"],
-                ["plus","Impulsion torride","Avance avec ardeur et embrasse l'intérieur de ses cuisses en remontant lentement.",20,"Tous"],
-                ["plus","Bon pour un plaisir","Tu avances ! Ton/ta partenaire te doit une caresse intime de ton choix.",30,"Tous"],
-                ["plus","Le trône du désir","Tu avances ! Allonge-toi et laisse-toi faire.",45,"Tous"],
-                ["plus","Esclave d'un tour","Tu avances : jusqu'à ton prochain tour, ton/ta partenaire obéit à tous tes désirs.",0,"Tous"],
-                ["plus","Accélération brûlante","Tu bondis ! Embrasse son corps partout où il est nu.",30,"Tous"],
-                ["minus","Châtiment délicieux","Tu recules ! Donne une fessée sensuelle (ou reçois-en une) suivie d'une caresse langoureuse.",0,"Tous"],
-                ["minus","Mise à nu","Pour ce recul, tu dois retirer le vêtement le plus important qu'il te reste.",0,"Tous"],
-                ["minus","Attaché(e)","Tu recules : mains attachées (foulard, cravate) jusqu'à ton prochain tour.",0,"Tous"],
-                ["minus","À son service","Pour ce recul, offre-lui une caresse intime de son choix.",30,"Tous"],
-                ["minus","Frustration","Tu recules : il/elle te caresse, mais tu n'as pas le droit de le/la toucher.",30,"Tous"],
-                ["minus","Pénitence brûlante","Mets-toi à genoux et embrasse ce qu'il/elle te désigne.",20,"Tous"],
-                ["feather","Caresse brûlante","Du bout des lèvres et de la langue, trace un chemin brûlant du nombril jusqu'à la bouche.",25,"Tous"],
-                ["feather","Plume intime","Avec une plume ou le bout des doigts, effleure son intimité.",30,"Tous"],
-                ["feather","Plume et glaçon","Alterne la plume (ou les doigts) et un glaçon sur sa poitrine.",30,"Tous"],
-                ["feather","Frisson total","Effleure tout son corps nu, des pieds à la tête.",45,"Tous"],
-                ["feather","Bout des seins","Effleure le bout de ses seins (ou de ses tétons) avec ta langue.",20,"Tous"],
-                ["feather","L'aine","Effleure le pli de l'aine, d'un côté puis de l'autre, sans aller plus loin.",25,"Tous"],
-                ["kiss","Baiser sauvage","Plaque ton/ta partenaire contre toi et embrasse-le/la passionnément tout en caressant ses fesses.",30,"Tous"],
-                ["kiss","Baiser intime","Embrasse son intimité, tendrement.",20,"Tous"],
-                ["kiss","Baiser nu","Embrassez-vous nus, corps entièrement collés.",30,"Tous"],
-                ["kiss","Baiser descendant","Commence par ses lèvres et descends en baisers jusqu'au bas de son ventre.",30,"Tous"],
-                ["kiss","Baiser gourmand","Embrasse ses seins (ou son torse) avec gourmandise.",30,"Tous"],
-                ["kiss","Baiser chaud-froid","Bois une gorgée chaude (ou froide) puis embrasse une zone intime.",20,"Tous"],
-                ["massage","Massage corps à corps","Frotte ton corps contre le sien dans un massage sensuel intégral.",40,"Tous"],
-                ["massage","Massage intime","Masse son intimité, avec douceur et un peu d'huile.",45,"Tous"],
-                ["massage","Massage nu","Masse son corps entièrement nu, sans éviter aucune zone.",60,"Tous"],
-                ["massage","Massage des fesses","Masse ses fesses avec de l'huile, longuement.",45,"Tous"],
-                ["massage","Massage à la bouche","Masse son corps uniquement avec ta bouche et ta langue.",45,"Tous"],
-                ["massage","Massage final","Termine le massage là où il/elle le désire.",45,"Tous"],
-                ["truth","Vérité ou défi torride","Vérité : quel est ton fantasme inavoué avec moi ? Défi : embrasse la zone intime de ton/ta partenaire.",20,"Tous"],
-                ["truth","Vérité ou défi : extase","Vérité : qu'est-ce qui te fait jouir le plus vite ? Défi : montre-le-moi.",30,"Tous"],
-                ["truth","Vérité ou défi : lieu","Vérité : où aimerais-tu qu'on fasse l'amour la prochaine fois ? Défi : prends la position que tu y imagines.",0,"Tous"],
-                ["truth","Vérité ou défi : jouet","Vérité : quel jouet aimerais-tu essayer avec moi ? Défi : imite son effet avec tes mains.",30,"Tous"],
-                ["truth","Vérité ou défi : audace","Vérité : quelle est la chose la plus osée que tu aimerais essayer ? Défi : décris-la en me caressant.",30,"Tous"],
-                ["truth","Vérité ou défi : préféré","Vérité : quelle est ta position préférée avec moi ? Défi : prenons-la 20 secondes.",20,"Tous"],
-                ["goose","L'oie en feu","Lancer doublé ! Tu fonces vers la case 69. Échangez un baiser brûlant pour célébrer.",0,"Tous"],
-                ["goose","L'oie insatiable","Lancer doublé ! Ton/ta partenaire te caresse intimement.",30,"Tous"],
-                ["goose","L'oie impudique","Lancer doublé ! Vous retirez tous les deux un vêtement.",0,"Tous"]
+                ["default","Soumission temporaire","L'un garde les mains dans le dos tandis que l'autre l'embrasse et le caresse partout.",45,"Tous",""],
+                ["default","Exploration intime","Glisse ta main sous ses sous-vêtements et caresse-le/la lentement.",30,"Tous","Partenaire en sous-vêtements"],
+                ["default","Dégustation","Embrasse et lèche délicatement sa poitrine ou son torse.",30,"Tous","Partenaire torse nu"],
+                ["default","Strip-tease express","Retire {tes 2 vêtements} de manière ultra-sensuelle en ondulant devant lui/elle.",30,"Tous",""],
+                ["default","Souffle chaud","Approche ta bouche tout près de son intimité (par-dessus le sous-vêtement) et souffle chaudement.",20,"Tous","Partenaire en sous-vêtements"],
+                ["default","Fantasme à voix haute","Décris en détail ce que tu aimerais lui faire dès que la partie sera terminée.",0,"Tous",""],
+                ["default","Nu(e) intégral(e)","Retire {tous tes vêtements}, lentement, en le/la regardant. Tu restes ainsi jusqu'à ton prochain tour.",30,"Tous",""],
+                ["default","Corps à corps","Peau contre peau, frottez-vous l'un contre l'autre sans vous embrasser.",30,"Tous","Les deux torse nu"],
+                ["default","Le maître du jeu","Pendant 45 secondes, décide de chaque geste que ton/ta partenaire te fait.",45,"Tous",""],
+                ["default","Bandeau","Bande-lui les yeux jusqu'à la fin de son prochain tour et caresse-le/la où tu veux.",30,"Tous",""],
+                ["default","Langue de feu","Trace avec ta langue un chemin de son cou jusqu'à son nombril.",25,"Tous","Partenaire torse nu"],
+                ["default","À sa merci","Allonge-toi : ton/ta partenaire t'embrasse où il/elle veut, tu n'as pas le droit de bouger.",40,"Tous",""],
+                ["default","Plaisir solo","Caresse-toi devant lui/elle, en le/la regardant dans les yeux.",30,"Tous",""],
+                ["default","Le glaçon brûlant","Fais glisser un glaçon sur son corps nu, puis réchauffe chaque zone avec ta bouche.",40,"Tous","Partenaire nu"],
+                ["default","Mains guidées","Il/elle guide ta main exactement là et comme il/elle aime être touché(e).",30,"Tous",""],
+                ["default","Intérieur des cuisses","Embrasse et mordille l'intérieur de ses cuisses, de plus en plus haut.",30,"Tous",""],
+                ["default","Lap dance","Offre-lui une lap dance torride. Il/elle n'a pas le droit de te toucher.",45,"Tous",""],
+                ["default","Le sous-vêtement aux dents","Enlève {ton dessous caché} et remets les vêtements que tu portais, devant lui/elle.",0,"Tous",""],
+                ["default","Gémissements","Caresse-le/la jusqu'à lui arracher un gémissement.",30,"Tous",""],
+                ["default","Position surprise","Choisis une position et prenez-la, habillés ou non, pendant 20 secondes.",20,"Tous",""],
+                ["default","Contre le mur","Plaque-le/la contre un mur et fais-lui ressentir tout ton désir.",30,"Tous",""],
+                ["default","Caresse lente","Caresse son intimité le plus lentement possible.",40,"Tous",""],
+                ["default","Le confessionnal","Avoue-lui ton fantasme le plus secret, sans détour.",0,"Tous",""],
+                ["default","Huile chaude","Verse un peu d'huile sur son corps et étale-la avec ton corps.",45,"Tous","Les deux torse nu"],
+                ["default","Un seul doigt","Avec un seul doigt, fais-le/la frissonner où tu veux.",30,"Tous",""],
+                ["default","Le tease ultime","Approche-toi de son intimité avec la bouche et arrête-toi à la dernière seconde. Trois fois.",0,"Tous",""],
+                ["default","Miroir","Fais-lui exactement les mêmes caresses qu'il/elle te fait.",30,"Tous",""],
+                ["default","Sans un bruit","Caresse-le/la intimement : il/elle ne doit faire aucun bruit. S'il/elle craque, il/elle a un gage de plus.",30,"Tous",""],
+                ["default","Le jouet","Si vous en avez un, sortez un jouet et utilisez-le l'un sur l'autre.",45,"Tous",""],
+                ["default","Récompense","Offre-lui la caresse dont il/elle rêve depuis le début de la partie.",45,"Tous",""],
+                ["plus","Vague de plaisir","Tu bondis en avant ! L'autre partenaire doit retirer {son vêtement} immédiatement.",0,"Tous",""],
+                ["plus","Impulsion torride","Avance avec ardeur et embrasse l'intérieur de ses cuisses en remontant lentement.",20,"Tous",""],
+                ["plus","Bon pour un plaisir","Tu avances ! Ton/ta partenaire te doit une caresse intime de ton choix.",30,"Tous",""],
+                ["plus","Le trône du désir","Tu avances ! Allonge-toi et laisse-toi faire.",45,"Tous",""],
+                ["plus","Esclave d'un tour","Tu avances : jusqu'à ton prochain tour, ton/ta partenaire obéit à tous tes désirs.",0,"Tous",""],
+                ["plus","Accélération brûlante","Tu bondis ! Embrasse son corps partout où il est nu.",30,"Tous","Partenaire sans haut"],
+                ["minus","Châtiment délicieux","Tu recules ! Reçois une fessée sensuelle suivie d'une caresse langoureuse.",0,"Tous",""],
+                ["minus","Mise à nu","Pour ce recul, retire {ton vêtement}.",0,"Tous",""],
+                ["minus","Attaché(e)","Tu recules : mains attachées (foulard, cravate) jusqu'à ton prochain tour.",0,"Tous",""],
+                ["minus","À son service","Pour ce recul, offre-lui une caresse intime de son choix.",30,"Tous",""],
+                ["minus","Frustration","Tu recules : il/elle te caresse, mais tu n'as pas le droit de le/la toucher.",30,"Tous",""],
+                ["minus","Pénitence brûlante","Mets-toi à genoux et embrasse ce qu'il/elle te désigne.",20,"Tous",""],
+                ["feather","Caresse brûlante","Du bout des lèvres et de la langue, trace un chemin brûlant du nombril jusqu'à la bouche.",25,"Tous","Partenaire torse nu"],
+                ["feather","Plume intime","Avec une plume ou le bout des doigts, effleure son intimité.",30,"Tous","Partenaire nu"],
+                ["feather","Plume et glaçon","Alterne la plume (ou les doigts) et un glaçon sur sa poitrine.",30,"Tous","Partenaire torse nu"],
+                ["feather","Frisson total","Effleure tout son corps nu, des pieds à la tête.",45,"Tous","Partenaire nu"],
+                ["feather","Bout des seins","Effleure le bout de ses seins et ses tétons avec ta langue.",20,"Tous","Partenaire torse nu"],
+                ["feather","L'aine","Effleure le pli de l'aine, d'un côté puis de l'autre, sans aller plus loin.",25,"Tous","Partenaire sans bas"],
+                ["kiss","Baiser sauvage","Plaque ton/ta partenaire contre toi et embrasse-le/la passionnément tout en caressant ses fesses.",30,"Tous",""],
+                ["kiss","Baiser intime","Embrasse son intimité, tendrement.",20,"Tous","Partenaire nu"],
+                ["kiss","Baiser nu","Embrassez-vous nus, corps entièrement collés.",30,"Tous","Les deux nus"],
+                ["kiss","Baiser descendant","Commence par ses lèvres et descends en baisers jusqu'au bas de son ventre.",30,"Tous","Partenaire torse nu"],
+                ["kiss","Baiser gourmand","Embrasse ses seins (ou son torse) avec gourmandise.",30,"Tous","Partenaire torse nu"],
+                ["kiss","Baiser chaud-froid","Bois une gorgée chaude (ou froide) puis embrasse une zone intime.",20,"Tous","Partenaire nu"],
+                ["massage","Massage corps à corps","Frotte ton corps contre le sien dans un massage sensuel intégral.",40,"Tous","Les deux nus"],
+                ["massage","Massage intime","Masse son intimité, avec douceur et un peu d'huile.",45,"Tous","Partenaire nu"],
+                ["massage","Massage nu","Masse son corps entièrement nu, sans éviter aucune zone.",60,"Tous","Partenaire nu"],
+                ["massage","Massage des fesses","Masse ses fesses avec de l'huile, longuement.",45,"Tous","Partenaire nu"],
+                ["massage","Massage à la bouche","Masse son corps uniquement avec ta bouche et ta langue.",45,"Tous","Partenaire torse nu"],
+                ["massage","Massage final","Termine le massage là où il/elle le désire.",45,"Tous",""],
+                ["truth","Vérité ou défi torride","Vérité : quel est ton fantasme inavoué avec moi ? Défi : embrasse la zone intime de ton/ta partenaire.",20,"Tous",""],
+                ["truth","Vérité ou défi : extase","Vérité : qu'est-ce qui te fait jouir le plus vite ? Défi : montre-le-moi.",30,"Tous",""],
+                ["truth","Vérité ou défi : lieu","Vérité : où aimerais-tu qu'on fasse l'amour la prochaine fois ? Défi : prends la position que tu y imagines.",0,"Tous",""],
+                ["truth","Vérité ou défi : jouet","Vérité : quel jouet aimerais-tu essayer avec moi ? Défi : imite son effet avec tes mains.",30,"Tous",""],
+                ["truth","Vérité ou défi : audace","Vérité : quelle est la chose la plus osée que tu aimerais essayer ? Défi : décris-la en me caressant.",30,"Tous",""],
+                ["truth","Vérité ou défi : préféré","Vérité : quelle est ta position préférée avec moi ? Défi : prenons-la 20 secondes.",20,"Tous",""],
+                ["goose","L'oie en feu","Lancer doublé ! Tu fonces vers la case 69. Échangez un baiser brûlant pour célébrer.",0,"Tous",""],
+                ["goose","L'oie insatiable","Lancer doublé ! Ton/ta partenaire te caresse très intimement.",30,"Tous",""],
+                ["goose","L'oie impudique","Lancer doublé ! Tu retires {tous tes vêtements}, ton/ta partenaire retire {tous ses vêtements}, et recommencez la partie si vous en êtes capables.",0,"Tous",""],
+                ["default","Le grand déballage","Retire-lui {ses 2 vêtements}, lentement, en embrassant chaque centimètre découvert.",30,"Tous",""],
+                ["default","Peau nue","Retire {ton vêtement} et colle ta peau contre la sienne.",20,"Tous",""],
+                ["default","À pleines mains","Prends ses seins (ou ses pectoraux) dans tes mains et embrasse-les.",30,"Tous","Partenaire torse nu"],
+                ["default","À travers le tissu","Caresse son intimité par-dessus son sous-vêtement jusqu'à le/la sentir frissonner.",30,"Tous","Partenaire en sous-vêtements"],
+                ["default","Dernière barrière","Retire-lui {son dessous} lentement, en embrassant ses cuisses.",0,"Tous",""],
+                ["default","Nu(e) devant toi","Il/elle te regarde : retire {tous tes vêtements}, un à un.",30,"Tous",""],
+                ["default","La langue curieuse","Lèche lentement l'intérieur de ses cuisses jusqu'à l'aine.",30,"Tous","Partenaire sans bas"],
+                ["default","Corps offert","Allonge-toi : il/elle embrasse ton corps nu où il/elle veut.",45,"Tous","Joueur nu"],
+                ["default","Huile intime","Masse ses fesses et ses cuisses à l'huile, en frôlant son intimité.",45,"Tous","Partenaire nu"],
+                ["default","Plaisir buccal","Offre-lui une caresse de ta bouche sur son intimité.",30,"Tous","Partenaire nu"],
+                ["default","Doigts magiques","Caresse son intimité du bout des doigts, en variant le rythme.",40,"Tous","Partenaire nu"],
+                ["default","Les tétons","Mordille et lèche ses tétons à tour de rôle.",25,"Tous","Partenaire torse nu"],
+                ["default","Peau contre peau","Allongez-vous nus l'un sur l'autre et ondulez lentement.",30,"Tous","Les deux nus"],
+                ["default","Montre-moi","Guide sa main sur ton intimité et montre-lui le rythme que tu aimes.",30,"Tous","Joueur sans bas"],
+                ["default","Face à face","Caressez-vous chacun soi-même face à face, sans vous toucher.",30,"Tous",""],
+                ["default","Au bord","Caresse-le/la intimement et arrête-toi juste avant qu'il/elle ne craque.",45,"Tous","Partenaire nu"],
+                ["default","Le 69","Prenez la position du 69 pendant 30 secondes.",30,"Tous","Les deux nus"],
+                ["default","Reins cambrés","Il/elle se met à quatre pattes : embrasse ses reins et ses fesses.",30,"Tous","Partenaire nu"],
+                ["default","Glaçon sur la poitrine","Promène un glaçon sur ses seins (ou son torse) puis réchauffe-les avec ta bouche.",30,"Tous","Partenaire torse nu"],
+                ["default","Ordre torride","Donne-lui un ordre torride : il/elle doit l'exécuter sur-le-champ.",30,"Tous",""],
+                ["default","Lap dance nue","Offre-lui une lap dance entièrement nu(e).",45,"Tous","Joueur nu"],
+                ["default","Mordille","Mordille ses fesses et l'intérieur de ses cuisses.",25,"Tous","Partenaire nu"],
+                ["default","De la nuque aux chevilles","Allonge-le/la sur le ventre et embrasse son corps de la nuque jusqu'aux chevilles.",45,"Tous","Partenaire nu"],
+                ["default","Supplie-moi","Embrasse tout son corps, sauf son intimité, jusqu'à ce qu'il/elle te supplie.",45,"Tous","Partenaire torse nu"],
+                ["default","Strip à deux","Déshabillez-vous mutuellement : tu lui retires {son vêtement}, il/elle te retire {ton vêtement}.",0,"Tous",""],
+                ["default","Frottement","Assieds-toi sur lui/elle et ondule contre son intimité.",30,"Tous",""],
+                ["default","Souffle intime","Souffle doucement sur son intimité nue.",20,"Tous","Partenaire nu"],
+                ["default","Les yeux dans les yeux","Caresse-le/la intimement : il/elle doit garder les yeux plongés dans les tiens.",30,"Tous","Partenaire nu"],
+                ["default","Sous la douche","Filez sous la douche ensemble pour un savonnage sensuel ; sinon, mime-le avec tes mains sur son corps nu.",60,"Tous","Partenaire nu"],
+                ["default","Avant-goût","Offre-lui un avant-goût de ce qui l'attend à la case 69.",30,"Tous",""]
             ]
         };
 
@@ -1063,7 +1188,136 @@
             return String(str || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
         }
 
-        // Transforme les lignes [Type, Titre, Description, Minuteur, Pour qui] en dictionnaire utilisé par le jeu
+        // --- 4ter. TENUES : les vêtements s'enlèvent dans un ordre logique ---
+        // Chaque joueur a une liste de vêtements retirés (player.off). Ordre : haut, bas (pantalon/jupe),
+        // soutien-gorge (femme), puis culotte/boxer. Un soutien-gorge ne part qu'après le haut,
+        // une culotte/un boxer qu'après le pantalon.
+        // Dans les textes des gages (Sheet/CSV), des repères entre accolades sont remplacés par l'app :
+        //   {ton vêtement} / {son vêtement}       → le prochain vêtement logique (« ton haut », « son pantalon »…)
+        //   {tes 2 vêtements} / {ses 2 vêtements} → les deux prochains
+        //   {tous tes vêtements}                  → tout ce qu'il reste
+        //   {ton haut} / {son haut}, {ton dessous} / {son dessous} (culotte ou boxer)
+        //   {ton dessous caché}                   → culotte/boxer retiré(e) en dessous, on garde le reste
+        // La colonne « Tenue requise » empêche un gage de tomber trop tôt : « Partenaire nu », « Les deux torse nu »,
+        // « Joueur avec haut »… (plusieurs conditions séparées par « + »). « Facultatif » : le retrait n'est pas noté
+        // automatiquement (gage conditionnel ou Vérité ou défi), on le note d'une touche sur la carte.
+        const TENUE_ITEMS = {
+            haut:    { f: ["ton haut", "son haut"], h: ["ton haut", "son haut"], short: { f: "haut", h: "haut" } },
+            bas:     { f: ["ton pantalon (ou ta jupe)", "son pantalon (ou sa jupe)"], h: ["ton pantalon", "son pantalon"], short: { f: "pantalon / jupe", h: "pantalon" } },
+            sg:      { f: ["ton soutien-gorge", "son soutien-gorge"], short: { f: "soutien-gorge" } },
+            dessous: { f: ["ta culotte", "sa culotte"], h: ["ton boxer", "son boxer"], short: { f: "culotte", h: "boxer" } }
+        };
+        const TENUE_NEEDS = { sg: "haut", dessous: "bas" }; // on ne retire X qu'une fois Y retiré
+
+        function sexKey(p) { return p && p.sex === "f" ? "f" : "h"; }
+        function tenueOrder(p) { return sexKey(p) === "f" ? ["haut", "bas", "sg", "dessous"] : ["haut", "bas", "dessous"]; }
+        function offList(p) { if (!Array.isArray(p.off)) p.off = []; return p.off; }
+        function isOff(p, k) { return offList(p).includes(k); }
+        function remainingItems(p, extraOff = []) { return tenueOrder(p).filter(k => !isOff(p, k) && !extraOff.includes(k)); }
+        function isNude(p) { return remainingItems(p).length === 0; }
+        function itemShort(p, k) { return TENUE_ITEMS[k].short[sexKey(p)] || k; }
+
+        function tenueStatus(p) {
+            const f = sexKey(p) === "f";
+            if (isNude(p)) return f ? "nue" : "nu";
+            const haut = isOff(p, "haut"), bas = isOff(p, "bas"), dessous = isOff(p, "dessous");
+            const torse = haut && (!f || isOff(p, "sg"));
+            if (dessous && !bas) return f ? "sans culotte dessous" : "sans boxer dessous";
+            if (!haut && !bas) return f ? "habillée" : "habillé";
+            if (dessous) return f ? "nue en bas" : "nu en bas";
+            if (!bas) return torse ? "torse nu" : "en soutien-gorge";
+            if (!haut) return f ? "en haut et culotte" : "en haut et boxer";
+            return torse ? (f ? "en culotte" : "en boxer") : "en sous-vêtements";
+        }
+
+        const TENUE_CONDS = {
+            "avec haut": p => !isOff(p, "haut"),
+            "sans haut": p => isOff(p, "haut"),
+            "torse nu": p => isOff(p, "haut") && (sexKey(p) !== "f" || isOff(p, "sg")),
+            "sans bas": p => isOff(p, "bas"),
+            "sans pantalon": p => isOff(p, "bas"),
+            "avec bas": p => !isOff(p, "bas"),
+            "avec pantalon": p => !isOff(p, "bas"),
+            "en sous-vetements": p => isOff(p, "bas") && !isOff(p, "dessous"),
+            "nu": p => isNude(p),
+            "habille": p => !isNude(p)
+        };
+
+        // « Partenaire nu + Joueur avec haut » → { conds: [{ who, test }], optional }
+        function parseTenue(str) {
+            const res = { conds: [], optional: false };
+            normalizeKey(str).split(/[+;,]/).forEach(part => {
+                const t = part.replace(/\(e\)|\(s\)/g, "").replace(/\s+/g, " ").trim();
+                if (!t) return;
+                if (t.startsWith("facultatif")) { res.optional = true; return; }
+                const m = t.match(/^(partenaire|joueur|joueuse|moi|les deux)\s+(.*)$/);
+                const who = !m ? "partner" : m[1] === "partenaire" ? "partner" : m[1] === "les deux" ? "both" : "me";
+                const rest = m ? m[2] : t;
+                const key = [rest, rest.replace(/e?s$/, ""), rest.replace(/e$/, "")].find(k => TENUE_CONDS[k]);
+                if (key) res.conds.push({ who, test: TENUE_CONDS[key] });
+            });
+            return res;
+        }
+
+        const TENUE_TOKEN = /\{\s*(tous tes|tous ses|ton|son|ta|sa|tes|ses)\s+([^}]*)\}/gi;
+
+        // Calcule le texte final et les vêtements retirés (sans rien modifier). null si impossible.
+        function resolveTenue(ch, performer, partner) {
+            const pending = new Map(); // joueur → clés retirées par ce gage
+            const raw = new Set();     // joueurs qui retirent leur dessous en gardant le reste ({ton dessous caché})
+            let ok = true;
+            const text = ch.desc.replace(TENUE_TOKEN, (all, poss, what) => {
+                const mine = /^(tous tes|ton|ta|tes)$/i.test(poss);
+                const p = mine ? performer : partner;
+                if (!p) { ok = false; return all; }
+                const already = pending.get(p) || [];
+                const left = remainingItems(p, already);
+                const w = normalizeKey(what);
+                let keys = [];
+                if (/^tous/i.test(poss)) keys = left;
+                else if (/^(2|deux)\b/.test(w)) keys = left.slice(0, 2);
+                else if (w.startsWith("vetement")) keys = left.slice(0, 1);
+                else {
+                    const k = w.startsWith("haut") ? "haut" : /^(dessous|culotte|boxer|slip)/.test(w) ? "dessous"
+                        : /^(bas|pantalon|jupe)/.test(w) ? "bas" : /^soutien/.test(w) ? "sg" : null;
+                    const hidden = k === "dessous" && /cache/.test(w);
+                    const need = hidden ? null : TENUE_NEEDS[k];
+                    if (k && left.includes(k) && (!need || isOff(p, need) || already.includes(need))) keys = [k];
+                    if (hidden && keys.length) raw.add(p);
+                }
+                if (!keys.length) { ok = false; return all; }
+                pending.set(p, already.concat(keys));
+                if (/^tous/i.test(poss) && keys.length >= 3) return mine ? "tous tes vêtements" : "tous ses vêtements";
+                const words = keys.map(k => TENUE_ITEMS[k][sexKey(p)][mine ? 0 : 1]);
+                return words.length > 1 ? words.slice(0, -1).join(", ") + " et " + words[words.length - 1] : words[0];
+            });
+            if (!ok) return null;
+            return { text, changes: [...pending.entries()].map(([player, keys]) => ({ player, keys, raw: raw.has(player) })) };
+        }
+
+        // Le gage est-il logique vu ce que chacun porte encore ?
+        function challengeFitsTenue(ch, performer, partner) {
+            const t = ch.tenue || { conds: [] };
+            for (const c of t.conds) {
+                const targets = c.who === "me" ? [performer] : c.who === "both" ? [performer, partner] : [partner];
+                if (targets.some(p => !p || !c.test(p))) return false;
+            }
+            return resolveTenue(ch, performer, partner) !== null;
+        }
+
+        // Retirer un vêtement retire aussi ce qu'il faut avant (culotte → pantalon) ; le remettre remet ce qui va dessus.
+        function setItemOff(p, k, off, keepOthers = false) {
+            const list = offList(p);
+            if (off) {
+                if (TENUE_NEEDS[k] && !keepOthers) setItemOff(p, TENUE_NEEDS[k], true);
+                if (!list.includes(k)) list.push(k);
+            } else {
+                p.off = list.filter(x => x !== k);
+                Object.entries(TENUE_NEEDS).forEach(([dep, need]) => { if (need === k) setItemOff(p, dep, false); });
+            }
+        }
+
+        // Transforme les lignes [Type, Titre, Description, Minuteur, Pour qui, Tenue requise] en dictionnaire utilisé par le jeu
         function buildChallengeLevel(rows) {
             const level = {};
             rows.forEach(row => {
@@ -1073,7 +1327,8 @@
                 if (!title && !desc) return;
                 const time = parseInt(row[3], 10) || 0;
                 const who = normalizeKey(row[4]) || "tous";
-                (level[cat] = level[cat] || []).push({ title: title || "Gage", desc, time, who });
+                const tenue = parseTenue(row[5] || "");
+                (level[cat] = level[cat] || []).push({ title: title || "Gage", desc, time, who, tenue });
             });
             return level;
         }
@@ -1131,7 +1386,7 @@
             id: "1J91y_WMOpqwWzjTwyDoTuoylCM_Imk4LD89ZhzM-q4M",
             onglets: { doux: "Doux", coquin: "Coquin", torride: "Torride" }
         };
-        const GAGES_CACHE_KEY = "nuances69_gages_cache_v1";
+        const GAGES_CACHE_KEY = "nuances69_gages_cache_v2";
 
         function parseCSV(text) {
             const rows = [];
@@ -1160,11 +1415,11 @@
             const head = table[0].map(normalizeKey);
             const col = (...names) => head.findIndex(h => names.some(n => h.startsWith(n)));
             const cType = col("type"), cTitle = col("titre"), cDesc = col("description"),
-                  cTime = col("minuteur", "duree"), cWho = col("pour qui"), cActive = col("actif");
+                  cTime = col("minuteur", "duree"), cWho = col("pour qui"), cActive = col("actif"), cTenue = col("tenue");
             if (cTitle < 0 || cDesc < 0) return [];
             return table.slice(1)
                 .filter(r => cActive < 0 || ["oui", "yes", "true", "1", "x"].includes(normalizeKey(r[cActive])))
-                .map(r => [r[cType] || "default", r[cTitle], r[cDesc], r[cTime] || 0, cWho >= 0 ? r[cWho] : "Tous"]);
+                .map(r => [r[cType] || "default", r[cTitle], r[cDesc], r[cTime] || 0, cWho >= 0 ? r[cWho] : "Tous", cTenue >= 0 ? (r[cTenue] || "") : ""]);
         }
 
         function applyImportedLevel(level, rows) {
@@ -2175,7 +2430,7 @@
                 updateUIPlayers();
 
                 await sleep(380);
-                displayChallengeForCase(arrow.to, isPlus ? "plus" : "minus", player);
+                displayChallengeForCase(arrow.to, isPlus ? "plus" : "minus", player, false, true);
                 endTurn();
                 return;
             }
@@ -2193,7 +2448,7 @@
 
             // 4. Case normale ou thématique
             const category = special ? special.type : "default";
-            displayChallengeForCase(currentCase, category, player);
+            displayChallengeForCase(currentCase, category, player, false, true);
             endTurn();
         }
 
@@ -2214,6 +2469,67 @@
         let lastDisplayedCase = 1;
         let lastDisplayedCategory = "default";
         let lastPartnerId = null;
+        let lastPerformerId = null;
+        let lastWasLanding = false;
+        let pendingTenue = null; // vêtements retirés par le gage affiché : { changes, applied, optional, snapshot }
+
+        // Un gage déjà sorti ne ressort plus de la partie (clé = intensité + titre)
+        function gageKey(ch) { return state.intensity + "|" + normalizeKey(ch.title); }
+        function gageUsed(ch) { return state.usedGages.includes(gageKey(ch)); }
+
+        // Choisit un gage : d'abord ceux de la case jamais sortis et logiques côté tenue, puis les cases
+        // normales, et seulement si tout est épuisé on accepte une répétition.
+        function pickChallenge(category, performer, partner) {
+            const poolGroup = CHALLENGES[state.intensity];
+            const catList = (poolGroup[category] && poolGroup[category].length) ? poolGroup[category] : poolGroup.default;
+            const all = Object.values(poolGroup).flat();
+            const fits = ch => challengeFitsPlayer(ch, performer) && challengeFitsTenue(ch, performer, partner);
+            const tries = [
+                catList.filter(ch => fits(ch) && !gageUsed(ch)),
+                poolGroup.default.filter(ch => fits(ch) && !gageUsed(ch)),
+                all.filter(ch => fits(ch) && !gageUsed(ch)),
+                catList.filter(fits),
+                poolGroup.default.filter(fits),
+                catList
+            ];
+            const list = tries.find(l => l.length);
+            return list[Math.floor(Math.random() * list.length)];
+        }
+
+        function applyPendingTenue(on) {
+            if (!pendingTenue || pendingTenue.applied === on) return;
+            if (on) {
+                pendingTenue.snapshot = state.players.map(p => offList(p).slice());
+                pendingTenue.changes.forEach(c => c.keys.forEach(k => setItemOff(c.player, k, true, c.raw)));
+            } else if (pendingTenue.snapshot) {
+                state.players.forEach((p, i) => { if (pendingTenue.snapshot[i]) p.off = pendingTenue.snapshot[i]; });
+            }
+            pendingTenue.applied = on;
+            saveStateToLocal();
+            renderTenueNote();
+            renderTenuesModal();
+        }
+
+        function togglePendingTenue() { if (pendingTenue) applyPendingTenue(!pendingTenue.applied); }
+
+        function renderTenueNote() {
+            ["mobile", "ipad"].forEach(view => {
+                const el = document.getElementById(`challenge-tenue-${view}`);
+                if (!el) return;
+                if (!pendingTenue || !pendingTenue.changes.length) { el.classList.add("hidden"); el.innerHTML = ""; return; }
+                el.classList.remove("hidden");
+                el.innerHTML = "";
+                const txt = document.createElement("span");
+                txt.className = "flex-1";
+                const what = pendingTenue.changes.map(c => `${c.player.name} : ${c.keys.map(k => itemShort(c.player, k)).join(" + ")}`).join(" • ");
+                txt.textContent = (pendingTenue.applied ? "👕 Noté — " : "👕 À noter si c'est fait — ") + what;
+                const btn = document.createElement("button");
+                btn.className = "tenue-btn" + (pendingTenue.applied ? "" : " on");
+                btn.textContent = pendingTenue.applied ? "Annuler" : "Noter ✓";
+                btn.onclick = togglePendingTenue;
+                el.append(txt, btn);
+            });
+        }
 
         // Choisit le partenaire du gage parmi les autres joueurs (garde le même si on change de gage)
         function pickPartner(performer, keep) {
@@ -2228,16 +2544,25 @@
             return partner;
         }
 
-        function displayChallengeForCase(caseNum, category = "default", activePlayer = null, keepPartner = false) {
+        function displayChallengeForCase(caseNum, category = "default", activePlayer = null, keepPartner = false, landing = false) {
             lastDisplayedCase = caseNum;
             lastDisplayedCategory = category;
+            lastWasLanding = landing;
 
             const performer = activePlayer || state.players[state.currentPlayerIdx];
-            const poolGroup = CHALLENGES[state.intensity];
-            const fullList = (poolGroup[category] && poolGroup[category].length) ? poolGroup[category] : poolGroup.default;
-            const forPlayer = fullList.filter(ch => challengeFitsPlayer(ch, performer));
-            const list = forPlayer.length ? forPlayer : fullList;
-            const challenge = list[Math.floor(Math.random() * list.length)];
+            lastPerformerId = performer.id;
+            const partner = pickPartner(performer, keepPartner);
+            const challenge = pickChallenge(category, performer, partner);
+            const resolved = resolveTenue(challenge, performer, partner) || { text: challenge.desc.replace(TENUE_TOKEN, "un vêtement"), changes: [] };
+            if (landing) {
+                const key = gageKey(challenge);
+                if (!state.usedGages.includes(key)) state.usedGages.push(key);
+                pendingTenue = { changes: resolved.changes, applied: false, optional: !!(challenge.tenue && challenge.tenue.optional) };
+                if (!pendingTenue.optional) applyPendingTenue(true);
+            } else {
+                pendingTenue = null;
+            }
+            renderTenueNote();
 
             const special = SPECIAL_NODES[caseNum];
             const arrow = BOARD_ARROWS.find(a => a.from === caseNum);
@@ -2267,10 +2592,9 @@
                 if (badgeEl) badgeEl.textContent = `${badgeLabel} • ${performer.name}`;
                 if (iconEl) iconEl.textContent = icon;
                 if (titleEl) titleEl.textContent = challenge.title;
-                if (descEl) descEl.textContent = formatArrowText(challenge.desc, category);
+                if (descEl) descEl.textContent = formatArrowText(resolved.text, category);
             });
 
-            const partner = pickPartner(performer, keepPartner);
             const pairText = partner ? `${performer.avatar} ${performer.name}  ➜  avec ${partner.avatar} ${partner.name}` : "";
             ["mobile", "ipad"].forEach(view => {
                 const pairEl = document.getElementById(`challenge-pair-${view}`);
@@ -2311,7 +2635,10 @@
         }
 
         function rerollChallengeOnly() {
-            displayChallengeForCase(lastDisplayedCase, lastDisplayedCategory, state.players[state.currentPlayerIdx], true);
+            // Annule les vêtements notés par le gage remplacé ; le gage reste « sorti » s'il venait d'un vrai tour
+            applyPendingTenue(false);
+            const performer = state.players.find(p => p.id === lastPerformerId) || state.players[state.currentPlayerIdx];
+            displayChallengeForCase(lastDisplayedCase, lastDisplayedCategory, performer, true, lastWasLanding);
         }
 
         function openChallengeSheet() {
@@ -2431,8 +2758,38 @@
             if (rollLabel) rollLabel.textContent = `Lancer • ${activeP.name}`;
         }
 
+        function renderTenuesModal() {
+            const wrap = document.getElementById("tenues-list");
+            if (!wrap) return;
+            wrap.innerHTML = "";
+            state.players.forEach(p => {
+                const card = document.createElement("div");
+                card.className = "tenue-card";
+                const head = document.createElement("div");
+                head.className = "flex items-center justify-between text-sm font-bold text-white";
+                const nm = document.createElement("span");
+                nm.textContent = `${p.avatar} ${p.name}`;
+                const st = document.createElement("span");
+                st.className = "menu-pill";
+                st.textContent = tenueStatus(p);
+                head.append(nm, st);
+                const chips = document.createElement("div");
+                chips.className = "tenue-chips";
+                tenueOrder(p).forEach(k => {
+                    const b = document.createElement("button");
+                    b.className = "tenue-chip" + (isOff(p, k) ? " off" : "");
+                    b.textContent = itemShort(p, k);
+                    b.onclick = () => { setItemOff(p, k, !isOff(p, k)); pendingTenue = null; renderTenueNote(); saveStateToLocal(); renderTenuesModal(); };
+                    chips.appendChild(b);
+                });
+                card.append(head, chips);
+                wrap.appendChild(card);
+            });
+        }
+
         function openModal(id) {
             if (id === "modal-setup") prepareSetup();
+            if (id === "modal-tenues") renderTenuesModal();
             const el = document.getElementById(id);
             el.classList.remove("hidden");
             el.classList.add("flex");
@@ -2581,7 +2938,8 @@
                 name: (p.name || "").trim() || PLAYER_DEFAULTS[i].name,
                 sex: p.sex,
                 avatar: p.avatar,
-                pos: state.players[i] && !countChanged && !forceNewGame ? state.players[i].pos : 1
+                pos: state.players[i] && !countChanged && !forceNewGame ? state.players[i].pos : 1,
+                off: state.players[i] && !countChanged && !forceNewGame ? offList(state.players[i]).slice() : []
             }));
             state.players = newPlayers;
             if (state.currentPlayerIdx >= state.players.length) state.currentPlayerIdx = 0;
@@ -2614,7 +2972,9 @@
         }
 
         function resetGame() {
-            state.players.forEach(p => { p.pos = 1; });
+            state.players.forEach(p => { p.pos = 1; p.off = []; });
+            state.usedGages = [];
+            pendingTenue = null;
             state.currentPlayerIdx = 0;
             state.isMoving = false;
             clearInterval(state.timerInterval);
