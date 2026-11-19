@@ -2,11 +2,14 @@
 
 Un jeu de l'oie coquin pour 2 à 4 joueurs, en une seule page web (`index.html`) installable sur iPhone et iPad. Le plateau en forme de cœur compte 69 cases ; chaque case propose un gage tiré de trois niveaux : **Doux**, **Coquin** et **Torride**.
 
+**Jouer en ligne : https://sillageprod.github.io/les-69-nuances-du-desir/**
+(lien de secours : https://les-69-nuances-du-desir.89y64z7b9g.workers.dev)
+
 ![Aperçu du plateau](apercus/apercu-global.png)
 
 ## Installer le jeu sur iPhone ou iPad
 
-1. Ouvrez `index.html` dans **Safari** (le fichier doit être servi par une adresse web, par exemple GitHub Pages ou un petit serveur).
+1. Ouvrez https://sillageprod.github.io/les-69-nuances-du-desir/ dans **Safari**.
 2. Touchez le bouton **Partager** (carré avec une flèche vers le haut).
 3. Choisissez **Sur l'écran d'accueil**, puis **Ajouter**.
 4. Lancez le jeu depuis son icône : il s'ouvre en plein écran et fonctionne hors connexion.
@@ -34,4 +37,4 @@ L'Apple TV n'a pas de navigateur. Pour afficher le plateau sur la télé, utilis
 - `gages/` : sauvegardes CSV des gages
 - `apercus/` : captures d'écran
 
-Dépôt privé : contenu réservé aux adultes.
+Contenu réservé aux adultes.
