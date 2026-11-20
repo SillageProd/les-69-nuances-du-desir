@@ -403,7 +403,7 @@
                     <g id="layer-nodes"></g>
                     <g id="layer-arrows"></g>
                     <g id="layer-effects"></g>
-                    <g id="layer-tokens"></g>
+                    <g id="layer-tokens" pointer-events="none"></g>
                 </g>
             </svg>
         </section>
@@ -1735,10 +1735,25 @@
             return { fill: i % 2 ? "url(#tileDefault)" : "url(#tileDefaultAlt)", stroke: "rgba(232,165,152,0.75)", sw: 1.4 };
         }
 
+        // Seules les cases où se trouve au moins un pion sont actives (clic = voir le défi)
+        function playersOnCase(i) {
+            return state.players.filter(p => p.pos === i);
+        }
+
+        function refreshCaseInteractivity() {
+            document.querySelectorAll("#layer-nodes .board-case").forEach(g => {
+                const i = parseInt(g.id.slice(5), 10);
+                const active = playersOnCase(i).length > 0;
+                g.classList.toggle("case-active", active);
+                g.style.cursor = active ? "pointer" : "default";
+            });
+        }
+
         function onCaseTap(i) {
             return (e) => {
                 e.stopPropagation();
                 if (cam.moved > 8) return; // c'était un glissement, pas un tap
+                if (!playersOnCase(i).length) return; // case sans pion : inactive
                 previewCaseChallenge(i);
             };
         }
@@ -1780,7 +1795,6 @@
                 const st = caseStyle(i);
 
                 const g = svgEl("g", { id: `case-${i}`, class: "board-case" }, nodesLayer);
-                g.style.cursor = "pointer";
                 g.addEventListener("click", onCaseTap(i));
 
                 svgEl("polygon", {
@@ -1813,7 +1827,6 @@
 
             // Case 69 : cœur central
             const g69 = svgEl("g", { id: `case-${TOTAL_CASES}`, class: "board-case" }, nodesLayer);
-            g69.style.cursor = "pointer";
             g69.addEventListener("click", onCaseTap(TOTAL_CASES));
             const inner = svgEl("g", { class: "case-69-glow" }, g69);
             svgEl("path", {
@@ -1975,6 +1988,7 @@
                 g.appendChild(body);
                 tokensLayer.appendChild(g);
             });
+            refreshCaseInteractivity();
         }
 
         // Animation physique parabolique d'un pas de case à case (saut en cloche)
@@ -2630,7 +2644,12 @@
             const special = SPECIAL_NODES[caseNum];
             const arrow = BOARD_ARROWS.find(a => a.from === caseNum);
             const cat = arrow ? arrow.type : (special ? special.type : "default");
-            displayChallengeForCase(caseNum, cat, state.players[state.currentPlayerIdx]);
+            // Le défi s'adresse au joueur dont le pion est sur la case (le joueur actif en priorité)
+            const here = playersOnCase(caseNum);
+            if (!here.length) return;
+            const current = state.players[state.currentPlayerIdx];
+            const performer = here.includes(current) ? current : here[0];
+            displayChallengeForCase(caseNum, cat, performer);
             if (window.innerWidth < 768) openChallengeSheet();
         }
 
