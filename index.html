@@ -241,6 +241,11 @@
         .tenue-chip { padding: 0.35rem 0.7rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: rgba(184, 29, 67, 0.55); color: #fff; border: 1px solid rgba(243, 213, 181, 0.35); }
         .tenue-chip.off { background: transparent; color: rgba(254, 205, 211, 0.55); text-decoration: line-through; border-style: dashed; }
         .menu-pill.off { background: rgba(255, 255, 255, 0.1); color: rgba(254, 205, 211, 0.7); }
+        /* Langues */
+        .leading-tight { line-height: 1.2; }
+        .rules-text strong { color: #f3d5b5; }
+        .lang-row.on { border-color: #f3d5b5; background: rgba(184, 29, 67, 0.45); }
+        .lang-code { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; width: 2.1rem; text-align: center; padding: 0.2rem 0; border-radius: 0.5rem; background: rgba(243, 213, 181, 0.15); color: #f3d5b5; }
         @media (max-width: 370px) { #board-hint { display: none; } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .pt-safe { padding-top: calc(var(--safe-top) + 0.5rem); }
@@ -292,9 +297,9 @@
 
                 <!-- Sélecteur segmenté du type de partie -->
                 <div class="flex items-center bg-[#12040a]/90 rounded-full p-0.5 border border-[#f3d5b5]/25 text-[11px] sm:text-xs shrink-0 ml-auto">
-                    <button onclick="setIntensity('doux')" id="btn-int-doux" class="px-2 sm:px-2.5 py-1 rounded-full transition font-medium text-rose-200/70">Doux</button>
-                    <button onclick="setIntensity('coquin')" id="btn-int-coquin" class="px-2 sm:px-2.5 py-1 rounded-full transition font-bold bg-[#b81d43] text-white shadow">Coquin</button>
-                    <button onclick="setIntensity('torride')" id="btn-int-torride" class="px-2 sm:px-2.5 py-1 rounded-full transition font-medium text-rose-200/70">Torride</button>
+                    <button onclick="setIntensity('doux')" id="btn-int-doux" class="px-2 sm:px-2.5 py-1 rounded-full transition font-medium text-rose-200/70" data-i18n="int.doux">Doux</button>
+                    <button onclick="setIntensity('coquin')" id="btn-int-coquin" class="px-2 sm:px-2.5 py-1 rounded-full transition font-bold bg-[#b81d43] text-white shadow" data-i18n="int.coquin">Coquin</button>
+                    <button onclick="setIntensity('torride')" id="btn-int-torride" class="px-2 sm:px-2.5 py-1 rounded-full transition font-medium text-rose-200/70" data-i18n="int.torride">Torride</button>
                 </div>
 
             </div>
@@ -320,7 +325,7 @@
             </div>
 
             <!-- Astuce tactile en bas du plateau -->
-            <div id="board-hint" class="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-[10px] text-rose-200/60 bg-[#12040a]/60 px-2.5 py-0.5 rounded-full whitespace-nowrap">
+            <div id="board-hint" class="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-[10px] text-rose-200/60 bg-[#12040a]/60 px-2.5 py-0.5 rounded-full whitespace-nowrap" data-i18n="board.hint">
                 Pincez pour zoomer • Glissez pour explorer • Double-tap : vue globale
             </div>
 
@@ -426,7 +431,7 @@
                     </div>
                     <div class="flex-1 flex flex-col gap-1.5">
                         <button id="btn-roll-ipad" onclick="handleRollDice()" class="btn-rosegold w-full py-3 px-4 rounded-2xl text-sm tracking-wide flex items-center justify-center gap-2">
-                            <span>🎲</span> Lancer le dé
+                            <span>🎲</span> <span data-i18n="dice.roll">Lancer le dé</span>
                         </button>
                         <p id="status-message-ipad" class="text-[11px] text-center text-rose-200/85">
                             Tour de Elle (🌹)
@@ -467,7 +472,7 @@
 
                 <div class="flex items-center justify-between pt-3 border-t border-white/10 text-xs text-rose-200/75">
                     <span id="challenge-player-tag-ipad">Pour : Elle 🌹</span>
-                    <button onclick="rerollChallengeOnly()" class="text-[#f3d5b5] underline">Autre gage ↻</button>
+                    <button onclick="rerollChallengeOnly()" class="text-[#f3d5b5] underline" data-i18n="card.other">Autre gage ↻</button>
                 </div>
             </div>
         </aside>
@@ -501,7 +506,7 @@
             <!-- Bouton rouvrir le gage actuel -->
             <button onclick="openChallengeSheet()" class="w-12 h-12 rounded-2xl bg-[#2b0816] border border-[#f3d5b5]/40 flex flex-col items-center justify-center shrink-0 active:scale-95 transition">
                 <span id="dock-challenge-icon" class="text-lg leading-none">🥂</span>
-                <span class="text-[9px] text-[#f3d5b5] font-semibold mt-0.5">Gage</span>
+                <span class="text-[9px] text-[#f3d5b5] font-semibold mt-0.5" data-i18n="dock.gage">Gage</span>
             </button>
         </div>
     </footer>
@@ -547,7 +552,7 @@
                 Autre gage ↻
             </button>
             <button onclick="closeChallengeSheet()" class="btn-rosegold flex-1 py-3 rounded-2xl text-sm">
-                Gage accompli • Continuer
+                <span data-i18n="card.done">Gage accompli • Continuer</span>
             </button>
         </div>
     </div>
@@ -557,35 +562,53 @@
         <div class="ios-glass rounded-3xl max-w-sm w-full p-5 border border-[#f3d5b5]/40 shadow-2xl">
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5] leading-none">Menu</h2>
+                    <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5] leading-none" data-i18n="menu.title">Menu</h2>
                     <p class="font-serif-luxury italic text-sm text-rose-200/80 mt-1">Les 69 nuances du désir</p>
                 </div>
-                <button onclick="closeModal('modal-menu')" class="text-rose-200 text-xl p-1" aria-label="Fermer">✕</button>
+                <button onclick="closeModal('modal-menu')" class="text-rose-200 text-xl p-1" data-i18n-aria="close" aria-label="Fermer">✕</button>
             </div>
             <div class="space-y-2">
+                <button onclick="closeModal('modal-menu'); openLanguagePicker(false);" class="menu-row">
+                    <span class="menu-ico">🌐</span><span class="flex-1 text-left" data-i18n="menu.language">Langue</span><span id="menu-lang-state" class="menu-pill">Français</span>
+                </button>
                 <button onclick="toggleSound(); refreshMenu();" class="menu-row">
-                    <span id="btn-sound" class="menu-ico">🔊</span><span class="flex-1 text-left">Son</span><span id="menu-sound-state" class="menu-pill">Activé</span>
+                    <span id="btn-sound" class="menu-ico">🔊</span><span class="flex-1 text-left" data-i18n="menu.sound">Son</span><span id="menu-sound-state" class="menu-pill">Activé</span>
                 </button>
                 <button onclick="toggleAutoCamera(); refreshMenu();" class="menu-row">
-                    <span id="btn-cam-follow" class="menu-ico">🎯</span><span class="flex-1 text-left">Zoom automatique sur le pion</span><span id="menu-cam-state" class="menu-pill">Activé</span>
+                    <span id="btn-cam-follow" class="menu-ico">🎯</span><span class="flex-1 text-left" data-i18n="menu.cam">Zoom automatique sur le pion</span><span id="menu-cam-state" class="menu-pill">Activé</span>
                 </button>
                 <button onclick="closeModal('modal-menu'); openModal('modal-setup');" class="menu-row">
-                    <span class="menu-ico">👥</span><span class="flex-1 text-left">Joueurs, prénoms &amp; pions</span><span id="menu-players-count" class="menu-pill">2</span>
+                    <span class="menu-ico">👥</span><span class="flex-1 text-left" data-i18n="menu.players">Joueurs, prénoms &amp; pions</span><span id="menu-players-count" class="menu-pill">2</span>
                 </button>
                 <button onclick="closeModal('modal-menu'); openModal('modal-tenues');" class="menu-row">
-                    <span class="menu-ico">👕</span><span class="flex-1 text-left">Tenues des joueurs</span><span class="text-rose-200/60">›</span>
+                    <span class="menu-ico">👕</span><span class="flex-1 text-left" data-i18n="menu.tenues">Tenues des joueurs</span><span class="text-rose-200/60">›</span>
                 </button>
                 <button onclick="closeModal('modal-menu'); openModal('modal-rules');" class="menu-row">
-                    <span class="menu-ico">📜</span><span class="flex-1 text-left">Règles du jeu</span><span class="text-rose-200/60">›</span>
+                    <span class="menu-ico">📜</span><span class="flex-1 text-left" data-i18n="menu.rules">Règles du jeu</span><span class="text-rose-200/60">›</span>
                 </button>
                 <button onclick="closeModal('modal-menu'); openModal('modal-install');" class="menu-row">
-                    <span class="menu-ico">📲</span><span class="flex-1 text-left">Installer sur iPhone / iPad</span><span class="text-rose-200/60">›</span>
+                    <span class="menu-ico">📲</span><span class="flex-1 text-left" data-i18n="menu.install">Installer sur iPhone / iPad</span><span class="text-rose-200/60">›</span>
                 </button>
                 <button onclick="closeModal('modal-menu'); openNewGameSetup();" class="menu-row text-rose-300">
-                    <span class="menu-ico">🔄</span><span class="flex-1 text-left">Nouvelle partie</span><span class="text-rose-200/60">›</span>
+                    <span class="menu-ico">🔄</span><span class="flex-1 text-left" data-i18n="menu.newGame">Nouvelle partie</span><span class="text-rose-200/60">›</span>
                 </button>
             </div>
-            <button onclick="closeModal('modal-menu')" class="btn-rosegold w-full mt-4 py-3 rounded-2xl text-sm">Retour au jeu</button>
+            <button onclick="closeModal('modal-menu')" class="btn-rosegold w-full mt-4 py-3 rounded-2xl text-sm"><span data-i18n="menu.back">Retour au jeu</span></button>
+        </div>
+    </div>
+
+    <!-- MODALE : CHOIX DE LA LANGUE (premier écran, puis Menu › Langue) -->
+    <div id="modal-lang" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="ios-glass rounded-3xl max-w-sm w-full p-5 border border-[#f3d5b5]/40 shadow-2xl max-h-[92dvh] overflow-y-auto">
+            <div class="flex items-start justify-between mb-3">
+                <div>
+                    <p class="text-2xl leading-none mb-2">💋🌐</p>
+                    <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5] leading-tight" data-i18n="lang.title">Choisissez votre langue</h2>
+                    <p class="text-xs text-rose-200/75 mt-1" data-i18n="lang.subtitle">Vous pourrez la changer à tout moment dans le Menu.</p>
+                </div>
+                <button id="btn-lang-close" onclick="closeModal('modal-lang')" class="text-rose-200 text-xl p-1" data-i18n-aria="close" aria-label="Fermer">✕</button>
+            </div>
+            <div id="lang-list" class="grid grid-cols-1 gap-2"></div>
         </div>
     </div>
 
@@ -593,13 +616,13 @@
     <div id="modal-setup" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4">
         <div class="ios-glass rounded-3xl max-w-lg w-full p-5 sm:p-6 border border-[#f3d5b5]/40 shadow-2xl max-h-[92dvh] flex flex-col">
             <div class="flex items-center justify-between mb-1 shrink-0">
-                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]">Les Amants du Jeu</h2>
+                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]" data-i18n="setup.title">Les Amants du Jeu</h2>
                 <button id="btn-setup-close" onclick="closeModal('modal-setup')" class="text-rose-200 text-xl p-1">✕</button>
             </div>
-            <p class="text-xs text-rose-200/75 mb-3 shrink-0">Combien êtes-vous ce soir ? Choisissez vos prénoms, votre sexe et vos talismans.</p>
+            <p class="text-xs text-rose-200/75 mb-3 shrink-0" data-i18n="setup.intro">Combien êtes-vous ce soir ? Choisissez vos prénoms, votre sexe et vos talismans.</p>
 
             <div class="flex items-center justify-between gap-3 mb-3 shrink-0">
-                <span class="text-[11px] uppercase tracking-wider text-[#f3d5b5]">Joueurs</span>
+                <span class="text-[11px] uppercase tracking-wider text-[#f3d5b5]" data-i18n="setup.players">Joueurs</span>
                 <div class="flex items-center bg-[#12040a]/90 rounded-full p-0.5 border border-[#f3d5b5]/25 text-sm">
                     <button type="button" onclick="setSetupCount(2)" id="btn-count-2" class="px-4 py-1.5 rounded-full transition font-semibold">2</button>
                     <button type="button" onclick="setSetupCount(3)" id="btn-count-3" class="px-4 py-1.5 rounded-full transition font-semibold">3</button>
@@ -609,11 +632,11 @@
 
             <div id="setup-players" class="space-y-2.5 overflow-y-auto pr-0.5 -mr-0.5 min-h-0"></div>
 
-            <p id="setup-warning" class="hidden text-[11px] text-amber-200/90 mt-2 shrink-0">Changer le nombre de joueurs lance une nouvelle partie.</p>
+            <p id="setup-warning" class="hidden text-[11px] text-amber-200/90 mt-2 shrink-0" data-i18n="setup.warning">Changer le nombre de joueurs lance une nouvelle partie.</p>
 
             <div class="mt-4 flex items-center justify-between gap-3 shrink-0">
                 <button id="btn-setup-new" onclick="saveSetup(true)" class="px-4 py-2.5 rounded-xl border border-rose-500/40 text-rose-300 text-xs font-semibold">
-                    Nouvelle partie
+                    <span data-i18n="setup.new">Nouvelle partie</span>
                 </button>
                 <button id="btn-setup-save" onclick="saveSetup(false)" class="btn-rosegold ml-auto px-6 py-2.5 rounded-xl text-sm">
                     Enregistrer
@@ -626,31 +649,27 @@
     <div id="modal-install" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="ios-glass rounded-3xl max-w-md w-full p-6 border border-[#f3d5b5]/40 shadow-2xl">
             <div class="flex items-center justify-between mb-2">
-                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]">Installer l'App iOS</h2>
-                <button onclick="closeModal('modal-install')" class="text-rose-200 text-xl p-1">✕</button>
+                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]" data-i18n="install.title">Installer l'App iOS</h2>
+                <button onclick="closeModal('modal-install')" class="text-rose-200 text-xl p-1" data-i18n-aria="close" aria-label="Fermer">✕</button>
             </div>
-            <p class="text-xs text-rose-100/85 leading-relaxed mb-4">
-                Profitez du jeu en plein écran sans barre de navigation Safari sur votre <strong>iPhone</strong> ou <strong>iPad</strong> :
-            </p>
+            <p class="text-xs text-rose-100/85 leading-relaxed mb-4" data-i18n-md="install.intro"></p>
             <ol class="space-y-3 text-sm text-rose-100 bg-[#12040a]/80 p-4 rounded-2xl border border-[#f3d5b5]/20">
                 <li class="flex items-start gap-2.5">
                     <span class="font-bold text-[#f3d5b5]">1.</span>
-                    <span>Ouvrez cette page dans <strong>Safari</strong> sur votre iPhone ou iPad.</span>
+                    <span data-i18n-md="install.step1"></span>
                 </li>
                 <li class="flex items-start gap-2.5">
                     <span class="font-bold text-[#f3d5b5]">2.</span>
-                    <span>Touchez l'icône <strong>Partager</strong> <span class="inline-block px-1.5 py-0.5 rounded bg-white/10 text-xs">⬆️</span> en bas (iPhone) ou en haut à droite (iPad).</span>
+                    <span data-i18n-md="install.step2"></span>
                 </li>
                 <li class="flex items-start gap-2.5">
                     <span class="font-bold text-[#f3d5b5]">3.</span>
-                    <span>Faites défiler et choisissez <strong>« Sur l'écran d'accueil »</strong>, puis touchez <strong>Ajouter</strong>.</span>
+                    <span data-i18n-md="install.step3"></span>
                 </li>
             </ol>
-            <p class="text-[11px] text-rose-200/70 mt-3 italic">
-                Votre partie est sauvegardée automatiquement sur votre appareil même si vous fermez l'application.
-            </p>
+            <p class="text-[11px] text-rose-200/70 mt-3 italic" data-i18n="install.note"></p>
             <button onclick="closeModal('modal-install')" class="btn-rosegold w-full mt-5 py-3 rounded-2xl text-sm">
-                Parfait !
+                <span data-i18n="install.ok">Parfait !</span>
             </button>
         </div>
     </div>
@@ -659,32 +678,32 @@
     <div id="modal-rules" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="ios-glass rounded-3xl max-w-lg w-full p-6 border border-[#f3d5b5]/40 shadow-2xl max-h-[85dvh] overflow-y-auto">
             <div class="flex items-center justify-between mb-3">
-                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]">Les Règles de l'Alcôve</h2>
-                <button onclick="closeModal('modal-rules')" class="text-rose-200 text-xl p-1">✕</button>
+                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]" data-i18n="rules.title">Les Règles de l'Alcôve</h2>
+                <button onclick="closeModal('modal-rules')" class="text-rose-200 text-xl p-1" data-i18n-aria="close" aria-label="Fermer">✕</button>
             </div>
             
-            <div class="space-y-3 text-sm text-rose-100/90 leading-relaxed">
-                <p>Parcourez les <strong class="text-[#f3d5b5]">69 cases</strong> du grand cœur, tour après tour, jusqu'à son centre : <strong class="text-[#f3d5b5]">L'Extase</strong>.</p>
+            <div class="rules-text space-y-3 text-sm text-rose-100/90 leading-relaxed">
+                <p data-i18n-md="rules.intro"></p>
                 
                 <div class="p-3.5 rounded-2xl bg-[#12040a]/85 border border-[#f3d5b5]/20 space-y-2 text-xs sm:text-sm">
-                    <p><span class="text-[#f3d5b5] font-bold">↗ Flèches Élan (+2 / +3) :</span> Le désir vous propulse en avant le long de la flèche dorée.</p>
-                    <p><span class="text-rose-400 font-bold">↙ Flèches Frisson (-2 / -3) :</span> Un contretemps taquin vous fait glisser en arrière avec un gage coquin.</p>
-                    <p><span class="text-fuchsia-300 font-bold">🦢 L'Oie Coquine :</span> Sur les cases 9, 18, 27, 36, 45, 54 et 63, votre lancer est immédiatement doublé !</p>
-                    <p><span class="text-amber-200 font-bold">🪶 Cases Sensorielles :</span> Plume, Baiser, Massage, Vérité ou Défi et Gages chronométrés.</p>
-                    <p><span class="text-[#f3d5b5] font-bold">🔍 Caméra :</span> Le plateau zoome sur le pion à chaque lancer. Touchez « Vue globale » (ou double-tap) pour voir tout le cœur. Le zoom automatique se coupe dans le Menu.</p>
+                    <p><span class="text-[#f3d5b5] font-bold" data-i18n="rules.plusL"></span> <span data-i18n="rules.plus"></span></p>
+                    <p><span class="text-rose-400 font-bold" data-i18n="rules.minusL"></span> <span data-i18n="rules.minus"></span></p>
+                    <p><span class="text-fuchsia-300 font-bold" data-i18n="rules.gooseL"></span> <span data-i18n="rules.goose"></span></p>
+                    <p><span class="text-amber-200 font-bold" data-i18n="rules.sensoryL"></span> <span data-i18n="rules.sensory"></span></p>
+                    <p><span class="text-[#f3d5b5] font-bold" data-i18n="rules.cameraL"></span> <span data-i18n="rules.camera"></span></p>
                 </div>
 
-                <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">De 2 à 4 joueurs :</strong> chacun joue à tour de rôle. Chaque gage désigne un partenaire (« Avec … ») parmi les autres joueurs, et les gages réservés à une femme ou à un homme ne tombent que sur la bonne personne.</p>
+                <p class="text-xs sm:text-sm" data-i18n-md="rules.players"></p>
 
-                <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">Tenues :</strong> le jeu retient ce que chacun a déjà retiré. Les vêtements tombent dans l'ordre (le haut ou le pantalon avant les sous-vêtements), et un gage qui demande d'être nu ne sort qu'une fois les vêtements retirés. Correction possible dans Menu › Tenues.</p>
+                <p class="text-xs sm:text-sm" data-i18n-md="rules.tenues"></p>
 
-                <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">Jamais deux fois le même gage :</strong> un gage déjà sorti ne revient plus de la partie.</p>
+                <p class="text-xs sm:text-sm" data-i18n-md="rules.norepeat"></p>
 
-                <p class="text-xs sm:text-sm"><strong class="text-[#f3d5b5]">Règle du rebond (Case 69) :</strong> Il faut atteindre 69 pile. Tout excédent vous fait reculer du surplus.</p>
+                <p class="text-xs sm:text-sm" data-i18n-md="rules.bounce"></p>
             </div>
 
             <button onclick="closeModal('modal-rules')" class="btn-rosegold w-full mt-5 py-3 rounded-2xl text-sm">
-                Retourner au jeu
+                <span data-i18n="rules.back">Retourner au jeu</span>
             </button>
         </div>
     </div>
@@ -693,12 +712,12 @@
     <div id="modal-tenues" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="ios-glass rounded-3xl max-w-md w-full p-5 border border-[#f3d5b5]/40 shadow-2xl max-h-[85dvh] overflow-y-auto">
             <div class="flex items-center justify-between mb-2">
-                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]">Tenues</h2>
-                <button onclick="closeModal('modal-tenues')" class="text-rose-200 text-xl p-1" aria-label="Fermer">✕</button>
+                <h2 class="font-serif-luxury text-3xl font-bold text-[#f3d5b5]" data-i18n="tenues.title">Tenues</h2>
+                <button onclick="closeModal('modal-tenues')" class="text-rose-200 text-xl p-1" data-i18n-aria="close" aria-label="Fermer">✕</button>
             </div>
-            <p class="text-xs text-rose-200/80 mb-3">Le jeu note ce que chacun retire et ne propose que des gages logiques. Touchez un vêtement pour corriger (barré = retiré).</p>
+            <p class="text-xs text-rose-200/80 mb-3" data-i18n="tenues.intro">Le jeu note ce que chacun retire et ne propose que des gages logiques. Touchez un vêtement pour corriger (barré = retiré).</p>
             <div id="tenues-list" class="space-y-2"></div>
-            <button onclick="closeModal('modal-tenues')" class="btn-rosegold w-full mt-4 py-3 rounded-2xl text-sm">Retour au jeu</button>
+            <button onclick="closeModal('modal-tenues')" class="btn-rosegold w-full mt-4 py-3 rounded-2xl text-sm"><span data-i18n="menu.back">Retour au jeu</span></button>
         </div>
     </div>
 
@@ -706,19 +725,829 @@
     <div id="modal-victory" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="ios-glass rounded-3xl max-w-md w-full p-7 border-2 border-[#f3d5b5] text-center shadow-[0_0_50px_rgba(184,29,67,0.65)]">
             <div class="text-5xl mb-2">👑💋🔥</div>
-            <h2 class="font-serif-luxury text-4xl font-bold text-[#f3d5b5] mb-2">Case 69 • L'Extase !</h2>
+            <h2 class="font-serif-luxury text-4xl font-bold text-[#f3d5b5] mb-2" data-i18n="victory.title">Case 69 • L'Extase !</h2>
             <p id="victory-winner-text" class="text-base text-rose-200 font-semibold mb-4">
                 Elle a atteint le sommet du plaisir !
             </p>
             <div class="p-4 rounded-2xl bg-[#12040a] border border-[#f3d5b5]/40 mb-6 text-left">
-                <p class="text-[11px] uppercase tracking-widest text-[#f3d5b5] mb-1">Le Gage Ultime</p>
+                <p class="text-[11px] uppercase tracking-widest text-[#f3d5b5] mb-1" data-i18n="victory.ultimate">Le Gage Ultime</p>
                 <p id="victory-gage-text" class="text-sm text-white leading-relaxed"></p>
             </div>
             <button onclick="closeModal('modal-victory'); openNewGameSetup();" class="btn-rosegold w-full py-3.5 rounded-2xl text-base">
-                Rejouer une partie
+                <span data-i18n="victory.replay">Rejouer une partie</span>
             </button>
         </div>
     </div>
+
+    <!-- LANG_PACKS:START (généré : packs de langues, interface + gages traduits) -->
+    <script>
+        const LANG_PACKS = {};
+        LANG_PACKS.fr = ({
+            name: "Français",
+            ui: {
+                "lang.title": "Choisissez votre langue",
+                "lang.subtitle": "Vous pourrez la changer à tout moment dans le Menu.",
+                "int.doux": "Doux", "int.coquin": "Coquin", "int.torride": "Torride",
+                "cam.global": "Vue globale", "cam.zoomPawn": "🔍 Zoom pion",
+                "board.hint": "Pincez pour zoomer • Glissez pour explorer • Double-tap : vue globale",
+                "board.start": "Départ", "board.ecstasy": "L'EXTASE 💋",
+                "dice.roll": "Lancer le dé", "dice.rollShort": "Lancer • {name}",
+                "status.turn": "Tour de {name} ({avatar})",
+                "status.rolling": "{name} lance le dé...",
+                "status.rolled": "{name} obtient {roll} !",
+                "status.bounce": "Rebond sur la case 69 !",
+                "status.arrowPlus": "Flèche Élan ({delta}) !",
+                "status.arrowMinus": "Flèche Frisson ({delta}) !",
+                "status.goose": "🦢 L'Oie double le lancer (+{roll}) !",
+                "card.case": "Case {n}", "card.caseShort": "C. {n}",
+                "card.arrowPlus": "Flèche Élan", "card.arrowMinus": "Flèche Frisson",
+                "card.pair": "{performer}  ➜  avec {partner}",
+                "card.for": "Pour : {name} {avatar}",
+                "card.forWith": "Pour : {name} {avatar} • avec {partner}",
+                "card.other": "Autre gage ↻", "card.done": "Gage accompli • Continuer", "dock.gage": "Gage",
+                "card.fallbackTitle": "Gage",
+                "timer.start": "Démarrer", "timer.resume": "Reprendre", "timer.pause": "Pause", "timer.done": "Terminé ✨",
+                "tenue.noted": "👕 Noté — ", "tenue.toNote": "👕 À noter si c'est fait — ",
+                "tenue.undo": "Annuler", "tenue.mark": "Noter ✓",
+                "menu.title": "Menu", "menu.language": "Langue", "menu.sound": "Son", "menu.on": "Activé", "menu.off": "Coupé",
+                "menu.cam": "Zoom automatique sur le pion", "menu.players": "Joueurs, prénoms & pions",
+                "menu.playersCount": "{n} joueurs", "menu.tenues": "Tenues des joueurs", "menu.rules": "Règles du jeu",
+                "menu.install": "Installer sur iPhone / iPad", "menu.newGame": "Nouvelle partie", "menu.back": "Retour au jeu",
+                "close": "Fermer",
+                "setup.title": "Les Amants du Jeu",
+                "setup.intro": "Combien êtes-vous ce soir ? Choisissez vos prénoms, votre sexe et vos talismans.",
+                "setup.players": "Joueurs", "setup.playerN": "Joueur {n}",
+                "setup.warning": "Changer le nombre de joueurs lance une nouvelle partie.",
+                "setup.new": "Nouvelle partie", "setup.save": "Enregistrer", "setup.start": "Commencer la partie",
+                "sex.f": "♀ Femme", "sex.h": "♂ Homme",
+                "name.f1": "Elle", "name.h1": "Lui", "name.fN": "Joueuse {n}", "name.hN": "Joueur {n}",
+                "install.title": "Installer l'App iOS",
+                "install.intro": "Profitez du jeu en plein écran sans barre de navigation Safari sur votre **iPhone** ou **iPad** :",
+                "install.step1": "Ouvrez cette page dans **Safari** sur votre iPhone ou iPad.",
+                "install.step2": "Touchez l'icône **Partager** ⬆️ en bas (iPhone) ou en haut à droite (iPad).",
+                "install.step3": "Faites défiler et choisissez **« Sur l'écran d'accueil »**, puis touchez **Ajouter**.",
+                "install.note": "Votre partie est sauvegardée automatiquement sur votre appareil même si vous fermez l'application.",
+                "install.ok": "Parfait !",
+                "rules.title": "Les Règles de l'Alcôve",
+                "rules.intro": "Parcourez les **69 cases** du grand cœur, tour après tour, jusqu'à son centre : **L'Extase**.",
+                "rules.plusL": "↗ Flèches Élan (+2 / +3) :", "rules.plus": "Le désir vous propulse en avant le long de la flèche dorée.",
+                "rules.minusL": "↙ Flèches Frisson (-2 / -3) :", "rules.minus": "Un contretemps taquin vous fait glisser en arrière avec un gage coquin.",
+                "rules.gooseL": "🦢 L'Oie Coquine :", "rules.goose": "Sur les cases 9, 18, 27, 36, 45, 54 et 63, votre lancer est immédiatement doublé !",
+                "rules.sensoryL": "🪶 Cases Sensorielles :", "rules.sensory": "Plume, Baiser, Massage, Vérité ou Défi et Gages chronométrés.",
+                "rules.cameraL": "🔍 Caméra :", "rules.camera": "Le plateau zoome sur le pion à chaque lancer. Touchez « Vue globale » (ou double-tap) pour voir tout le cœur. Le zoom automatique se coupe dans le Menu.",
+                "rules.players": "**De 2 à 4 joueurs :** chacun joue à tour de rôle. Chaque gage désigne un partenaire (« Avec … ») parmi les autres joueurs, et les gages réservés à une femme ou à un homme ne tombent que sur la bonne personne.",
+                "rules.tenues": "**Tenues :** le jeu retient ce que chacun a déjà retiré. Les vêtements tombent dans l'ordre (le haut ou le pantalon avant les sous-vêtements), et un gage qui demande d'être nu ne sort qu'une fois les vêtements retirés. Correction possible dans Menu › Tenues.",
+                "rules.norepeat": "**Jamais deux fois le même gage :** un gage déjà sorti ne revient plus de la partie.",
+                "rules.bounce": "**Règle du rebond (Case 69) :** Il faut atteindre 69 pile. Tout excédent vous fait reculer du surplus.",
+                "rules.back": "Retourner au jeu",
+                "tenues.title": "Tenues",
+                "tenues.intro": "Le jeu note ce que chacun retire et ne propose que des gages logiques. Touchez un vêtement pour corriger (barré = retiré).",
+                "victory.title": "Case 69 • L'Extase !", "victory.ultimate": "Le Gage Ultime", "victory.replay": "Rejouer une partie",
+                "victory.many": "{winner} a atteint la Case 69 en premier ! {loser} est désigné(e) pour le gage ultime.",
+                "victory.two": "{winner} a atteint la Case 69 avant {loser} !",
+                "ultimate.doux": "{winner} remporte un massage intégral de 15 minutes à la lumière tamisée, accompagné de tendres baisers partout où il/elle le souhaite.",
+                "ultimate.coquin": "{winner} devient le maître ou la maîtresse du jeu pendant 15 minutes : {loser} doit exaucer tous ses désirs et fantasmes sans dire non.",
+                "ultimate.torride": "L'Extase absolue : {loser} doit offrir à {winner} un plaisir total et sans limite pendant 20 minutes, entièrement dédié à son orgasme.",
+                "node.start": "Prélude", "node.goose": "Oie Coquine", "node.feather": "La Plume", "node.kiss": "Le Baiser",
+                "node.massage": "Le Massage", "node.truth": "Vérité ou Défi", "node.oil": "Massage Huilé", "node.fever": "Fièvre", "node.end": "L'Extase",
+                "arrow.back": "Tu recules, "
+            },
+            // Vêtements : [mon vêtement, son vêtement] selon le sexe de la personne qui le porte
+            tenue: {
+                items: {
+                    haut:    { f: ["ton haut", "son haut"], h: ["ton haut", "son haut"] },
+                    bas:     { f: ["ton pantalon (ou ta jupe)", "son pantalon (ou sa jupe)"], h: ["ton pantalon", "son pantalon"] },
+                    sg:      { f: ["ton soutien-gorge", "son soutien-gorge"] },
+                    dessous: { f: ["ta culotte", "sa culotte"], h: ["ton boxer", "son boxer"] }
+                },
+                short: { haut: { f: "haut", h: "haut" }, bas: { f: "pantalon / jupe", h: "pantalon" }, sg: { f: "soutien-gorge" }, dessous: { f: "culotte", h: "boxer" } },
+                all: { f: ["tous tes vêtements", "tous ses vêtements"], h: ["tous tes vêtements", "tous ses vêtements"] },
+                and: " et ",
+                some: "un vêtement",
+                // [femme, homme]
+                status: {
+                    nude: ["nue", "nu"], hiddenOff: ["sans culotte dessous", "sans boxer dessous"], dressed: ["habillée", "habillé"],
+                    nudeBottom: ["nue en bas", "nu en bas"], topless: ["torse nu", "torse nu"], inBra: ["en soutien-gorge", "en soutien-gorge"],
+                    topAndUnder: ["en haut et culotte", "en haut et boxer"], inUnder: ["en culotte", "en boxer"], underwear: ["en sous-vêtements", "en sous-vêtements"]
+                }
+            }
+        });
+        LANG_PACKS.nl = ({
+            name: "Nederlands",
+            ui: {
+                "lang.title": "Kies je taal",
+                "lang.subtitle": "Je kunt ze op elk moment wijzigen in het Menu.",
+                "int.doux": "Zacht", "int.coquin": "Ondeugend", "int.torride": "Heet",
+                "cam.global": "Volledig bord", "cam.zoomPawn": "🔍 Zoom op pion",
+                "board.hint": "Knijp om te zoomen • Veeg om te verkennen • Dubbeltik: volledig bord",
+                "board.start": "Start", "board.ecstasy": "EXTASE 💋",
+                "dice.roll": "Gooi de dobbelsteen", "dice.rollShort": "Gooien • {name}",
+                "status.turn": "{name} is aan de beurt ({avatar})",
+                "status.rolling": "{name} gooit de dobbelsteen...",
+                "status.rolled": "{name} gooit {roll}!",
+                "status.bounce": "Terugkaatsen op vak 69!",
+                "status.arrowPlus": "Vaartpijl ({delta})!",
+                "status.arrowMinus": "Huiverpijl ({delta})!",
+                "status.goose": "🦢 De Gans verdubbelt de worp (+{roll})!",
+                "card.case": "Vak {n}", "card.caseShort": "V. {n}",
+                "card.arrowPlus": "Vaartpijl", "card.arrowMinus": "Huiverpijl",
+                "card.pair": "{performer}  ➜  met {partner}",
+                "card.for": "Voor: {name} {avatar}",
+                "card.forWith": "Voor: {name} {avatar} • met {partner}",
+                "card.other": "Andere opdracht ↻", "card.done": "Opdracht volbracht • Verder", "dock.gage": "Opdracht",
+                "card.fallbackTitle": "Opdracht",
+                "timer.start": "Start", "timer.resume": "Hervatten", "timer.pause": "Pauze", "timer.done": "Klaar ✨",
+                "tenue.noted": "👕 Genoteerd — ", "tenue.toNote": "👕 Noteer als het gedaan is — ",
+                "tenue.undo": "Ongedaan", "tenue.mark": "Noteren ✓",
+                "menu.title": "Menu", "menu.language": "Taal", "menu.sound": "Geluid", "menu.on": "Aan", "menu.off": "Uit",
+                "menu.cam": "Automatisch inzoomen op de pion", "menu.players": "Spelers, namen & pionnen",
+                "menu.playersCount": "{n} spelers", "menu.tenues": "Kledij van de spelers", "menu.rules": "Spelregels",
+                "menu.install": "Installeren op iPhone / iPad", "menu.newGame": "Nieuw spel", "menu.back": "Terug naar het spel",
+                "close": "Sluiten",
+                "setup.title": "De Geliefden aan Zet",
+                "setup.intro": "Met hoeveel zijn jullie vanavond? Kies jullie namen, geslacht en talismannen.",
+                "setup.players": "Spelers", "setup.playerN": "Speler {n}",
+                "setup.warning": "Het aantal spelers wijzigen start een nieuw spel.",
+                "setup.new": "Nieuw spel", "setup.save": "Opslaan", "setup.start": "Start het spel",
+                "sex.f": "♀ Vrouw", "sex.h": "♂ Man",
+                "name.f1": "Zij", "name.h1": "Hij", "name.fN": "Speelster {n}", "name.hN": "Speler {n}",
+                "install.title": "De iOS-app installeren",
+                "install.intro": "Speel op volledig scherm, zonder de Safari-balk, op je **iPhone** of **iPad**:",
+                "install.step1": "Open deze pagina in **Safari** op je iPhone of iPad.",
+                "install.step2": "Tik op het **Deel**-icoon ⬆️ onderaan (iPhone) of rechtsboven (iPad).",
+                "install.step3": "Scrol naar beneden en kies **„Zet op beginscherm”**, tik daarna op **Voeg toe**.",
+                "install.note": "Je spel wordt automatisch op je toestel bewaard, ook als je de app sluit.",
+                "install.ok": "Perfect!",
+                "rules.title": "De Regels van de Alkoof",
+                "rules.intro": "Doorloop de **69 vakken** van het grote hart, beurt na beurt, tot in het midden: **De Extase**.",
+                "rules.plusL": "↗ Vaartpijlen (+2 / +3):", "rules.plus": "Het verlangen stuwt je vooruit langs de gouden pijl.",
+                "rules.minusL": "↙ Huiverpijlen (-2 / -3):", "rules.minus": "Een plagerige tegenslag laat je achteruit glijden, met een ondeugende opdracht.",
+                "rules.gooseL": "🦢 De Ondeugende Gans:", "rules.goose": "Op de vakken 9, 18, 27, 36, 45, 54 en 63 wordt je worp meteen verdubbeld!",
+                "rules.sensoryL": "🪶 Zinnelijke vakken:", "rules.sensory": "Veer, Kus, Massage, Doen of Durven en opdrachten met timer.",
+                "rules.cameraL": "🔍 Camera:", "rules.camera": "Het bord zoomt bij elke worp in op de pion. Tik op „Volledig bord” (of dubbeltik) om het hele hart te zien. Automatisch zoomen zet je uit in het Menu.",
+                "rules.players": "**Met 2 tot 4 spelers:** iedereen speelt om beurten. Elke opdracht kiest een partner („Met …”) onder de andere spelers, en opdrachten voor een vrouw of een man vallen alleen bij de juiste persoon.",
+                "rules.tenues": "**Kledij:** het spel onthoudt wat iedereen al uitgetrokken heeft. Kleren gaan uit in een logische volgorde (top of broek vóór het ondergoed), en een opdracht waarvoor je naakt moet zijn, komt pas als de kleren uit zijn. Corrigeren kan in Menu › Kledij.",
+                "rules.norepeat": "**Nooit twee keer dezelfde opdracht:** een opdracht die al gevallen is, komt niet meer terug.",
+                "rules.bounce": "**Terugkaatsregel (vak 69):** je moet precies op 69 uitkomen. Wat je te veel gooit, ga je terug.",
+                "rules.back": "Terug naar het spel",
+                "tenues.title": "Kledij",
+                "tenues.intro": "Het spel noteert wat iedereen uittrekt en stelt alleen logische opdrachten voor. Tik op een kledingstuk om te corrigeren (doorstreept = uitgetrokken).",
+                "victory.title": "Vak 69 • De Extase!", "victory.ultimate": "De Ultieme Opdracht", "victory.replay": "Opnieuw spelen",
+                "victory.many": "{winner} bereikte als eerste vak 69! {loser} is aangeduid voor de ultieme opdracht.",
+                "victory.two": "{winner} bereikte vak 69 vóór {loser}!",
+                "ultimate.doux": "{winner} wint een volledige massage van 15 minuten bij gedimd licht, met tedere kussen overal waar hij/zij wil.",
+                "ultimate.coquin": "{winner} wordt 15 minuten lang meester of meesteres van het spel: {loser} moet al zijn/haar verlangens en fantasieën vervullen zonder nee te zeggen.",
+                "ultimate.torride": "De absolute extase: {loser} schenkt {winner} 20 minuten lang grenzeloos genot, volledig gewijd aan zijn/haar orgasme.",
+                "node.start": "Prelude", "node.goose": "Ondeugende Gans", "node.feather": "De Veer", "node.kiss": "De Kus",
+                "node.massage": "De Massage", "node.truth": "Doen of Durven", "node.oil": "Oliemassage", "node.fever": "Koorts", "node.end": "De Extase",
+                "arrow.back": "Je moet terug! "
+            },
+            tenue: {
+                items: {
+                    haut:    { f: ["je top", "haar top"], h: ["je shirt", "zijn shirt"] },
+                    bas:     { f: ["je broek (of rok)", "haar broek (of rok)"], h: ["je broek", "zijn broek"] },
+                    sg:      { f: ["je beha", "haar beha"] },
+                    dessous: { f: ["je slipje", "haar slipje"], h: ["je boxer", "zijn boxer"] }
+                },
+                short: { haut: { f: "top", h: "shirt" }, bas: { f: "broek / rok", h: "broek" }, sg: { f: "beha" }, dessous: { f: "slipje", h: "boxer" } },
+                all: { f: ["al je kleren", "al haar kleren"], h: ["al je kleren", "al zijn kleren"] },
+                and: " en ",
+                some: "een kledingstuk",
+                status: {
+                    nude: ["naakt", "naakt"], hiddenOff: ["zonder slipje eronder", "zonder boxer eronder"], dressed: ["aangekleed", "aangekleed"],
+                    nudeBottom: ["onderaan naakt", "onderaan naakt"], topless: ["topless", "met ontbloot bovenlijf"], inBra: ["in beha", "in beha"],
+                    topAndUnder: ["in top en slipje", "in shirt en boxer"], inUnder: ["in slipje", "in boxer"], underwear: ["in ondergoed", "in ondergoed"]
+                }
+            }
+        });
+        LANG_PACKS.nl.gages = {};
+        LANG_PACKS.en = ({
+            name: "English",
+            ui: {
+                "lang.title": "Choose your language",
+                "lang.subtitle": "You can change it at any time in the Menu.",
+                "int.doux": "Sweet", "int.coquin": "Naughty", "int.torride": "Steamy",
+                "cam.global": "Full view", "cam.zoomPawn": "🔍 Zoom on pawn",
+                "board.hint": "Pinch to zoom • Drag to explore • Double-tap: full view",
+                "board.start": "Start", "board.ecstasy": "ECSTASY 💋",
+                "dice.roll": "Roll the die", "dice.rollShort": "Roll • {name}",
+                "status.turn": "{name}'s turn ({avatar})",
+                "status.rolling": "{name} rolls the die...",
+                "status.rolled": "{name} rolls a {roll}!",
+                "status.bounce": "Bounce off square 69!",
+                "status.arrowPlus": "Rush arrow ({delta})!",
+                "status.arrowMinus": "Shiver arrow ({delta})!",
+                "status.goose": "🦢 The Goose doubles the roll (+{roll})!",
+                "card.case": "Square {n}", "card.caseShort": "Sq. {n}",
+                "card.arrowPlus": "Rush arrow", "card.arrowMinus": "Shiver arrow",
+                "card.pair": "{performer}  ➜  with {partner}",
+                "card.for": "For: {name} {avatar}",
+                "card.forWith": "For: {name} {avatar} • with {partner}",
+                "card.other": "Another dare ↻", "card.done": "Dare done • Continue", "dock.gage": "Dare",
+                "card.fallbackTitle": "Dare",
+                "timer.start": "Start", "timer.resume": "Resume", "timer.pause": "Pause", "timer.done": "Done ✨",
+                "tenue.noted": "👕 Noted — ", "tenue.toNote": "👕 Note it once done — ",
+                "tenue.undo": "Undo", "tenue.mark": "Note ✓",
+                "menu.title": "Menu", "menu.language": "Language", "menu.sound": "Sound", "menu.on": "On", "menu.off": "Off",
+                "menu.cam": "Auto-zoom on the pawn", "menu.players": "Players, names & pawns",
+                "menu.playersCount": "{n} players", "menu.tenues": "Players' outfits", "menu.rules": "Game rules",
+                "menu.install": "Install on iPhone / iPad", "menu.newGame": "New game", "menu.back": "Back to the game",
+                "close": "Close",
+                "setup.title": "The Lovers at Play",
+                "setup.intro": "How many of you tonight? Choose your names, your sex and your charms.",
+                "setup.players": "Players", "setup.playerN": "Player {n}",
+                "setup.warning": "Changing the number of players starts a new game.",
+                "setup.new": "New game", "setup.save": "Save", "setup.start": "Start the game",
+                "sex.f": "♀ Woman", "sex.h": "♂ Man",
+                "name.f1": "She", "name.h1": "He", "name.fN": "Player {n}", "name.hN": "Player {n}",
+                "install.title": "Install the iOS App",
+                "install.intro": "Enjoy the game full screen, without the Safari bar, on your **iPhone** or **iPad**:",
+                "install.step1": "Open this page in **Safari** on your iPhone or iPad.",
+                "install.step2": "Tap the **Share** icon ⬆️ at the bottom (iPhone) or top right (iPad).",
+                "install.step3": "Scroll down and choose **“Add to Home Screen”**, then tap **Add**.",
+                "install.note": "Your game is saved automatically on your device, even if you close the app.",
+                "install.ok": "Perfect!",
+                "rules.title": "The Rules of the Alcove",
+                "rules.intro": "Travel the **69 squares** of the great heart, turn after turn, all the way to its centre: **Ecstasy**.",
+                "rules.plusL": "↗ Rush arrows (+2 / +3):", "rules.plus": "Desire pushes you forward along the golden arrow.",
+                "rules.minusL": "↙ Shiver arrows (-2 / -3):", "rules.minus": "A teasing setback slides you backwards, with a naughty dare.",
+                "rules.gooseL": "🦢 The Naughty Goose:", "rules.goose": "On squares 9, 18, 27, 36, 45, 54 and 63, your roll is doubled straight away!",
+                "rules.sensoryL": "🪶 Sensual squares:", "rules.sensory": "Feather, Kiss, Massage, Truth or Dare and timed dares.",
+                "rules.cameraL": "🔍 Camera:", "rules.camera": "The board zooms in on the pawn with every roll. Tap “Full view” (or double-tap) to see the whole heart. Auto-zoom can be turned off in the Menu.",
+                "rules.players": "**2 to 4 players:** everyone takes turns. Each dare picks a partner (“With …”) among the other players, and dares meant for a woman or a man only go to the right person.",
+                "rules.tenues": "**Outfits:** the game remembers what everyone has already taken off. Clothes come off in order (top or trousers before underwear), and a dare that requires being naked only comes up once the clothes are off. You can correct it in Menu › Outfits.",
+                "rules.norepeat": "**Never the same dare twice:** a dare that has come up won't return during the game.",
+                "rules.bounce": "**Bounce rule (Square 69):** you must land exactly on 69. Any extra points make you move back.",
+                "rules.back": "Back to the game",
+                "tenues.title": "Outfits",
+                "tenues.intro": "The game notes what everyone takes off and only offers dares that make sense. Tap a piece of clothing to correct it (crossed out = taken off).",
+                "victory.title": "Square 69 • Ecstasy!", "victory.ultimate": "The Ultimate Dare", "victory.replay": "Play again",
+                "victory.many": "{winner} reached Square 69 first! {loser} is chosen for the ultimate dare.",
+                "victory.two": "{winner} reached Square 69 before {loser}!",
+                "ultimate.doux": "{winner} wins a 15-minute full-body massage in soft light, with tender kisses wherever they wish.",
+                "ultimate.coquin": "{winner} becomes the master or mistress of the game for 15 minutes: {loser} must grant all their desires and fantasies without saying no.",
+                "ultimate.torride": "Absolute ecstasy: {loser} must give {winner} total, limitless pleasure for 20 minutes, entirely devoted to their orgasm.",
+                "node.start": "Prelude", "node.goose": "Naughty Goose", "node.feather": "The Feather", "node.kiss": "The Kiss",
+                "node.massage": "The Massage", "node.truth": "Truth or Dare", "node.oil": "Oil Massage", "node.fever": "Fever", "node.end": "Ecstasy",
+                "arrow.back": "You move back! "
+            },
+            tenue: {
+                items: {
+                    haut:    { f: ["your top", "her top"], h: ["your top", "his top"] },
+                    bas:     { f: ["your trousers (or skirt)", "her trousers (or skirt)"], h: ["your trousers", "his trousers"] },
+                    sg:      { f: ["your bra", "her bra"] },
+                    dessous: { f: ["your panties", "her panties"], h: ["your boxers", "his boxers"] }
+                },
+                short: { haut: { f: "top", h: "top" }, bas: { f: "trousers / skirt", h: "trousers" }, sg: { f: "bra" }, dessous: { f: "panties", h: "boxers" } },
+                all: { f: ["all your clothes", "all her clothes"], h: ["all your clothes", "all his clothes"] },
+                and: " and ",
+                some: "a piece of clothing",
+                status: {
+                    nude: ["naked", "naked"], hiddenOff: ["no panties underneath", "no boxers underneath"], dressed: ["dressed", "dressed"],
+                    nudeBottom: ["naked from the waist down", "naked from the waist down"], topless: ["topless", "bare-chested"], inBra: ["in her bra", "in his bra"],
+                    topAndUnder: ["in top and panties", "in top and boxers"], inUnder: ["in her panties", "in his boxers"], underwear: ["in underwear", "in underwear"]
+                }
+            }
+        });
+        LANG_PACKS.en.gages = {"D01":["A breath on the neck","Bring your lips close to your partner's neck and blow gently for 15 seconds before placing a kiss there."],"D02":["Magnetic gaze","Look deep into each other's eyes without talking or laughing for 30 seconds, hands intertwined."],"D03":["Whispered compliment","Whisper in their ear what you like most about their body, in a smooth voice."],"D04":["Caressing the face","Trace the outline of their face, cheekbones and lips with your fingertips."],"D05":["Slow dance","Hold each other close and sway languidly."],"D06":["Eskimo kiss","Gently rub your noses together, then share a kiss with the tips of your lips."],"D07":["Hands in the hair","Slowly run your fingers through their hair and massage their scalp."],"D08":["Three sweet words","Tell them three words that describe them, looking them straight in the eye."],"D09":["Kiss on the eyelid","Ask them to close their eyes and place a light kiss on each eyelid."],"D10":["Still embrace","Hold each other tight without moving, breathing in the same rhythm."],"D11":["The first memory","Tell them the exact moment you first wanted to kiss them."],"D12":["Intertwined fingers","Brush their hand, then slowly intertwine your fingers with theirs, one by one."],"D13":["Brushing lips","Bring your lips a millimetre from theirs without touching for 10 seconds. Then kiss them."],"D14":["Kiss on the neck","Place three slow kisses on their neck, from the ear down to the shoulder."],"D15":["Secret nickname","Invent a sweet little nickname for your partner and use it until your next turn."],"D16":["Cheek to cheek","Rest your cheek against theirs and whisper what you want tonight."],"D17":["Barefoot","Take off your shoes and socks, then stroke their feet with yours."],"D18":["Imaginary slow dance","Hum a song that brings back a memory and invite them to dance."],"D19":["Butterfly kiss","Flutter your eyelashes against their cheek like butterfly wings."],"D20":["On their lap","Sit on their lap until your next turn."],"D21":["Shivering back","Run your fingers along their spine, over their clothes."],"D22":["A promise","Promise them a treat you will give them this week (breakfast in bed, a massage...)."],"D23":["Warm hands","Rub your hands together to warm them, then place them on their cheeks."],"D24":["Kiss on the tip of the nose","Kiss the tip of their nose, then their chin, then their lips."],"D25":["Forehead to forehead","Rest your foreheads together, eyes closed, and breathe together."],"D26":["The earlobe","Very gently nibble their earlobe."],"D27":["The forbidden word","Choose a word your partner is no longer allowed to say. If they say it, they owe you a kiss."],"D28":["Stolen smile","Make them smile without touching them or speaking, only with your eyes."],"D29":["Arms around the waist","Wrap your arms around their waist from behind and rest your chin on their shoulder."],"D30":["Declaration","Finish this sentence out loud: \"What I love most when we're alone is...\""],"D31":["Rush of tenderness","Give your partner a passionate kiss on the lips."],"D32":["Sweet complicity","Gracefully kiss the inside of their wrist and their palm."],"D33":["Beating heart","Put your hand on their heart and let them put theirs on yours."],"D34":["Fair wind","Choose where your partner must kiss you."],"D35":["Little prince","Your partner gives you a ceremonious kiss on the hand."],"D36":["Sweet victory","Receive a hug that lasts as long as you like."],"D37":["Gentle setback","Take off an accessory (jewellery, watch, socks...) or let your partner choose which one."],"D38":["Teasing dare","To make up for it, kiss three different places on their face."],"D39":["Official apology","Ask your partner for forgiveness in the most charming way possible."],"D40":["Running late","Take off your socks or a piece of jewellery, your partner's choice."],"D41":["The heart's retreat","Give them a sincere compliment they have never heard before."],"D42":["Tender prisoner","Keep your hands on their knees until your next turn."],"D43":["The silk feather","With your fingernails or a soft fabric, slowly brush their forearms and neck."],"D44":["Feather on the face","With a feather, a brush or your fingertips, brush their face while their eyes are closed."],"D45":["Invisible letters","Write a word on their back with your fingertip. They have to guess it."],"D46":["Shivering wrists","Very slowly brush the inside of their wrists and elbows."],"D47":["Light breath","Replace the feather with your breath: travel along their neck and nape."],"D48":["The path of the hands","Brush the back of their hands, then work your way up to their shoulders."],"D49":["Languid kiss","A deep, slow kiss while gently holding the back of their neck."],"D50":["Movie kiss","Tip them back slightly like in an old film and kiss them."],"D51":["Slow-motion kiss","Kiss in slow motion, as if time had stopped."],"D52":["A thousand kisses","Cover their face with quick little kisses."],"D53":["Surprise kiss","Your partner closes their eyes. Kiss them when they least expect it."],"D54":["The lower lip","Tenderly kiss only their lower lip."],"D55":["Relaxing the shoulders","Slowly massage their shoulders and neck to help them unwind."],"D56":["Hand massage","Massage their hand finger by finger, then the palm."],"D57":["Foot massage","Massage their feet gently and attentively."],"D58":["The temples","Massage their temples in slow little circles, eyes closed."],"D59":["The back","Massage their back over their clothes, from the bottom up to the neck."],"D60":["Face massage","Massage their forehead, cheeks and jaw with your fingertips."],"D61":["Sweet truth or dare","Truth: what is your most beautiful romantic memory with me? Dare: kiss me where I have a beauty spot."],"D62":["Truth or dare: first time","Truth: what did you think of me the first time you saw me? Dare: re-enact our first kiss."],"D63":["Truth or dare: talent","Truth: what is my greatest charm? Dare: declare your love to me in a song."],"D64":["Truth or dare: dream","Truth: what romantic trip do you dream of taking with me? Dare: kiss me in another language."],"D65":["Truth or dare: outfit","Truth: what outfit do you like seeing me in most? Dare: mime what you feel when I wear it."],"D66":["Truth or dare: tenderness","Truth: what little gesture of mine melts you? Dare: do it to me now."],"D67":["The accomplice goose","The goose doubles your roll! Use this momentum to whisper a promise for tonight."],"D68":["The romantic goose","Roll doubled! Give them a kiss for every square you move (maximum 10)."],"D69":["The greedy goose","Roll doubled! Your partner owes you a little treat of your choice."],"D70":["Warm breath","Blow gently into the hollow of their neck until they get goosebumps."],"D71":["If you were...","Tell them which flower, which song and which perfume they would be, and why."],"D72":["Hand on the heart","Place their hand on your heart and tell them what makes it beat faster."],"D73":["The path of kisses","Place five kisses on their hand, working up to the wrist."],"D74":["Tender gaze","Look at them without speaking and smile until they blush."],"D75":["Lullaby","Whisper a few sweet words in their ear, like a lullaby."],"D76":["A shoulder to lean on","Rest your head on their shoulder and let them stroke your hair."],"D77":["Kiss in the palm","Kiss the hollow of their palm, then close their hand over it, like a secret."],"D78":["Three qualities","Name three things you admire about them."],"D79":["Back of the hand","Stroke their cheek with the back of your hand, very slowly."],"D80":["Piano","Let your fingers dance on their forearm as if on a piano."],"D81":["The best date","Tell them your favourite memory of a date with them."],"D82":["Hug from behind","Wrap your arms around them from behind and rock them gently."],"D83":["The chin","Gently lift their chin with your fingertips and kiss them."],"D84":["What I noticed","Whisper in their ear something beautiful you noticed about them today."],"D85":["Corners of the eyes","Kiss the corners of their eyes, one side and then the other."],"D86":["Feet to feet","Press your feet together and share a knowing smile."],"D87":["Soft nape","Gently massage the back of their neck with your fingertips."],"D88":["The wish","Make a wish for your relationship out loud."],"D89":["Slow dance without music","Take them in your arms and slow dance without music."],"D90":["A drawn heart","Draw a heart with your fingertip in the palm of their hand."],"D91":["Kisses on the temples","Place a kiss on each of their temples."],"D92":["The poet","Make up a line of love worthy of a poem and recite it to them."],"D93":["Hand in hand","Keep your hands intertwined until your next turn."],"D94":["Corners of the lips","Kiss them at the corner of the lips, then on the other side."],"D95":["The confidence","Tell them a little thing you have never dared to say."],"D96":["Shiver up the arm","Run your fingertips from their wrist up to their shoulder."],"D97":["Soothed brow","Smooth their forehead and eyebrows with your fingertips, as if wiping away their day."],"D98":["The pulse","Kiss the inside of their wrist and feel their pulse quicken."],"D99":["The promised kiss","Promise them a kiss for later, and describe it to them in detail."],"C01":["Light bite","Kiss their neck working down to the collarbone and finish with a gentle bite on the shoulder."],"C02":["Blindfolded","Your partner closes their eyes: kiss them wherever you like, without them being allowed to touch you."],"C03":["Shiver down the spine","Slide your hands under their top and slowly stroke the small of their back."],"C04":["The art of unveiling","Slowly take off {ton vêtement} while keeping eye contact."],"C05":["Sensual map","Trace the inside of their thighs with your fingertips."],"C06":["Butterfly kisses","Leave a trail of little kisses from their ear down to the hollow of their chest."],"C07":["Unbuttoning","Slowly undo two buttons (or a zip) of their clothes, with your teeth if you dare."],"C08":["Wandering hands","For 30 seconds, your hands can go anywhere... over the clothes."],"C09":["Daring whisper","Whisper in their ear the naughtiest thing you would like to do to them tonight."],"C10":["The ice cube","With an ice cube (or cold fingers), trace a line from the nape of their neck down to the small of their back."],"C11":["Astride","Straddle them and kiss their neck."],"C12":["Catwalk","Do a little sensual catwalk in front of them, lifting your top slightly."],"C13":["Statue","Your partner must not move. Kiss them everywhere above the waist."],"C14":["Under the fabric","Slide a hand under their top and stroke their belly."],"C15":["Along the belt","Kiss the line of their waistband from one hip to the other."],"C16":["Their hand, your choice","Take their hand and place it where you want to be touched."],"C17":["The buttocks","Caress their buttocks with both hands while kissing them."],"C18":["Undulation","Press against them and slowly move your hips against their body."],"C19":["Bare back","Take off {son haut} and kiss the whole length of their back."],"C20":["Teasing tongue","Brush their lips with the tip of your tongue, without kissing them."],"C21":["Tied hands","Hold their wrists above their head and kiss their neck."],"C22":["Mystery underwear","Describe the underwear you are wearing to your partner. They may check."],"C23":["Mental snapshot","Take off {ton vêtement} and strike the most sensual pose you can for 10 seconds."],"C24":["Greedy mouth","Kiss and nibble the inside of their arm, from the wrist up to the armpit."],"C25":["The moan","Let them hear, right in their ear, the sound you make when you really want them."],"C26":["Back to the wall","Gently push them against a wall and kiss them passionately."],"C27":["The navel","Kiss their navel and move two centimetres lower."],"C28":["Crossed legs","Wrap your legs around their waist during a long kiss."],"C29":["No touching","You must turn them on using only your mouth, no hands."],"C30":["Clothes swap","Swap one piece of clothing and keep it on until the end of the game."],"C31":["Rising desire","What passion! You win the right to guide your partner's hands wherever you want."],"C32":["Sensual acceleration","Passionately kiss the most sensitive spot on their neck."],"C33":["Privilege","Your partner takes off {son vêtement}."],"C34":["The throne","Make yourself comfortable and receive kisses on your belly."],"C35":["Naughty joker","Keep this joker: you may refuse a dare later in the game."],"C36":["In control","For 30 seconds, your partner does exactly what you say (within the limits of the card)."],"C37":["Naughty whim","Take off {ton vêtement} or let your partner take it off you."],"C38":["Sensual penance","Kiss their belly or the small of their back."],"C39":["Little spank","Receive a teasing little spank."],"C40":["On your knees","To be forgiven, get on your knees and kiss their thighs."],"C41":["No hands","Until your next turn, you can no longer use your hands."],"C42":["The lost garment","Your partner demands that you take off {ton vêtement}."],"C43":["Feather shiver","With the tip of your tongue or very light fingers, brush their chest."],"C44":["Feather on the thighs","With a feather or your fingertips, brush the inside of their thighs."],"C45":["The belly","Brush their bare belly from the navel up to the chest."],"C46":["The lower back","Brush the hollow of their lower back and the top of their buttocks."],"C47":["Blind feather","Eyes closed, they must guess which part of their body you are brushing."],"C48":["Forbidden tickle","Brush the places where they are ticklish. If they laugh, they take off {son vêtement}."],"C49":["Stolen kiss","Sit on their lap (or pull them against you) for a steamy kiss."],"C50":["Icy kiss","Put an ice cube in your mouth, then kiss their neck."],"C51":["Kiss in the hollow","Kiss the hollow between their breasts or the middle of their chest."],"C52":["Fiery kiss","A fiery kiss, hands in their hair, bodies pressed together."],"C53":["Upside-down kiss","Kiss them upside down, like in Spider-Man."],"C54":["The hips","Kiss their hips, just above the waistband."],"C55":["Hip massage","Slowly massage their lower back, hips and buttocks."],"C56":["Oil massage","With a little oil or cream, massage their bare back."],"C57":["The thighs","Massage the back of their thighs, slowly working upwards."],"C58":["Chest massage","Massage their chest, over their underwear or directly on the skin."],"C59":["Sitting on them","Sit on their back and massage their shoulders."],"C60":["Lip massage","Massage the back of their neck using only your lips."],"C61":["Naughty truth or dare","Truth: which part of my body drives you wild the most? Dare: take off {son vêtement} with your teeth or with one hand."],"C62":["Truth or dare: place","Truth: what is the most daring place you would like us to make love? Dare: act out the scene."],"C63":["Truth or dare: memory","Truth: what is our hottest moment? Dare: recreate how it started."],"C64":["Truth or dare: dream","Truth: have you ever had a naughty dream about me? Dare: whisper the dream in my ear."],"C65":["Truth or dare: lingerie","Truth: what lingerie or outfit would you like to see me wear? Dare: describe it while touching me."],"C66":["Truth or dare: zone","Truth: what is your most sensitive spot? Dare: let me find it with my eyes closed."],"C67":["The naughty goose","Your roll is doubled! Give a daring caress before you go on your way."],"C68":["The cheeky goose","Roll doubled! Your partner takes off {ses 2 vêtements}."],"C69":["The greedy goose","Roll doubled! Choose a part of their body to kiss."],"C70":["Slow-motion strip","Take off {ton vêtement} as slowly as possible, while dancing."],"C71":["Expert hand","Take off {son vêtement} without ever leaving their lips."],"C72":["Little bites","Gently nibble their lower lip, then their neck."],"C73":["Descending breath","Blow from their neck down to their navel, without touching them."],"C74":["Greedy belly","Cover their belly with kisses."],"C75":["The back on offer","Kiss their back from the nape of the neck down to the small of the back."],"C76":["Forbidden zones","Caress them everywhere except their intimate areas."],"C77":["The belt","Undo their belt (or the button of their trousers) with only one hand."],"C78":["Hands on the thighs","Put your hands on their thighs and slowly slide upwards, without going too far."],"C79":["Deep voice","Tell them what you are going to do to them later, in a very low voice."],"C80":["Close together","Press your body against theirs and let them feel your desire."],"C81":["Undressed with your eyes","Undress them with your eyes, describing out loud what you imagine."],"C82":["Around the navel","Kiss and gently lick around their navel."],"C83":["Back pockets","Slide your hands into their back pockets and pull them towards you."],"C84":["Undressing for two","You take off {ton vêtement}, then you take off {son vêtement}."],"C85":["The arch","Make them arch their back by caressing the hollow of their lower back."],"C86":["Their scent","Breathe in their scent from the neck to the shoulder, describing it."],"C87":["Naughty word","Nibble their earlobe and whisper a naughty word."],"C88":["The sexy pose","Strike the sexiest pose you can and let them look at you without touching."],"C89":["Close dance","Dance against them, with their hands on your buttocks."],"C90":["The small of the back","Kiss the hollow of their lower back."],"C91":["At the edge of the fabric","Kiss the top of their chest, right at the edge of the fabric."],"C92":["The sigh","Kiss their neck until you draw a sigh from them."],"C93":["Guide me","They guide your hands over their body, over their underwear."],"C94":["Zone on offer","Your partner chooses a part of your body: offer it to them to kiss."],"C95":["Little striptease","Take off {ton vêtement} to music, like a real striptease."],"C96":["Top of the thighs","Brush the top of their thighs, right at the edge of their underwear."],"C97":["The wait","Bring your lips close to theirs, pull back, and do it three times before kissing them."],"C98":["Under the top","Massage the small of their back, sliding your hands under their top."],"C99":["The naughty secret","Confess the place where you once wanted to jump on them."],"T01":["Temporary submission","One keeps their hands behind their back while the other kisses and caresses them everywhere."],"T02":["Intimate exploration","Slide your hand under their underwear and caress them slowly."],"T03":["Tasting","Kiss and gently lick their breasts or chest."],"T04":["Express striptease","Take off {tes 2 vêtements} ultra-sensually, swaying in front of them."],"T05":["Hot breath","Bring your mouth very close to their intimate area (over the underwear) and breathe hot air on it."],"T06":["Fantasy out loud","Describe in detail what you would like to do to them as soon as the game is over."],"T07":["Fully naked","Take off {tous tes vêtements}, slowly, while looking at them. Stay that way until your next turn."],"T08":["Body to body","Skin against skin, rub against each other without kissing."],"T09":["Game master","For 45 seconds, you decide every move your partner makes on you."],"T10":["Blindfold","Blindfold them until the end of their next turn and caress them wherever you want."],"T11":["Tongue of fire","With your tongue, trace a path from their neck down to their navel."],"T12":["At their mercy","Lie down: your partner kisses you wherever they want, and you are not allowed to move."],"T13":["Solo pleasure","Touch yourself in front of them, looking them in the eyes."],"T14":["The burning ice cube","Slide an ice cube over their naked body, then warm each spot with your mouth."],"T15":["Guided hands","They guide your hand exactly where and how they like to be touched."],"T16":["Inner thighs","Kiss and nibble the inside of their thighs, higher and higher."],"T17":["Lap dance","Give them a steamy lap dance. They are not allowed to touch you."],"T18":["Underwear with your teeth","Take off {ton dessous caché} and put the clothes you were wearing back on, in front of them."],"T19":["Moans","Caress them until you draw a moan from them."],"T20":["Surprise position","Choose a position and get into it, clothed or not, for 20 seconds."],"T21":["Against the wall","Push them against a wall and make them feel all your desire."],"T22":["Slow caress","Caress their intimate area as slowly as possible."],"T23":["The confessional","Confess your most secret fantasy, without beating around the bush."],"T24":["Hot oil","Pour a little oil on their body and spread it with your body."],"T25":["Just one finger","With just one finger, make them shiver wherever you like."],"T26":["The ultimate tease","Bring your mouth close to their intimate area and stop at the last second. Three times."],"T27":["Mirror","Give them exactly the same caresses they give you."],"T28":["Not a sound","Caress them intimately: they must not make a sound. If they crack, they get an extra dare."],"T29":["The toy","If you have one, bring out a toy and use it on each other."],"T30":["Reward","Give them the caress they have been dreaming of since the start of the game."],"T31":["Wave of pleasure","The other partner must take off {son vêtement} immediately."],"T32":["Steamy impulse","Kiss the inside of their thighs, slowly working upwards."],"T33":["Voucher for pleasure","Your partner owes you an intimate caress of your choice."],"T34":["The throne of desire","Lie down and let yourself be pampered."],"T35":["Slave for a turn","Until your next turn, your partner obeys your every desire."],"T36":["Burning acceleration","Kiss their body everywhere it is bare."],"T37":["Delicious punishment","Receive a sensual spank followed by a languid caress."],"T38":["Laid bare","Take off {ton vêtement}."],"T39":["Tied up","Hands tied (scarf, tie) until your next turn."],"T40":["At their service","Give them an intimate caress of their choice."],"T41":["Frustration","They caress you, but you are not allowed to touch them."],"T42":["Burning penance","Get on your knees and kiss whatever they point to."],"T43":["Burning caress","With your lips and tongue, trace a burning path from their navel up to their mouth."],"T44":["Intimate feather","With a feather or your fingertips, brush their intimate area."],"T45":["Feather and ice","Alternate the feather (or your fingers) and an ice cube on their chest."],"T46":["Total shiver","Brush their whole naked body, from head to toe."],"T47":["Nipples","Brush their nipples with your tongue."],"T48":["The groin","Brush the crease of their groin, one side then the other, without going further."],"T49":["Wild kiss","Pull your partner against you and kiss them passionately while caressing their buttocks."],"T50":["Intimate kiss","Tenderly kiss their intimate area."],"T51":["Naked kiss","Kiss naked, bodies pressed completely together."],"T52":["Descending kiss","Start with their lips and kiss your way down to their lower belly."],"T53":["Greedy kiss","Kiss their breasts (or chest) greedily."],"T54":["Hot-and-cold kiss","Take a hot (or cold) sip, then kiss an intimate area."],"T55":["Body-to-body massage","Rub your body against theirs in a full sensual massage."],"T56":["Intimate massage","Massage their intimate area, gently and with a little oil."],"T57":["Naked massage","Massage their completely naked body, without avoiding any area."],"T58":["Buttock massage","Massage their buttocks with oil, at length."],"T59":["Mouth massage","Massage their body using only your mouth and tongue."],"T60":["Final massage","Finish the massage wherever they wish."],"T61":["Steamy truth or dare","Truth: what is your unspoken fantasy with me? Dare: kiss your partner's intimate area."],"T62":["Truth or dare: ecstasy","Truth: what makes you come the fastest? Dare: show me."],"T63":["Truth or dare: place","Truth: where would you like us to make love next time? Dare: get into the position you imagine there."],"T64":["Truth or dare: toy","Truth: which toy would you like to try with me? Dare: imitate its effect with your hands."],"T65":["Truth or dare: daring","Truth: what is the most daring thing you would like to try? Dare: describe it while caressing me."],"T66":["Truth or dare: favourite","Truth: what is your favourite position with me? Dare: let's get into it for 20 seconds."],"T67":["The goose on fire","Roll doubled! You race towards square 69. Share a burning kiss to celebrate."],"T68":["The insatiable goose","Roll doubled! Your partner caresses you very intimately."],"T69":["The shameless goose","Roll doubled! You take off {tous tes vêtements}, your partner takes off {tous ses vêtements}, and start the game over if you can."],"T70":["The big unwrapping","Take off {ses 2 vêtements}, slowly, kissing every centimetre you uncover."],"T71":["Bare skin","Take off {ton vêtement} and press your skin against theirs."],"T72":["Handfuls","Take their breasts (or pecs) in your hands and kiss them."],"T73":["Through the fabric","Caress their intimate area over their underwear until you feel them shiver."],"T74":["Last barrier","Slowly take off {son dessous}, kissing their thighs."],"T75":["Naked before you","They watch you: take off {tous tes vêtements}, one by one."],"T76":["Curious tongue","Slowly lick the inside of their thighs up to the groin."],"T77":["Body on offer","Lie down: they kiss your naked body wherever they want."],"T78":["Intimate oil","Massage their buttocks and thighs with oil, brushing against their intimate area."],"T79":["Oral pleasure","Give their intimate area a caress with your mouth."],"T80":["Magic fingers","Caress their intimate area with your fingertips, varying the rhythm."],"T81":["The nipples","Nibble and lick their nipples in turn."],"T82":["Skin to skin","Lie naked on top of each other and move slowly."],"T83":["Show me","Guide their hand to your intimate area and show them the rhythm you like."],"T84":["Face to face","Each of you touches yourself, face to face, without touching each other."],"T85":["On the edge","Caress them intimately and stop just before they can't hold back."],"T86":["The 69","Get into the 69 position for 30 seconds."],"T87":["Arched back","They get on all fours: kiss their lower back and buttocks."],"T88":["Ice on the chest","Run an ice cube over their breasts (or chest), then warm them with your mouth."],"T89":["Steamy order","Give them a steamy order: they must carry it out on the spot."],"T90":["Naked lap dance","Give them a lap dance completely naked."],"T91":["Nibble","Nibble their buttocks and the inside of their thighs."],"T92":["From neck to ankles","Lay them on their stomach and kiss their body from the nape of the neck down to the ankles."],"T93":["Beg me","Kiss their whole body, except their intimate area, until they beg you."],"T94":["Strip for two","Undress each other: you take off {son vêtement}, they take off {ton vêtement}."],"T95":["Grinding","Sit on them and grind against their intimate area."],"T96":["Intimate breath","Blow softly on their bare intimate area."],"T97":["Eyes locked","Caress them intimately: they must keep their eyes locked on yours."],"T98":["In the shower","Head to the shower together for a sensual soaping; otherwise, mime it with your hands on their naked body."],"T99":["A foretaste","Give them a foretaste of what awaits them on square 69."]};
+        LANG_PACKS.de = ({
+            name: "Deutsch",
+            ui: {
+                "lang.title": "Wähle deine Sprache",
+                "lang.subtitle": "Du kannst sie jederzeit im Menü ändern.",
+                "int.doux": "Zart", "int.coquin": "Frech", "int.torride": "Heiß",
+                "cam.global": "Gesamtansicht", "cam.zoomPawn": "🔍 Zoom auf Figur",
+                "board.hint": "Zum Zoomen zusammenziehen • Wischen zum Erkunden • Doppeltippen: Gesamtansicht",
+                "board.start": "Start", "board.ecstasy": "EKSTASE 💋",
+                "dice.roll": "Würfeln", "dice.rollShort": "Würfeln • {name}",
+                "status.turn": "{name} ist dran ({avatar})",
+                "status.rolling": "{name} würfelt...",
+                "status.rolled": "{name} würfelt eine {roll}!",
+                "status.bounce": "Abprall an Feld 69!",
+                "status.arrowPlus": "Schwungpfeil ({delta})!",
+                "status.arrowMinus": "Schauerpfeil ({delta})!",
+                "status.goose": "🦢 Die Gans verdoppelt den Wurf (+{roll})!",
+                "card.case": "Feld {n}", "card.caseShort": "F. {n}",
+                "card.arrowPlus": "Schwungpfeil", "card.arrowMinus": "Schauerpfeil",
+                "card.pair": "{performer}  ➜  mit {partner}",
+                "card.for": "Für: {name} {avatar}",
+                "card.forWith": "Für: {name} {avatar} • mit {partner}",
+                "card.other": "Andere Aufgabe ↻", "card.done": "Aufgabe erfüllt • Weiter", "dock.gage": "Aufgabe",
+                "card.fallbackTitle": "Aufgabe",
+                "timer.start": "Starten", "timer.resume": "Weiter", "timer.pause": "Pause", "timer.done": "Fertig ✨",
+                "tenue.noted": "👕 Notiert — ", "tenue.toNote": "👕 Notieren, wenn erledigt — ",
+                "tenue.undo": "Rückgängig", "tenue.mark": "Notieren ✓",
+                "menu.title": "Menü", "menu.language": "Sprache", "menu.sound": "Ton", "menu.on": "An", "menu.off": "Aus",
+                "menu.cam": "Automatischer Zoom auf die Figur", "menu.players": "Spieler, Namen & Figuren",
+                "menu.playersCount": "{n} Spieler", "menu.tenues": "Kleidung der Spieler", "menu.rules": "Spielregeln",
+                "menu.install": "Auf iPhone / iPad installieren", "menu.newGame": "Neues Spiel", "menu.back": "Zurück zum Spiel",
+                "close": "Schließen",
+                "setup.title": "Die Liebenden im Spiel",
+                "setup.intro": "Wie viele seid ihr heute Abend? Wählt eure Namen, euer Geschlecht und eure Talismane.",
+                "setup.players": "Spieler", "setup.playerN": "Spieler {n}",
+                "setup.warning": "Wenn du die Spielerzahl änderst, beginnt ein neues Spiel.",
+                "setup.new": "Neues Spiel", "setup.save": "Speichern", "setup.start": "Spiel starten",
+                "sex.f": "♀ Frau", "sex.h": "♂ Mann",
+                "name.f1": "Sie", "name.h1": "Er", "name.fN": "Spielerin {n}", "name.hN": "Spieler {n}",
+                "install.title": "Die iOS-App installieren",
+                "install.intro": "Spiele im Vollbild, ohne die Safari-Leiste, auf deinem **iPhone** oder **iPad**:",
+                "install.step1": "Öffne diese Seite in **Safari** auf deinem iPhone oder iPad.",
+                "install.step2": "Tippe auf das **Teilen**-Symbol ⬆️ unten (iPhone) oder oben rechts (iPad).",
+                "install.step3": "Scrolle nach unten, wähle **„Zum Home-Bildschirm“** und tippe auf **Hinzufügen**.",
+                "install.note": "Dein Spiel wird automatisch auf deinem Gerät gespeichert, auch wenn du die App schließt.",
+                "install.ok": "Perfekt!",
+                "rules.title": "Die Regeln des Alkovens",
+                "rules.intro": "Durchlauft die **69 Felder** des großen Herzens, Runde für Runde, bis zu seiner Mitte: **der Ekstase**.",
+                "rules.plusL": "↗ Schwungpfeile (+2 / +3):", "rules.plus": "Das Verlangen treibt dich entlang des goldenen Pfeils nach vorn.",
+                "rules.minusL": "↙ Schauerpfeile (-2 / -3):", "rules.minus": "Ein neckischer Rückschlag lässt dich zurückrutschen, mit einer frechen Aufgabe.",
+                "rules.gooseL": "🦢 Die freche Gans:", "rules.goose": "Auf den Feldern 9, 18, 27, 36, 45, 54 und 63 wird dein Wurf sofort verdoppelt!",
+                "rules.sensoryL": "🪶 Sinnliche Felder:", "rules.sensory": "Feder, Kuss, Massage, Wahrheit oder Pflicht und Aufgaben mit Timer.",
+                "rules.cameraL": "🔍 Kamera:", "rules.camera": "Das Spielbrett zoomt bei jedem Wurf auf die Figur. Tippe auf „Gesamtansicht“ (oder doppeltippe), um das ganze Herz zu sehen. Den automatischen Zoom schaltest du im Menü aus.",
+                "rules.players": "**2 bis 4 Spieler:** Alle spielen reihum. Jede Aufgabe bestimmt eine Partnerin oder einen Partner („Mit …“) unter den anderen Spielern, und Aufgaben für eine Frau oder einen Mann fallen nur auf die richtige Person.",
+                "rules.tenues": "**Kleidung:** Das Spiel merkt sich, was jeder schon ausgezogen hat. Die Kleidung fällt der Reihe nach (Oberteil oder Hose vor der Unterwäsche), und eine Aufgabe, für die man nackt sein muss, kommt erst, wenn die Kleidung aus ist. Korrigieren kannst du das unter Menü › Kleidung.",
+                "rules.norepeat": "**Nie zweimal dieselbe Aufgabe:** Eine gezogene Aufgabe kommt im Spiel nicht wieder.",
+                "rules.bounce": "**Abprallregel (Feld 69):** Du musst genau auf 69 landen. Jeder Punkt zu viel lässt dich zurückgehen.",
+                "rules.back": "Zurück zum Spiel",
+                "tenues.title": "Kleidung",
+                "tenues.intro": "Das Spiel notiert, was jeder auszieht, und schlägt nur passende Aufgaben vor. Tippe auf ein Kleidungsstück, um es zu korrigieren (durchgestrichen = ausgezogen).",
+                "victory.title": "Feld 69 • Ekstase!", "victory.ultimate": "Die ultimative Aufgabe", "victory.replay": "Noch einmal spielen",
+                "victory.many": "{winner} hat Feld 69 als Erste(r) erreicht! {loser} wird für die ultimative Aufgabe bestimmt.",
+                "victory.two": "{winner} hat Feld 69 vor {loser} erreicht!",
+                "ultimate.doux": "{winner} gewinnt eine 15-minütige Ganzkörpermassage bei gedämpftem Licht, mit zärtlichen Küssen überall, wo er/sie möchte.",
+                "ultimate.coquin": "{winner} wird 15 Minuten lang Herr oder Herrin des Spiels: {loser} muss alle Wünsche und Fantasien erfüllen, ohne Nein zu sagen.",
+                "ultimate.torride": "Die absolute Ekstase: {loser} schenkt {winner} 20 Minuten lang grenzenlose Lust, ganz seinem/ihrem Orgasmus gewidmet.",
+                "node.start": "Vorspiel", "node.goose": "Freche Gans", "node.feather": "Die Feder", "node.kiss": "Der Kuss",
+                "node.massage": "Die Massage", "node.truth": "Wahrheit oder Pflicht", "node.oil": "Ölmassage", "node.fever": "Fieber", "node.end": "Die Ekstase",
+                "arrow.back": "Zurück mit dir! "
+            },
+            // Akkusativ: die Platzhalter stehen in den Texten immer als direktes Objekt („Zieh {ton vêtement} aus“)
+            tenue: {
+                items: {
+                    haut:    { f: ["dein Oberteil", "ihr Oberteil"], h: ["dein Oberteil", "sein Oberteil"] },
+                    bas:     { f: ["deine Hose (oder deinen Rock)", "ihre Hose (oder ihren Rock)"], h: ["deine Hose", "seine Hose"] },
+                    sg:      { f: ["deinen BH", "ihren BH"] },
+                    dessous: { f: ["deinen Slip", "ihren Slip"], h: ["deine Boxershorts", "seine Boxershorts"] }
+                },
+                short: { haut: { f: "Oberteil", h: "Oberteil" }, bas: { f: "Hose / Rock", h: "Hose" }, sg: { f: "BH" }, dessous: { f: "Slip", h: "Boxershorts" } },
+                all: { f: ["deine ganze Kleidung", "ihre ganze Kleidung"], h: ["deine ganze Kleidung", "seine ganze Kleidung"] },
+                and: " und ",
+                some: "ein Kleidungsstück",
+                status: {
+                    nude: ["nackt", "nackt"], hiddenOff: ["ohne Slip darunter", "ohne Boxershorts darunter"], dressed: ["angezogen", "angezogen"],
+                    nudeBottom: ["untenrum nackt", "untenrum nackt"], topless: ["oben ohne", "mit nacktem Oberkörper"], inBra: ["im BH", "im BH"],
+                    topAndUnder: ["in Oberteil und Slip", "in Oberteil und Boxershorts"], inUnder: ["im Slip", "in Boxershorts"], underwear: ["in Unterwäsche", "in Unterwäsche"]
+                }
+            }
+        });
+        LANG_PACKS.de.gages = {};
+        LANG_PACKS.es = ({
+            name: "Español",
+            ui: {
+                "lang.title": "Elige tu idioma",
+                "lang.subtitle": "Podrás cambiarlo en cualquier momento desde el Menú.",
+                "int.doux": "Suave", "int.coquin": "Pícaro", "int.torride": "Ardiente",
+                "cam.global": "Vista general", "cam.zoomPawn": "🔍 Zoom ficha",
+                "board.hint": "Pellizca para hacer zoom • Desliza para explorar • Doble toque: vista general",
+                "board.start": "Salida", "board.ecstasy": "ÉXTASIS 💋",
+                "dice.roll": "Tirar el dado", "dice.rollShort": "Tirar • {name}",
+                "status.turn": "Turno de {name} ({avatar})",
+                "status.rolling": "{name} tira el dado...",
+                "status.rolled": "¡{name} saca un {roll}!",
+                "status.bounce": "¡Rebote en la casilla 69!",
+                "status.arrowPlus": "¡Flecha Impulso ({delta})!",
+                "status.arrowMinus": "¡Flecha Escalofrío ({delta})!",
+                "status.goose": "🦢 ¡La Oca duplica la tirada (+{roll})!",
+                "card.case": "Casilla {n}", "card.caseShort": "C. {n}",
+                "card.arrowPlus": "Flecha Impulso", "card.arrowMinus": "Flecha Escalofrío",
+                "card.pair": "{performer}  ➜  con {partner}",
+                "card.for": "Para: {name} {avatar}",
+                "card.forWith": "Para: {name} {avatar} • con {partner}",
+                "card.other": "Otra prenda ↻", "card.done": "Prenda cumplida • Continuar", "dock.gage": "Prenda",
+                "card.fallbackTitle": "Prenda",
+                "timer.start": "Empezar", "timer.resume": "Reanudar", "timer.pause": "Pausa", "timer.done": "Terminado ✨",
+                "tenue.noted": "👕 Anotado — ", "tenue.toNote": "👕 Anótalo cuando esté hecho — ",
+                "tenue.undo": "Deshacer", "tenue.mark": "Anotar ✓",
+                "menu.title": "Menú", "menu.language": "Idioma", "menu.sound": "Sonido", "menu.on": "Activado", "menu.off": "Desactivado",
+                "menu.cam": "Zoom automático en la ficha", "menu.players": "Jugadores, nombres y fichas",
+                "menu.playersCount": "{n} jugadores", "menu.tenues": "Ropa de los jugadores", "menu.rules": "Reglas del juego",
+                "menu.install": "Instalar en iPhone / iPad", "menu.newGame": "Nueva partida", "menu.back": "Volver al juego",
+                "close": "Cerrar",
+                "setup.title": "Los Amantes del Juego",
+                "setup.intro": "¿Cuántos sois esta noche? Elegid vuestros nombres, vuestro sexo y vuestros talismanes.",
+                "setup.players": "Jugadores", "setup.playerN": "Jugador {n}",
+                "setup.warning": "Cambiar el número de jugadores inicia una nueva partida.",
+                "setup.new": "Nueva partida", "setup.save": "Guardar", "setup.start": "Empezar la partida",
+                "sex.f": "♀ Mujer", "sex.h": "♂ Hombre",
+                "name.f1": "Ella", "name.h1": "Él", "name.fN": "Jugadora {n}", "name.hN": "Jugador {n}",
+                "install.title": "Instalar la app iOS",
+                "install.intro": "Disfruta del juego a pantalla completa, sin la barra de Safari, en tu **iPhone** o **iPad**:",
+                "install.step1": "Abre esta página en **Safari** en tu iPhone o iPad.",
+                "install.step2": "Toca el icono **Compartir** ⬆️ abajo (iPhone) o arriba a la derecha (iPad).",
+                "install.step3": "Desplázate y elige **«Añadir a pantalla de inicio»**, luego toca **Añadir**.",
+                "install.note": "Tu partida se guarda automáticamente en tu dispositivo, aunque cierres la aplicación.",
+                "install.ok": "¡Perfecto!",
+                "rules.title": "Las Reglas de la Alcoba",
+                "rules.intro": "Recorred las **69 casillas** del gran corazón, turno tras turno, hasta su centro: **El Éxtasis**.",
+                "rules.plusL": "↗ Flechas Impulso (+2 / +3):", "rules.plus": "El deseo te lanza hacia delante a lo largo de la flecha dorada.",
+                "rules.minusL": "↙ Flechas Escalofrío (-2 / -3):", "rules.minus": "Un contratiempo travieso te hace retroceder, con una prenda pícara.",
+                "rules.gooseL": "🦢 La Oca Pícara:", "rules.goose": "En las casillas 9, 18, 27, 36, 45, 54 y 63, ¡tu tirada se duplica al instante!",
+                "rules.sensoryL": "🪶 Casillas sensoriales:", "rules.sensory": "Pluma, Beso, Masaje, Verdad o Reto y prendas con cronómetro.",
+                "rules.cameraL": "🔍 Cámara:", "rules.camera": "El tablero hace zoom en la ficha en cada tirada. Toca «Vista general» (o doble toque) para ver todo el corazón. El zoom automático se desactiva en el Menú.",
+                "rules.players": "**De 2 a 4 jugadores:** cada uno juega por turnos. Cada prenda designa una pareja («Con …») entre los demás jugadores, y las prendas reservadas a una mujer o a un hombre solo le tocan a la persona adecuada.",
+                "rules.tenues": "**Ropa:** el juego recuerda lo que cada uno ya se ha quitado. La ropa cae en orden (la parte de arriba o el pantalón antes que la ropa interior), y una prenda que exige estar desnudo solo sale cuando ya no queda ropa. Puedes corregirlo en Menú › Ropa.",
+                "rules.norepeat": "**Nunca dos veces la misma prenda:** una prenda que ya ha salido no vuelve en la partida.",
+                "rules.bounce": "**Regla del rebote (casilla 69):** hay que llegar justo al 69. Lo que sobre te hace retroceder.",
+                "rules.back": "Volver al juego",
+                "tenues.title": "Ropa",
+                "tenues.intro": "El juego anota lo que cada uno se quita y solo propone prendas lógicas. Toca una prenda de ropa para corregir (tachada = quitada).",
+                "victory.title": "Casilla 69 • ¡El Éxtasis!", "victory.ultimate": "La Prenda Final", "victory.replay": "Jugar otra partida",
+                "victory.many": "¡{winner} ha llegado primero a la casilla 69! {loser} es elegido/a para la prenda final.",
+                "victory.two": "¡{winner} ha llegado a la casilla 69 antes que {loser}!",
+                "ultimate.doux": "{winner} gana un masaje integral de 15 minutos con luz tenue, acompañado de tiernos besos allí donde quiera.",
+                "ultimate.coquin": "{winner} se convierte en el amo o la ama del juego durante 15 minutos: {loser} debe cumplir todos sus deseos y fantasías sin decir que no.",
+                "ultimate.torride": "El éxtasis absoluto: {loser} debe ofrecer a {winner} un placer total y sin límites durante 20 minutos, dedicado por completo a su orgasmo.",
+                "node.start": "Preludio", "node.goose": "Oca Pícara", "node.feather": "La Pluma", "node.kiss": "El Beso",
+                "node.massage": "El Masaje", "node.truth": "Verdad o Reto", "node.oil": "Masaje con aceite", "node.fever": "Fiebre", "node.end": "El Éxtasis",
+                "arrow.back": "¡Retrocedes! "
+            },
+            tenue: {
+                items: {
+                    haut:    { f: ["tu parte de arriba", "su parte de arriba"], h: ["tu camiseta", "su camiseta"] },
+                    bas:     { f: ["tu pantalón (o tu falda)", "su pantalón (o su falda)"], h: ["tu pantalón", "su pantalón"] },
+                    sg:      { f: ["tu sujetador", "su sujetador"] },
+                    dessous: { f: ["tus bragas", "sus bragas"], h: ["tu bóxer", "su bóxer"] }
+                },
+                short: { haut: { f: "parte de arriba", h: "camiseta" }, bas: { f: "pantalón / falda", h: "pantalón" }, sg: { f: "sujetador" }, dessous: { f: "bragas", h: "bóxer" } },
+                all: { f: ["toda tu ropa", "toda su ropa"], h: ["toda tu ropa", "toda su ropa"] },
+                and: " y ",
+                some: "una prenda de ropa",
+                status: {
+                    nude: ["desnuda", "desnudo"], hiddenOff: ["sin bragas debajo", "sin bóxer debajo"], dressed: ["vestida", "vestido"],
+                    nudeBottom: ["desnuda de cintura para abajo", "desnudo de cintura para abajo"], topless: ["en topless", "con el torso desnudo"], inBra: ["en sujetador", "en sujetador"],
+                    topAndUnder: ["con la parte de arriba y en bragas", "con camiseta y en bóxer"], inUnder: ["en bragas", "en bóxer"], underwear: ["en ropa interior", "en ropa interior"]
+                }
+            }
+        });
+        LANG_PACKS.es.gages = {};
+        LANG_PACKS.pt = ({
+            name: "Português",
+            ui: {
+                "lang.title": "Escolhe a tua língua",
+                "lang.subtitle": "Podes mudá-la a qualquer momento no Menu.",
+                "int.doux": "Suave", "int.coquin": "Atrevido", "int.torride": "Escaldante",
+                "cam.global": "Vista geral", "cam.zoomPawn": "🔍 Zoom no peão",
+                "board.hint": "Aperta para fazer zoom • Desliza para explorar • Toque duplo: vista geral",
+                "board.start": "Partida", "board.ecstasy": "ÊXTASE 💋",
+                "dice.roll": "Lançar o dado", "dice.rollShort": "Lançar • {name}",
+                "status.turn": "Vez de {name} ({avatar})",
+                "status.rolling": "{name} lança o dado...",
+                "status.rolled": "{name} tira {roll}!",
+                "status.bounce": "Ressalto na casa 69!",
+                "status.arrowPlus": "Seta Impulso ({delta})!",
+                "status.arrowMinus": "Seta Arrepio ({delta})!",
+                "status.goose": "🦢 O Ganso duplica o lançamento (+{roll})!",
+                "card.case": "Casa {n}", "card.caseShort": "C. {n}",
+                "card.arrowPlus": "Seta Impulso", "card.arrowMinus": "Seta Arrepio",
+                "card.pair": "{performer}  ➜  com {partner}",
+                "card.for": "Para: {name} {avatar}",
+                "card.forWith": "Para: {name} {avatar} • com {partner}",
+                "card.other": "Outro desafio ↻", "card.done": "Desafio cumprido • Continuar", "dock.gage": "Desafio",
+                "card.fallbackTitle": "Desafio",
+                "timer.start": "Iniciar", "timer.resume": "Retomar", "timer.pause": "Pausa", "timer.done": "Terminado ✨",
+                "tenue.noted": "👕 Anotado — ", "tenue.toNote": "👕 Anota quando estiver feito — ",
+                "tenue.undo": "Anular", "tenue.mark": "Anotar ✓",
+                "menu.title": "Menu", "menu.language": "Língua", "menu.sound": "Som", "menu.on": "Ligado", "menu.off": "Desligado",
+                "menu.cam": "Zoom automático no peão", "menu.players": "Jogadores, nomes e peões",
+                "menu.playersCount": "{n} jogadores", "menu.tenues": "Roupa dos jogadores", "menu.rules": "Regras do jogo",
+                "menu.install": "Instalar no iPhone / iPad", "menu.newGame": "Novo jogo", "menu.back": "Voltar ao jogo",
+                "close": "Fechar",
+                "setup.title": "Os Amantes do Jogo",
+                "setup.intro": "Quantos são esta noite? Escolham os vossos nomes, o vosso sexo e os vossos talismãs.",
+                "setup.players": "Jogadores", "setup.playerN": "Jogador {n}",
+                "setup.warning": "Mudar o número de jogadores inicia um novo jogo.",
+                "setup.new": "Novo jogo", "setup.save": "Guardar", "setup.start": "Começar o jogo",
+                "sex.f": "♀ Mulher", "sex.h": "♂ Homem",
+                "name.f1": "Ela", "name.h1": "Ele", "name.fN": "Jogadora {n}", "name.hN": "Jogador {n}",
+                "install.title": "Instalar a app iOS",
+                "install.intro": "Joga em ecrã inteiro, sem a barra do Safari, no teu **iPhone** ou **iPad**:",
+                "install.step1": "Abre esta página no **Safari** no teu iPhone ou iPad.",
+                "install.step2": "Toca no ícone **Partilhar** ⬆️ em baixo (iPhone) ou em cima à direita (iPad).",
+                "install.step3": "Desliza e escolhe **«Adicionar ao ecrã principal»**, depois toca em **Adicionar**.",
+                "install.note": "O teu jogo é guardado automaticamente no teu aparelho, mesmo que feches a aplicação.",
+                "install.ok": "Perfeito!",
+                "rules.title": "As Regras da Alcova",
+                "rules.intro": "Percorram as **69 casas** do grande coração, ronda após ronda, até ao seu centro: **O Êxtase**.",
+                "rules.plusL": "↗ Setas Impulso (+2 / +3):", "rules.plus": "O desejo empurra-te para a frente ao longo da seta dourada.",
+                "rules.minusL": "↙ Setas Arrepio (-2 / -3):", "rules.minus": "Um contratempo provocador faz-te escorregar para trás, com um desafio atrevido.",
+                "rules.gooseL": "🦢 O Ganso Atrevido:", "rules.goose": "Nas casas 9, 18, 27, 36, 45, 54 e 63, o teu lançamento é logo duplicado!",
+                "rules.sensoryL": "🪶 Casas sensoriais:", "rules.sensory": "Pena, Beijo, Massagem, Verdade ou Consequência e desafios cronometrados.",
+                "rules.cameraL": "🔍 Câmara:", "rules.camera": "O tabuleiro faz zoom no peão a cada lançamento. Toca em «Vista geral» (ou toque duplo) para ver o coração inteiro. O zoom automático desliga-se no Menu.",
+                "rules.players": "**De 2 a 4 jogadores:** cada um joga à vez. Cada desafio escolhe um parceiro («Com …») entre os outros jogadores, e os desafios reservados a uma mulher ou a um homem só calham à pessoa certa.",
+                "rules.tenues": "**Roupa:** o jogo lembra-se do que cada um já tirou. A roupa sai por ordem (a parte de cima ou as calças antes da roupa interior), e um desafio que exige estar nu só aparece quando a roupa já saiu. Podes corrigir em Menu › Roupa.",
+                "rules.norepeat": "**Nunca o mesmo desafio duas vezes:** um desafio que já saiu não volta neste jogo.",
+                "rules.bounce": "**Regra do ressalto (casa 69):** é preciso chegar exatamente ao 69. O que sobrar faz-te recuar.",
+                "rules.back": "Voltar ao jogo",
+                "tenues.title": "Roupa",
+                "tenues.intro": "O jogo anota o que cada um tira e só propõe desafios lógicos. Toca numa peça de roupa para corrigir (riscada = tirada).",
+                "victory.title": "Casa 69 • O Êxtase!", "victory.ultimate": "O Desafio Final", "victory.replay": "Jogar outra vez",
+                "victory.many": "{winner} chegou primeiro à casa 69! {loser} foi escolhido/a para o desafio final.",
+                "victory.two": "{winner} chegou à casa 69 antes de {loser}!",
+                "ultimate.doux": "{winner} ganha uma massagem integral de 15 minutos à luz suave, com beijos ternos onde quiser.",
+                "ultimate.coquin": "{winner} torna-se o senhor ou a senhora do jogo durante 15 minutos: {loser} tem de satisfazer todos os seus desejos e fantasias sem dizer não.",
+                "ultimate.torride": "O êxtase absoluto: {loser} tem de oferecer a {winner} um prazer total e sem limites durante 20 minutos, inteiramente dedicado ao seu orgasmo.",
+                "node.start": "Prelúdio", "node.goose": "Ganso Atrevido", "node.feather": "A Pena", "node.kiss": "O Beijo",
+                "node.massage": "A Massagem", "node.truth": "Verdade ou Consequência", "node.oil": "Massagem com óleo", "node.fever": "Febre", "node.end": "O Êxtase",
+                "arrow.back": "Recuas! "
+            },
+            tenue: {
+                items: {
+                    haut:    { f: ["a tua parte de cima", "a parte de cima dela"], h: ["a tua t-shirt", "a t-shirt dele"] },
+                    bas:     { f: ["as tuas calças (ou a saia)", "as calças dela (ou a saia)"], h: ["as tuas calças", "as calças dele"] },
+                    sg:      { f: ["o teu soutien", "o soutien dela"] },
+                    dessous: { f: ["as tuas cuecas", "as cuecas dela"], h: ["os teus boxers", "os boxers dele"] }
+                },
+                short: { haut: { f: "parte de cima", h: "t-shirt" }, bas: { f: "calças / saia", h: "calças" }, sg: { f: "soutien" }, dessous: { f: "cuecas", h: "boxers" } },
+                all: { f: ["toda a tua roupa", "toda a roupa dela"], h: ["toda a tua roupa", "toda a roupa dele"] },
+                and: " e ",
+                some: "uma peça de roupa",
+                status: {
+                    nude: ["nua", "nu"], hiddenOff: ["sem cuecas por baixo", "sem boxers por baixo"], dressed: ["vestida", "vestido"],
+                    nudeBottom: ["nua da cintura para baixo", "nu da cintura para baixo"], topless: ["em topless", "de tronco nu"], inBra: ["de soutien", "de soutien"],
+                    topAndUnder: ["de parte de cima e cuecas", "de t-shirt e boxers"], inUnder: ["de cuecas", "de boxers"], underwear: ["em roupa interior", "em roupa interior"]
+                }
+            }
+        });
+        LANG_PACKS.pt.gages = {};
+        LANG_PACKS.it = ({
+            name: "Italiano",
+            ui: {
+                "lang.title": "Scegli la tua lingua",
+                "lang.subtitle": "Potrai cambiarla in qualsiasi momento dal Menu.",
+                "int.doux": "Dolce", "int.coquin": "Birichino", "int.torride": "Bollente",
+                "cam.global": "Vista d'insieme", "cam.zoomPawn": "🔍 Zoom pedina",
+                "board.hint": "Pizzica per lo zoom • Scorri per esplorare • Doppio tocco: vista d'insieme",
+                "board.start": "Partenza", "board.ecstasy": "L'ESTASI 💋",
+                "dice.roll": "Lancia il dado", "dice.rollShort": "Lancia • {name}",
+                "status.turn": "Tocca a {name} ({avatar})",
+                "status.rolling": "{name} lancia il dado...",
+                "status.rolled": "{name} fa {roll}!",
+                "status.bounce": "Rimbalzo sulla casella 69!",
+                "status.arrowPlus": "Freccia Slancio ({delta})!",
+                "status.arrowMinus": "Freccia Brivido ({delta})!",
+                "status.goose": "🦢 L'Oca raddoppia il lancio (+{roll})!",
+                "card.case": "Casella {n}", "card.caseShort": "C. {n}",
+                "card.arrowPlus": "Freccia Slancio", "card.arrowMinus": "Freccia Brivido",
+                "card.pair": "{performer}  ➜  con {partner}",
+                "card.for": "Per: {name} {avatar}",
+                "card.forWith": "Per: {name} {avatar} • con {partner}",
+                "card.other": "Altra penitenza ↻", "card.done": "Penitenza fatta • Continua", "dock.gage": "Penitenza",
+                "card.fallbackTitle": "Penitenza",
+                "timer.start": "Avvia", "timer.resume": "Riprendi", "timer.pause": "Pausa", "timer.done": "Finito ✨",
+                "tenue.noted": "👕 Annotato — ", "tenue.toNote": "👕 Annota quando è fatto — ",
+                "tenue.undo": "Annulla", "tenue.mark": "Annota ✓",
+                "menu.title": "Menu", "menu.language": "Lingua", "menu.sound": "Suono", "menu.on": "Attivo", "menu.off": "Spento",
+                "menu.cam": "Zoom automatico sulla pedina", "menu.players": "Giocatori, nomi e pedine",
+                "menu.playersCount": "{n} giocatori", "menu.tenues": "Abiti dei giocatori", "menu.rules": "Regole del gioco",
+                "menu.install": "Installa su iPhone / iPad", "menu.newGame": "Nuova partita", "menu.back": "Torna al gioco",
+                "close": "Chiudi",
+                "setup.title": "Gli Amanti in Gioco",
+                "setup.intro": "Quanti siete stasera? Scegliete i vostri nomi, il vostro sesso e i vostri talismani.",
+                "setup.players": "Giocatori", "setup.playerN": "Giocatore {n}",
+                "setup.warning": "Cambiare il numero di giocatori avvia una nuova partita.",
+                "setup.new": "Nuova partita", "setup.save": "Salva", "setup.start": "Inizia la partita",
+                "sex.f": "♀ Donna", "sex.h": "♂ Uomo",
+                "name.f1": "Lei", "name.h1": "Lui", "name.fN": "Giocatrice {n}", "name.hN": "Giocatore {n}",
+                "install.title": "Installa l'app iOS",
+                "install.intro": "Goditi il gioco a schermo intero, senza la barra di Safari, sul tuo **iPhone** o **iPad**:",
+                "install.step1": "Apri questa pagina in **Safari** sul tuo iPhone o iPad.",
+                "install.step2": "Tocca l'icona **Condividi** ⬆️ in basso (iPhone) o in alto a destra (iPad).",
+                "install.step3": "Scorri e scegli **«Aggiungi alla schermata Home»**, poi tocca **Aggiungi**.",
+                "install.note": "La partita viene salvata automaticamente sul tuo dispositivo, anche se chiudi l'app.",
+                "install.ok": "Perfetto!",
+                "rules.title": "Le Regole dell'Alcova",
+                "rules.intro": "Percorrete le **69 caselle** del grande cuore, turno dopo turno, fino al suo centro: **L'Estasi**.",
+                "rules.plusL": "↗ Frecce Slancio (+2 / +3):", "rules.plus": "Il desiderio ti spinge avanti lungo la freccia dorata.",
+                "rules.minusL": "↙ Frecce Brivido (-2 / -3):", "rules.minus": "Un contrattempo malizioso ti fa scivolare indietro, con una penitenza birichina.",
+                "rules.gooseL": "🦢 L'Oca Birichina:", "rules.goose": "Sulle caselle 9, 18, 27, 36, 45, 54 e 63 il tuo lancio viene subito raddoppiato!",
+                "rules.sensoryL": "🪶 Caselle sensoriali:", "rules.sensory": "Piuma, Bacio, Massaggio, Obbligo o Verità e penitenze a tempo.",
+                "rules.cameraL": "🔍 Telecamera:", "rules.camera": "Il tabellone zooma sulla pedina a ogni lancio. Tocca «Vista d'insieme» (o doppio tocco) per vedere tutto il cuore. Lo zoom automatico si disattiva dal Menu.",
+                "rules.players": "**Da 2 a 4 giocatori:** si gioca a turno. Ogni penitenza indica un partner («Con …») tra gli altri giocatori, e le penitenze riservate a una donna o a un uomo toccano solo alla persona giusta.",
+                "rules.tenues": "**Abiti:** il gioco ricorda cosa si è già tolto ciascuno. Gli abiti cadono in ordine (la parte di sopra o i pantaloni prima della biancheria intima), e una penitenza che richiede di essere nudi esce solo quando i vestiti sono stati tolti. Puoi correggere in Menu › Abiti.",
+                "rules.norepeat": "**Mai due volte la stessa penitenza:** una penitenza già uscita non torna più nella partita.",
+                "rules.bounce": "**Regola del rimbalzo (casella 69):** bisogna arrivare esattamente al 69. Ogni punto in più ti fa tornare indietro.",
+                "rules.back": "Torna al gioco",
+                "tenues.title": "Abiti",
+                "tenues.intro": "Il gioco annota cosa si toglie ciascuno e propone solo penitenze logiche. Tocca un capo per correggere (barrato = tolto).",
+                "victory.title": "Casella 69 • L'Estasi!", "victory.ultimate": "La Penitenza Suprema", "victory.replay": "Gioca ancora",
+                "victory.many": "{winner} ha raggiunto per primo/a la casella 69! {loser} è scelto/a per la penitenza suprema.",
+                "victory.two": "{winner} ha raggiunto la casella 69 prima di {loser}!",
+                "ultimate.doux": "{winner} vince un massaggio completo di 15 minuti a luce soffusa, con baci teneri ovunque desideri.",
+                "ultimate.coquin": "{winner} diventa il padrone o la padrona del gioco per 15 minuti: {loser} deve esaudire tutti i suoi desideri e le sue fantasie senza dire di no.",
+                "ultimate.torride": "L'estasi assoluta: {loser} deve regalare a {winner} un piacere totale e senza limiti per 20 minuti, interamente dedicato al suo orgasmo.",
+                "node.start": "Preludio", "node.goose": "Oca Birichina", "node.feather": "La Piuma", "node.kiss": "Il Bacio",
+                "node.massage": "Il Massaggio", "node.truth": "Obbligo o Verità", "node.oil": "Massaggio all'olio", "node.fever": "Febbre", "node.end": "L'Estasi",
+                "arrow.back": "Torni indietro! "
+            },
+            tenue: {
+                items: {
+                    haut:    { f: ["la tua maglia", "la sua maglia"], h: ["la tua maglietta", "la sua maglietta"] },
+                    bas:     { f: ["i tuoi pantaloni (o la gonna)", "i suoi pantaloni (o la gonna)"], h: ["i tuoi pantaloni", "i suoi pantaloni"] },
+                    sg:      { f: ["il tuo reggiseno", "il suo reggiseno"] },
+                    dessous: { f: ["le tue mutandine", "le sue mutandine"], h: ["i tuoi boxer", "i suoi boxer"] }
+                },
+                short: { haut: { f: "maglia", h: "maglietta" }, bas: { f: "pantaloni / gonna", h: "pantaloni" }, sg: { f: "reggiseno" }, dessous: { f: "mutandine", h: "boxer" } },
+                all: { f: ["tutti i tuoi vestiti", "tutti i suoi vestiti"], h: ["tutti i tuoi vestiti", "tutti i suoi vestiti"] },
+                and: " e ",
+                some: "un capo",
+                status: {
+                    nude: ["nuda", "nudo"], hiddenOff: ["senza mutandine sotto", "senza boxer sotto"], dressed: ["vestita", "vestito"],
+                    nudeBottom: ["nuda dalla vita in giù", "nudo dalla vita in giù"], topless: ["in topless", "a torso nudo"], inBra: ["in reggiseno", "in reggiseno"],
+                    topAndUnder: ["in maglia e mutandine", "in maglietta e boxer"], inUnder: ["in mutandine", "in boxer"], underwear: ["in intimo", "in intimo"]
+                }
+            }
+        });
+        LANG_PACKS.it.gages = {};
+        LANG_PACKS.pl = ({
+            name: "Polski",
+            ui: {
+                "lang.title": "Wybierz język",
+                "lang.subtitle": "Możesz go zmienić w każdej chwili w Menu.",
+                "int.doux": "Czule", "int.coquin": "Zmysłowo", "int.torride": "Gorąco",
+                "cam.global": "Cała plansza", "cam.zoomPawn": "🔍 Zoom na pionek",
+                "board.hint": "Zsuń palce, by przybliżyć • Przesuń, by zwiedzać • Podwójne stuknięcie: cała plansza",
+                "board.start": "Start", "board.ecstasy": "EKSTAZA 💋",
+                "dice.roll": "Rzuć kostką", "dice.rollShort": "Rzut • {name}",
+                "status.turn": "Kolej: {name} ({avatar})",
+                "status.rolling": "{name} rzuca kostką...",
+                "status.rolled": "{name} wyrzuca {roll}!",
+                "status.bounce": "Odbicie od pola 69!",
+                "status.arrowPlus": "Strzałka Zapału ({delta})!",
+                "status.arrowMinus": "Strzałka Dreszczu ({delta})!",
+                "status.goose": "🦢 Gęś podwaja rzut (+{roll})!",
+                "card.case": "Pole {n}", "card.caseShort": "P. {n}",
+                "card.arrowPlus": "Strzałka Zapału", "card.arrowMinus": "Strzałka Dreszczu",
+                "card.pair": "{performer}  ➜  z: {partner}",
+                "card.for": "Dla: {name} {avatar}",
+                "card.forWith": "Dla: {name} {avatar} • z: {partner}",
+                "card.other": "Inne zadanie ↻", "card.done": "Zadanie wykonane • Dalej", "dock.gage": "Zadanie",
+                "card.fallbackTitle": "Zadanie",
+                "timer.start": "Start", "timer.resume": "Wznów", "timer.pause": "Pauza", "timer.done": "Koniec ✨",
+                "tenue.noted": "👕 Zapisano — ", "tenue.toNote": "👕 Zapisz, gdy zrobione — ",
+                "tenue.undo": "Cofnij", "tenue.mark": "Zapisz ✓",
+                "menu.title": "Menu", "menu.language": "Język", "menu.sound": "Dźwięk", "menu.on": "Wł.", "menu.off": "Wył.",
+                "menu.cam": "Automatyczny zoom na pionek", "menu.players": "Gracze, imiona i pionki",
+                "menu.playersCount": "Graczy: {n}", "menu.tenues": "Ubrania graczy", "menu.rules": "Zasady gry",
+                "menu.install": "Zainstaluj na iPhonie / iPadzie", "menu.newGame": "Nowa gra", "menu.back": "Wróć do gry",
+                "close": "Zamknij",
+                "setup.title": "Kochankowie w Grze",
+                "setup.intro": "Ile was dziś jest? Wybierzcie imiona, płeć i talizmany.",
+                "setup.players": "Gracze", "setup.playerN": "Gracz {n}",
+                "setup.warning": "Zmiana liczby graczy rozpoczyna nową grę.",
+                "setup.new": "Nowa gra", "setup.save": "Zapisz", "setup.start": "Rozpocznij grę",
+                "sex.f": "♀ Kobieta", "sex.h": "♂ Mężczyzna",
+                "name.f1": "Ona", "name.h1": "On", "name.fN": "Graczka {n}", "name.hN": "Gracz {n}",
+                "install.title": "Zainstaluj aplikację iOS",
+                "install.intro": "Graj na pełnym ekranie, bez paska Safari, na swoim **iPhonie** lub **iPadzie**:",
+                "install.step1": "Otwórz tę stronę w **Safari** na iPhonie lub iPadzie.",
+                "install.step2": "Stuknij ikonę **Udostępnij** ⬆️ na dole (iPhone) lub w prawym górnym rogu (iPad).",
+                "install.step3": "Przewiń i wybierz **„Do ekranu początkowego”**, a potem stuknij **Dodaj**.",
+                "install.note": "Gra zapisuje się automatycznie na urządzeniu, nawet jeśli zamkniesz aplikację.",
+                "install.ok": "Świetnie!",
+                "rules.title": "Zasady Alkowy",
+                "rules.intro": "Przejdźcie **69 pól** wielkiego serca, runda po rundzie, aż do jego środka: **Ekstazy**.",
+                "rules.plusL": "↗ Strzałki Zapału (+2 / +3):", "rules.plus": "Pożądanie popycha cię do przodu wzdłuż złotej strzałki.",
+                "rules.minusL": "↙ Strzałki Dreszczu (-2 / -3):", "rules.minus": "Figlarna przeszkoda cofa cię, a do tego dostajesz pikantne zadanie.",
+                "rules.gooseL": "🦢 Figlarna Gęś:", "rules.goose": "Na polach 9, 18, 27, 36, 45, 54 i 63 twój rzut od razu się podwaja!",
+                "rules.sensoryL": "🪶 Pola zmysłowe:", "rules.sensory": "Piórko, Pocałunek, Masaż, Prawda czy wyzwanie i zadania na czas.",
+                "rules.cameraL": "🔍 Kamera:", "rules.camera": "Plansza przybliża pionek przy każdym rzucie. Stuknij „Cała plansza” (lub stuknij dwa razy), by zobaczyć całe serce. Automatyczny zoom wyłączysz w Menu.",
+                "rules.players": "**Od 2 do 4 graczy:** gracie po kolei. Każde zadanie wskazuje partnera („Z: …”) spośród pozostałych graczy, a zadania przeznaczone dla kobiety lub mężczyzny trafiają tylko do właściwej osoby.",
+                "rules.tenues": "**Ubrania:** gra pamięta, co każdy już zdjął. Ubrania znikają po kolei (góra lub spodnie przed bielizną), a zadanie wymagające nagości pojawia się dopiero, gdy ubrania są zdjęte. Poprawić można w Menu › Ubrania.",
+                "rules.norepeat": "**Nigdy dwa razy to samo zadanie:** zadanie, które już wypadło, nie wróci w tej grze.",
+                "rules.bounce": "**Zasada odbicia (pole 69):** trzeba trafić dokładnie na 69. Nadwyżka cofa cię o tyle pól.",
+                "rules.back": "Wróć do gry",
+                "tenues.title": "Ubrania",
+                "tenues.intro": "Gra zapisuje, co każdy zdejmuje, i proponuje tylko logiczne zadania. Stuknij część garderoby, by poprawić (przekreślone = zdjęte).",
+                "victory.title": "Pole 69 • Ekstaza!", "victory.ultimate": "Zadanie Ostateczne", "victory.replay": "Zagraj jeszcze raz",
+                "victory.many": "{winner} pierwszy/a dotarł(a) do pola 69! {loser} wykona zadanie ostateczne.",
+                "victory.two": "{winner} dotarł(a) do pola 69 przed: {loser}!",
+                "ultimate.doux": "{winner} wygrywa 15-minutowy masaż całego ciała w przyciemnionym świetle, z czułymi pocałunkami wszędzie, gdzie zechce.",
+                "ultimate.coquin": "{winner} zostaje panem lub panią gry na 15 minut: {loser} musi spełniać wszystkie jego/jej pragnienia i fantazje, nie mówiąc „nie”.",
+                "ultimate.torride": "Absolutna ekstaza: {loser} ofiarowuje osobie {winner} pełną, nieograniczoną rozkosz przez 20 minut, całkowicie poświęconą jej orgazmowi.",
+                "node.start": "Preludium", "node.goose": "Figlarna Gęś", "node.feather": "Piórko", "node.kiss": "Pocałunek",
+                "node.massage": "Masaż", "node.truth": "Prawda czy wyzwanie", "node.oil": "Masaż olejkiem", "node.fever": "Gorączka", "node.end": "Ekstaza",
+                "arrow.back": "Cofasz się! "
+            },
+            // Biernik: znaczniki w tekstach zawsze jako dopełnienie („Zdejmij {ton vêtement}”)
+            tenue: {
+                items: {
+                    haut:    { f: ["swoją bluzkę", "jej bluzkę"], h: ["swoją koszulkę", "jego koszulkę"] },
+                    bas:     { f: ["swoje spodnie (lub spódnicę)", "jej spodnie (lub spódnicę)"], h: ["swoje spodnie", "jego spodnie"] },
+                    sg:      { f: ["swój stanik", "jej stanik"] },
+                    dessous: { f: ["swoje majtki", "jej majtki"], h: ["swoje bokserki", "jego bokserki"] }
+                },
+                short: { haut: { f: "bluzka", h: "koszulka" }, bas: { f: "spodnie / spódnica", h: "spodnie" }, sg: { f: "stanik" }, dessous: { f: "majtki", h: "bokserki" } },
+                all: { f: ["wszystkie swoje ubrania", "wszystkie jej ubrania"], h: ["wszystkie swoje ubrania", "wszystkie jego ubrania"] },
+                and: " i ",
+                some: "jedną część garderoby",
+                status: {
+                    nude: ["naga", "nagi"], hiddenOff: ["bez majtek pod spodem", "bez bokserek pod spodem"], dressed: ["ubrana", "ubrany"],
+                    nudeBottom: ["naga od pasa w dół", "nagi od pasa w dół"], topless: ["topless", "z nagim torsem"], inBra: ["w staniku", "w staniku"],
+                    topAndUnder: ["w bluzce i majtkach", "w koszulce i bokserkach"], inUnder: ["w majtkach", "w bokserkach"], underwear: ["w bieliźnie", "w bieliźnie"]
+                }
+            }
+        });
+        LANG_PACKS.pl.gages = {};
+        LANG_PACKS.ja = ({
+            name: "日本語",
+            ui: {
+                "lang.title": "言語を選んでください",
+                "lang.subtitle": "メニューからいつでも変更できます。",
+                "int.doux": "やさしく", "int.coquin": "いたずら", "int.torride": "情熱",
+                "cam.global": "全体表示", "cam.zoomPawn": "🔍 コマにズーム",
+                "board.hint": "ピンチでズーム • スワイプで移動 • ダブルタップ：全体表示",
+                "board.start": "スタート", "board.ecstasy": "エクスタシー 💋",
+                "dice.roll": "サイコロを振る", "dice.rollShort": "振る • {name}",
+                "status.turn": "{name}の番です（{avatar}）",
+                "status.rolling": "{name}がサイコロを振っています...",
+                "status.rolled": "{name}は{roll}！",
+                "status.bounce": "69マスで跳ね返り！",
+                "status.arrowPlus": "勢いの矢印（{delta}）！",
+                "status.arrowMinus": "ゾクッと矢印（{delta}）！",
+                "status.goose": "🦢 ガチョウで出目が2倍（+{roll}）！",
+                "card.case": "{n}マス", "card.caseShort": "{n}マス",
+                "card.arrowPlus": "勢いの矢印", "card.arrowMinus": "ゾクッと矢印",
+                "card.pair": "{performer}  ➜  相手：{partner}",
+                "card.for": "対象：{name} {avatar}",
+                "card.forWith": "対象：{name} {avatar} • 相手：{partner}",
+                "card.other": "別のお題 ↻", "card.done": "お題クリア • 続ける", "dock.gage": "お題",
+                "card.fallbackTitle": "お題",
+                "timer.start": "スタート", "timer.resume": "再開", "timer.pause": "一時停止", "timer.done": "終了 ✨",
+                "tenue.noted": "👕 記録済み — ", "tenue.toNote": "👕 済んだら記録 — ",
+                "tenue.undo": "取り消す", "tenue.mark": "記録 ✓",
+                "menu.title": "メニュー", "menu.language": "言語", "menu.sound": "サウンド", "menu.on": "オン", "menu.off": "オフ",
+                "menu.cam": "コマへの自動ズーム", "menu.players": "プレイヤー・名前・コマ",
+                "menu.playersCount": "{n}人", "menu.tenues": "プレイヤーの服装", "menu.rules": "ゲームのルール",
+                "menu.install": "iPhone / iPad にインストール", "menu.newGame": "新しいゲーム", "menu.back": "ゲームに戻る",
+                "close": "閉じる",
+                "setup.title": "恋人たちのゲーム",
+                "setup.intro": "今夜は何人で遊びますか？ 名前、性別、お守りを選んでください。",
+                "setup.players": "プレイヤー", "setup.playerN": "プレイヤー{n}",
+                "setup.warning": "人数を変えると新しいゲームが始まります。",
+                "setup.new": "新しいゲーム", "setup.save": "保存", "setup.start": "ゲームを始める",
+                "sex.f": "♀ 女性", "sex.h": "♂ 男性",
+                "name.f1": "彼女", "name.h1": "彼", "name.fN": "プレイヤー{n}", "name.hN": "プレイヤー{n}",
+                "install.title": "iOSアプリとしてインストール",
+                "install.intro": "**iPhone** や **iPad** で、Safariのバーなしの全画面で遊べます：",
+                "install.step1": "iPhone または iPad の **Safari** でこのページを開きます。",
+                "install.step2": "画面下（iPhone）または右上（iPad）の **共有** アイコン ⬆️ をタップします。",
+                "install.step3": "スクロールして **「ホーム画面に追加」** を選び、**追加** をタップします。",
+                "install.note": "アプリを閉じても、ゲームは端末に自動で保存されます。",
+                "install.ok": "OK！",
+                "rules.title": "寝室のルール",
+                "rules.intro": "大きなハートの **69マス** を順番に進み、中心の **エクスタシー** を目指しましょう。",
+                "rules.plusL": "↗ 勢いの矢印（+2 / +3）：", "rules.plus": "欲望が金色の矢印に沿ってあなたを前へ押し出します。",
+                "rules.minusL": "↙ ゾクッと矢印（-2 / -3）：", "rules.minus": "いたずらなハプニングで後ろへ戻り、エッチなお題が待っています。",
+                "rules.gooseL": "🦢 いたずらガチョウ：", "rules.goose": "9・18・27・36・45・54・63マスでは、出目がすぐに2倍になります！",
+                "rules.sensoryL": "🪶 官能マス：", "rules.sensory": "羽根、キス、マッサージ、真実か挑戦か、タイマー付きのお題。",
+                "rules.cameraL": "🔍 カメラ：", "rules.camera": "サイコロを振るたびにボードがコマにズームします。「全体表示」をタップ（またはダブルタップ）するとハート全体が見えます。自動ズームはメニューでオフにできます。",
+                "rules.players": "**2〜4人で：** 順番にプレイします。お題ごとに他のプレイヤーから相手（「相手：…」）が選ばれ、女性向け・男性向けのお題は該当する人にだけ出ます。",
+                "rules.tenues": "**服装：** ゲームは各自が脱いだものを覚えています。服は順番に脱ぎ（下着より先にトップスやズボン）、裸になる必要があるお題は服を脱いだ後にしか出ません。メニュー › 服装で修正できます。",
+                "rules.norepeat": "**同じお題は二度出ません：** 一度出たお題はそのゲーム中もう出ません。",
+                "rules.bounce": "**跳ね返りルール（69マス）：** ちょうど69に止まる必要があります。超えた分だけ戻ります。",
+                "rules.back": "ゲームに戻る",
+                "tenues.title": "服装",
+                "tenues.intro": "ゲームは各自が脱いだものを記録し、筋の通ったお題だけを出します。服をタップして修正できます（取り消し線＝脱いだ）。",
+                "victory.title": "69マス • エクスタシー！", "victory.ultimate": "究極のお題", "victory.replay": "もう一度遊ぶ",
+                "victory.many": "{winner}が最初に69マスに到達！ 究極のお題は{loser}に決定です。",
+                "victory.two": "{winner}が{loser}より先に69マスに到達！",
+                "ultimate.doux": "{winner}は、薄暗い明かりの中で15分間の全身マッサージを受けられます。好きな場所にやさしいキスつきで。",
+                "ultimate.coquin": "{winner}は15分間ゲームの主人になります。{loser}はすべての願いと妄想を、ノーと言わずにかなえなければなりません。",
+                "ultimate.torride": "究極のエクスタシー：{loser}は{winner}に20分間、限りない快楽を捧げます。すべてはその人の絶頂のために。",
+                "node.start": "プレリュード", "node.goose": "いたずらガチョウ", "node.feather": "羽根", "node.kiss": "キス",
+                "node.massage": "マッサージ", "node.truth": "真実か挑戦か", "node.oil": "オイルマッサージ", "node.fever": "熱情", "node.end": "エクスタシー",
+                "arrow.back": "後ろに戻ります！ "
+            },
+            tenue: {
+                items: {
+                    haut:    { f: ["あなたのトップス", "彼女のトップス"], h: ["あなたのシャツ", "彼のシャツ"] },
+                    bas:     { f: ["あなたのズボン（またはスカート）", "彼女のズボン（またはスカート）"], h: ["あなたのズボン", "彼のズボン"] },
+                    sg:      { f: ["あなたのブラ", "彼女のブラ"] },
+                    dessous: { f: ["あなたのショーツ", "彼女のショーツ"], h: ["あなたのボクサーパンツ", "彼のボクサーパンツ"] }
+                },
+                short: { haut: { f: "トップス", h: "シャツ" }, bas: { f: "ズボン / スカート", h: "ズボン" }, sg: { f: "ブラ" }, dessous: { f: "ショーツ", h: "ボクサーパンツ" } },
+                all: { f: ["あなたの服すべて", "彼女の服すべて"], h: ["あなたの服すべて", "彼の服すべて"] },
+                and: "と", sep: "、",
+                some: "服を1枚",
+                status: {
+                    nude: ["裸", "裸"], hiddenOff: ["ノーパン", "ノーパン"], dressed: ["服を着ている", "服を着ている"],
+                    nudeBottom: ["下半身裸", "下半身裸"], topless: ["トップレス", "上半身裸"], inBra: ["ブラ姿", "ブラ姿"],
+                    topAndUnder: ["トップスとショーツ", "シャツとパンツ"], inUnder: ["ショーツ姿", "パンツ姿"], underwear: ["下着姿", "下着姿"]
+                }
+            }
+        });
+        LANG_PACKS.ja.gages = {};
+    </script>
+    <!-- LANG_PACKS:END -->
 
     <script>
         /**
@@ -744,7 +1573,89 @@
             { base: "#134e4a", aura: "rgba(15, 118, 110, 0.85)" }
         ];
         const AVATARS = ["🌹", "💋", "🦋", "🍒", "👠", "🔥", "🍷", "🎩", "🖤", "🦚", "😈", "👑"];
-        const SEX_LABELS = { f: "♀ Femme", h: "♂ Homme" };
+
+        // --- 0. LANGUES ---
+        // Les textes de chaque langue sont dans LANG_PACKS (bloc <script> « PACKS DE LANGUES » plus haut).
+        // Pour ajouter une langue : copier un pack (ui + tenue + gages), le traduire et ajouter son code ici.
+        const LANG_ORDER = ["fr", "nl", "en", "de", "es", "pt", "it", "pl", "ja"];
+        const LANG_KEY = "nuances69_lang";
+        let currentLang = "fr";
+
+        function langPack(lang = currentLang) { return LANG_PACKS[lang] || LANG_PACKS.fr; }
+        function availableLangs() { return LANG_ORDER.filter(l => LANG_PACKS[l]); }
+
+        // Texte d'interface : t("status.turn", { name: "Léa" })
+        function t(key, vars) {
+            let s = langPack().ui[key];
+            if (s === undefined) s = LANG_PACKS.fr.ui[key];
+            if (s === undefined) return key;
+            if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
+            return s;
+        }
+
+        // Mini-format des textes : **gras**
+        function mdToHtml(s) {
+            const esc = String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            return esc.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        }
+
+        function loadSavedLang() {
+            try {
+                const v = localStorage.getItem(LANG_KEY);
+                if (v && LANG_PACKS[v]) return v;
+            } catch (e) {}
+            return null;
+        }
+
+        // Langue de l'appareil (pour présélectionner le bon bouton au premier lancement)
+        function detectDeviceLang() {
+            const list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
+            for (const l of list) {
+                const code = String(l).toLowerCase().slice(0, 2);
+                if (LANG_PACKS[code]) return code;
+            }
+            return "fr";
+        }
+
+        function applyStaticI18n() {
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+            document.querySelectorAll("[data-i18n-md]").forEach(el => { el.innerHTML = mdToHtml(t(el.dataset.i18nMd)); });
+            document.querySelectorAll("[data-i18n-aria]").forEach(el => {
+                el.setAttribute("aria-label", t(el.dataset.i18nAria));
+                el.setAttribute("title", t(el.dataset.i18nAria));
+            });
+        }
+
+        // Prénoms par défaut (« Elle », « She », « Zij »…) : ils suivent la langue choisie
+        function defaultPlayerName(i, sex, lang = currentLang) {
+            const ui = langPack(lang).ui;
+            const first = sex === "f" ? ui["name.f1"] : ui["name.h1"];
+            const nth = (sex === "f" ? ui["name.fN"] : ui["name.hN"]).replace("{n}", i + 1);
+            return i < 2 ? first : nth;
+        }
+        function isDefaultPlayerName(name, i) {
+            const n = String(name || "").trim();
+            if (!n) return true;
+            return availableLangs().some(lang => ["f", "h"].some(sx => {
+                const ui = langPack(lang).ui;
+                return n === ui[sx === "f" ? "name.f1" : "name.h1"] ||
+                    n === ui[sx === "f" ? "name.fN" : "name.hN"].replace("{n}", i + 1);
+            }));
+        }
+        function localizeDefaultNames(players) {
+            const taken = [];
+            players.forEach((p, i) => {
+                if (isDefaultPlayerName(p.name, i)) {
+                    let name = defaultPlayerName(i, p.sex);
+                    if (taken.includes(name)) name = (p.sex === "f" ? t("name.fN") : t("name.hN")).replace("{n}", i + 1);
+                    p.name = name;
+                }
+                taken.push(p.name);
+            });
+        }
+
+        function sexLabel(sx) { return t(sx === "f" ? "sex.f" : "sex.h"); }
 
         // --- 1. GÉNÉRATION DYNAMIQUE DU MANIFEST PWA ---
         (function injectManifest() {
@@ -845,22 +1756,22 @@
         ];
 
         const SPECIAL_NODES = {
-            1:  { type: "start",   icon: "🥂", label: "Prélude" },
-            9:  { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            14: { type: "feather", icon: "🪶", label: "La Plume" },
-            18: { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            23: { type: "kiss",    icon: "💋", label: "Le Baiser" },
-            27: { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            31: { type: "massage", icon: "💆", label: "Le Massage" },
-            36: { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            41: { type: "truth",   icon: "🔮", label: "Vérité ou Défi" },
-            45: { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            50: { type: "feather", icon: "🪶", label: "La Plume" },
-            54: { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            59: { type: "massage", icon: "🕯️", label: "Massage Huilé" },
-            63: { type: "goose",   icon: "🦢", label: "Oie Coquine" },
-            65: { type: "kiss",    icon: "🔥", label: "Fièvre" },
-            69: { type: "end",     icon: "👑", label: "L'Extase" }
+            1:  { type: "start",   icon: "🥂", labelKey: "node.start" },
+            9:  { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            14: { type: "feather", icon: "🪶", labelKey: "node.feather" },
+            18: { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            23: { type: "kiss",    icon: "💋", labelKey: "node.kiss" },
+            27: { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            31: { type: "massage", icon: "💆", labelKey: "node.massage" },
+            36: { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            41: { type: "truth",   icon: "🔮", labelKey: "node.truth" },
+            45: { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            50: { type: "feather", icon: "🪶", labelKey: "node.feather" },
+            54: { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            59: { type: "massage", icon: "🕯️", labelKey: "node.oil" },
+            63: { type: "goose",   icon: "🦢", labelKey: "node.goose" },
+            65: { type: "kiss",    icon: "🔥", labelKey: "node.fever" },
+            69: { type: "end",     icon: "👑", labelKey: "node.end" }
         };
 
         // --- 4. BIBLIOTHÈQUE DES GAGES PAR INTENSITÉ ---
@@ -1215,19 +2126,25 @@
         function isOff(p, k) { return offList(p).includes(k); }
         function remainingItems(p, extraOff = []) { return tenueOrder(p).filter(k => !isOff(p, k) && !extraOff.includes(k)); }
         function isNude(p) { return remainingItems(p).length === 0; }
-        function itemShort(p, k) { return TENUE_ITEMS[k].short[sexKey(p)] || k; }
+        function tenuePack() { return langPack().tenue || LANG_PACKS.fr.tenue; }
+        function itemShort(p, k) {
+            const s = tenuePack().short[k] || LANG_PACKS.fr.tenue.short[k];
+            return (s && s[sexKey(p)]) || TENUE_ITEMS[k].short[sexKey(p)] || k;
+        }
 
         function tenueStatus(p) {
             const f = sexKey(p) === "f";
-            if (isNude(p)) return f ? "nue" : "nu";
+            const st = tenuePack().status;
+            const say = key => st[key][f ? 0 : 1];
+            if (isNude(p)) return say("nude");
             const haut = isOff(p, "haut"), bas = isOff(p, "bas"), dessous = isOff(p, "dessous");
             const torse = haut && (!f || isOff(p, "sg"));
-            if (dessous && !bas) return f ? "sans culotte dessous" : "sans boxer dessous";
-            if (!haut && !bas) return f ? "habillée" : "habillé";
-            if (dessous) return f ? "nue en bas" : "nu en bas";
-            if (!bas) return torse ? "torse nu" : "en soutien-gorge";
-            if (!haut) return f ? "en haut et culotte" : "en haut et boxer";
-            return torse ? (f ? "en culotte" : "en boxer") : "en sous-vêtements";
+            if (dessous && !bas) return say("hiddenOff");
+            if (!haut && !bas) return say("dressed");
+            if (dessous) return say("nudeBottom");
+            if (!bas) return torse ? say("topless") : say("inBra");
+            if (!haut) return say("topAndUnder");
+            return torse ? say("inUnder") : say("underwear");
         }
 
         const TENUE_CONDS = {
@@ -1265,8 +2182,9 @@
         function resolveTenue(ch, performer, partner) {
             const pending = new Map(); // joueur → clés retirées par ce gage
             const raw = new Set();     // joueurs qui retirent leur dessous en gardant le reste ({ton dessous caché})
+            const subs = {};           // repère → vêtements choisis, dans l'ordre d'apparition
             let ok = true;
-            const text = ch.desc.replace(TENUE_TOKEN, (all, poss, what) => {
+            ch.desc.replace(TENUE_TOKEN, (all, poss, what) => {
                 const mine = /^(tous tes|ton|ta|tes)$/i.test(poss);
                 const p = mine ? performer : partner;
                 if (!p) { ok = false; return all; }
@@ -1287,12 +2205,35 @@
                 }
                 if (!keys.length) { ok = false; return all; }
                 pending.set(p, already.concat(keys));
-                if (/^tous/i.test(poss) && keys.length >= 3) return mine ? "tous tes vêtements" : "tous ses vêtements";
-                const words = keys.map(k => TENUE_ITEMS[k][sexKey(p)][mine ? 0 : 1]);
-                return words.length > 1 ? words.slice(0, -1).join(", ") + " et " + words[words.length - 1] : words[0];
+                const tk = tokenKey(all);
+                (subs[tk] = subs[tk] || []).push({ player: p, mine, keys, all: /^tous/i.test(poss) });
+                return all;
             });
             if (!ok) return null;
-            return { text, changes: [...pending.entries()].map(([player, keys]) => ({ player, keys, raw: raw.has(player) })) };
+            return { subs, changes: [...pending.entries()].map(([player, keys]) => ({ player, keys, raw: raw.has(player) })) };
+        }
+
+        function tokenKey(token) { return normalizeKey(token).replace(/\s+/g, " "); }
+
+        // Mots des vêtements dans la langue choisie (« ton haut », « her top », « zijn broek »…)
+        function tenueWords(s) {
+            const T = tenuePack(), fr = LANG_PACKS.fr.tenue, sx = sexKey(s.player), who = s.mine ? 0 : 1;
+            if (s.all && s.keys.length >= 3) return (T.all || fr.all)[sx][who];
+            const words = s.keys.map(k => ((T.items[k] && T.items[k][sx]) || fr.items[k][sx])[who]);
+            return words.length > 1 ? words.slice(0, -1).join(T.sep || ", ") + T.and + words[words.length - 1] : words[0];
+        }
+
+        // Remplace les repères {ton vêtement}… d'un texte (dans n'importe quelle langue) par les vêtements choisis.
+        // Le n-ième repère identique reçoit le n-ième choix, même si la traduction change l'ordre des phrases.
+        function fillTenueTokens(desc, subs) {
+            const seen = {};
+            return desc.replace(TENUE_TOKEN, all => {
+                const tk = tokenKey(all);
+                const list = (subs && subs[tk]) || [];
+                const n = seen[tk] = (seen[tk] || 0) + 1;
+                const s = list[n - 1] || list[list.length - 1];
+                return s ? tenueWords(s) : tenuePack().some;
+            });
         }
 
         // Le gage est-il logique vu ce que chacun porte encore ?
@@ -1317,10 +2258,12 @@
             }
         }
 
-        // Transforme les lignes [Type, Titre, Description, Minuteur, Pour qui, Tenue requise] en dictionnaire utilisé par le jeu
-        function buildChallengeLevel(rows) {
+        // Transforme les lignes [Type, Titre, Description, Minuteur, Pour qui, Tenue requise, ID, Traductions]
+        // en dictionnaire utilisé par le jeu. L'ID (D01, C12, T99…) relie un gage à ses traductions.
+        const LEVEL_PREFIX = { doux: "D", coquin: "C", torride: "T" };
+        function buildChallengeLevel(rows, prefix = "") {
             const level = {};
-            rows.forEach(row => {
+            rows.forEach((row, idx) => {
                 const cat = GAGE_TYPES[normalizeKey(row[0])] || "default";
                 const title = String(row[1] || "").trim();
                 const desc = String(row[2] || "").trim();
@@ -1328,16 +2271,38 @@
                 const time = parseInt(row[3], 10) || 0;
                 const who = normalizeKey(row[4]) || "tous";
                 const tenue = parseTenue(row[5] || "");
-                (level[cat] = level[cat] || []).push({ title: title || "Gage", desc, time, who, tenue });
+                const id = String(row[6] || "").trim().toUpperCase() || (prefix + String(idx + 1).padStart(2, "0"));
+                const tr = row[7] && typeof row[7] === "object" ? row[7] : null;
+                (level[cat] = level[cat] || []).push({ id, title: title || "Gage", desc, time, who, tenue, tr });
             });
             return level;
         }
 
         const CHALLENGES = {
-            doux: buildChallengeLevel(GAGES.doux),
-            coquin: buildChallengeLevel(GAGES.coquin),
-            torride: buildChallengeLevel(GAGES.torride)
+            doux: buildChallengeLevel(GAGES.doux, "D"),
+            coquin: buildChallengeLevel(GAGES.coquin, "C"),
+            torride: buildChallengeLevel(GAGES.torride, "T")
         };
+
+        // Titres français de la copie intégrée : une traduction intégrée n'est utilisée que si le gage
+        // du Sheet porte toujours le même titre (sinon le gage a changé et la traduction serait fausse).
+        const EMBEDDED_FR_TITLES = {};
+        Object.entries(GAGES).forEach(([lvl, rows]) => rows.forEach((r, i) => {
+            EMBEDDED_FR_TITLES[LEVEL_PREFIX[lvl] + String(i + 1).padStart(2, "0")] = normalizeKey(r[1]);
+        }));
+
+        // Titre et texte du gage dans la langue choisie (repli sur le français si pas de traduction)
+        function challengeText(ch, lang = currentLang) {
+            if (lang !== "fr") {
+                let tr = ch.tr && ch.tr[lang];
+                if (!tr || !tr[1]) {
+                    const packed = langPack(lang).gages && langPack(lang).gages[ch.id];
+                    if (packed && EMBEDDED_FR_TITLES[ch.id] === normalizeKey(ch.title)) tr = packed;
+                }
+                if (tr && tr[1]) return { title: tr[0] || ch.title, desc: tr[1], lang };
+            }
+            return { title: ch.title, desc: ch.desc, lang: "fr" };
+        }
 
         // Flèches : en avant, pas de « Tu avances / Tu bondis… » ; en arrière, le texte commence toujours par « Tu recules, »
         const ADVANCE_PREFIXES = [
@@ -1357,7 +2322,14 @@
             }
             return t;
         }
-        function formatArrowText(desc, category) {
+        function formatArrowText(desc, category, lang = "fr") {
+            if (lang !== "fr") {
+                // Les traductions sont écrites sans « tu avances / tu recules » : l'app ajoute le début de phrase
+                const d = desc.trim();
+                if (category === "plus") return d.charAt(0).toUpperCase() + d.slice(1);
+                if (category === "minus") return t("arrow.back") + d.charAt(0).toUpperCase() + d.slice(1);
+                return d;
+            }
             if (category === "plus") {
                 const t = stripPrefixes(desc, ADVANCE_PREFIXES);
                 return t.charAt(0).toUpperCase() + t.slice(1);
@@ -1386,7 +2358,7 @@
             id: "1J91y_WMOpqwWzjTwyDoTuoylCM_Imk4LD89ZhzM-q4M",
             onglets: { doux: "Doux", coquin: "Coquin", torride: "Torride" }
         };
-        const GAGES_CACHE_KEY = "nuances69_gages_cache_v2";
+        const GAGES_CACHE_KEY = "nuances69_gages_cache_v3";
 
         function parseCSV(text) {
             const rows = [];
@@ -1413,17 +2385,32 @@
             const table = parseCSV(csvText);
             if (table.length < 2) return [];
             const head = table[0].map(normalizeKey);
-            const col = (...names) => head.findIndex(h => names.some(n => h.startsWith(n)));
+            const TR_HEAD = /^(titre|title|description)\s*[\(\[]?\s*([a-z]{2})\s*[\)\]]?$/;
+            const col = (...names) => {
+                const exact = head.findIndex(h => names.includes(h));
+                return exact >= 0 ? exact : head.findIndex(h => !TR_HEAD.test(h) && names.some(n => h.startsWith(n)));
+            };
             const cType = col("type"), cTitle = col("titre"), cDesc = col("description"),
-                  cTime = col("minuteur", "duree"), cWho = col("pour qui"), cActive = col("actif"), cTenue = col("tenue");
+                  cTime = col("minuteur", "duree"), cWho = col("pour qui"), cActive = col("actif"), cTenue = col("tenue"), cId = col("id");
             if (cTitle < 0 || cDesc < 0) return [];
+            // Colonnes de traduction facultatives : « Titre NL », « Description NL », « Titre (EN) »…
+            const trCols = [];
+            head.forEach((h, i) => {
+                const m = h.match(TR_HEAD);
+                if (m && m[2] !== "fr") trCols.push({ i, lang: m[2], part: m[1] === "description" ? 1 : 0 });
+            });
             return table.slice(1)
                 .filter(r => cActive < 0 || ["oui", "yes", "true", "1", "x"].includes(normalizeKey(r[cActive])))
-                .map(r => [r[cType] || "default", r[cTitle], r[cDesc], r[cTime] || 0, cWho >= 0 ? r[cWho] : "Tous", cTenue >= 0 ? (r[cTenue] || "") : ""]);
+                .map(r => {
+                    const tr = {};
+                    trCols.forEach(c => { const v = String(r[c.i] || "").trim(); if (v) (tr[c.lang] = tr[c.lang] || ["", ""])[c.part] = v; });
+                    return [r[cType] || "default", r[cTitle], r[cDesc], r[cTime] || 0, cWho >= 0 ? r[cWho] : "Tous",
+                        cTenue >= 0 ? (r[cTenue] || "") : "", cId >= 0 ? r[cId] : "", tr];
+                });
         }
 
         function applyImportedLevel(level, rows) {
-            const built = buildChallengeLevel(rows);
+            const built = buildChallengeLevel(rows, LEVEL_PREFIX[level]);
             if (built.default && built.default.length) CHALLENGES[level] = built;
         }
 
@@ -1553,11 +2540,13 @@
         function refreshMenu() {
             const snd = document.getElementById("menu-sound-state");
             const camEl = document.getElementById("menu-cam-state");
-            snd.textContent = state.soundEnabled ? "Activé" : "Coupé";
+            snd.textContent = state.soundEnabled ? t("menu.on") : t("menu.off");
             snd.classList.toggle("off", !state.soundEnabled);
-            camEl.textContent = state.autoFollowCamera ? "Activé" : "Coupé";
+            camEl.textContent = state.autoFollowCamera ? t("menu.on") : t("menu.off");
             camEl.classList.toggle("off", !state.autoFollowCamera);
-            document.getElementById("menu-players-count").textContent = `${state.players.length} joueurs`;
+            document.getElementById("menu-players-count").textContent = t("menu.playersCount", { n: state.players.length });
+            const langEl = document.getElementById("menu-lang-state");
+            if (langEl) langEl.textContent = langPack().name;
         }
 
         function toggleSound() {
@@ -1774,7 +2763,7 @@
 
             // Cases 1 à 68
             for (let i = 1; i < TOTAL_CASES; i++) {
-                const t = nodePositions[i];
+                const tile = nodePositions[i];
                 const specialInfo = SPECIAL_NODES[i];
                 const arrowInfo = BOARD_ARROWS.find(a => a.from === i);
                 const st = caseStyle(i);
@@ -1784,12 +2773,12 @@
                 g.addEventListener("click", onCaseTap(i));
 
                 svgEl("polygon", {
-                    points: t.poly.map(p => p.map(v => v.toFixed(1)).join(",")).join(" "),
+                    points: tile.poly.map(p => p.map(v => v.toFixed(1)).join(",")).join(" "),
                     fill: st.fill, stroke: st.stroke, "stroke-width": st.sw, "stroke-linejoin": "round",
                     class: "case-shape"
                 }, g);
 
-                const label = svgEl("g", { transform: `translate(${t.x.toFixed(1)}, ${t.y.toFixed(1)})`, "pointer-events": "none" }, g);
+                const label = svgEl("g", { transform: `translate(${tile.x.toFixed(1)}, ${tile.y.toFixed(1)})`, "pointer-events": "none" }, g);
                 let icon = null;
                 if (i === 1) icon = "🥂";
                 else if (arrowInfo) icon = null;
@@ -1797,7 +2786,7 @@
 
                 if (icon) {
                     const num = svgEl("text", { y: -9, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "#f3d5b5", "font-family": "Montserrat, sans-serif" }, label);
-                    num.textContent = i === 1 ? "Départ" : i;
+                    num.textContent = i === 1 ? t("board.start") : i;
                     const ic = svgEl("text", { y: 17, "text-anchor": "middle", "font-size": 21 }, label);
                     ic.textContent = icon;
                 } else if (arrowInfo) {
@@ -1823,7 +2812,7 @@
             const t69 = svgEl("text", { x: c.cx, y: c.cy - 2, "text-anchor": "middle", "font-family": "Cormorant Garamond, serif", "font-size": 64, "font-weight": 700, fill: "#ffffff", "pointer-events": "none" }, g69);
             t69.textContent = "69";
             const s69 = svgEl("text", { x: c.cx, y: c.cy + 32, "text-anchor": "middle", "font-size": 15, "font-weight": 600, fill: "#f3d5b5", "letter-spacing": 2, "font-family": "Montserrat, sans-serif", "pointer-events": "none" }, g69);
-            s69.textContent = "L'EXTASE 💋";
+            s69.textContent = t("board.ecstasy");
 
             // Flèches Élan (+2/+3) et Frisson (-2/-3) par-dessus les cases
             BOARD_ARROWS.forEach(arrow => {
@@ -2103,7 +3092,7 @@
             const btn = document.getElementById("btn-global-view");
             if (!btn) return;
             const zoomed = (cam.goal ? cam.goal.s : cam.s) > 1.15;
-            const label = zoomed ? "Vue globale" : "🔍 Zoom pion";
+            const label = zoomed ? t("cam.global") : t("cam.zoomPawn");
             if (cam.globalLabel !== label) { btn.textContent = label; cam.globalLabel = label; }
         }
 
@@ -2355,11 +3344,11 @@
 
             followToken(state.currentPlayerIdx); // la caméra rejoint le pion pendant que le dé roule
             playSoundEffect("dice");
-            setStatusText(`${player.name} lance le dé...`);
+            setStatusText(t("status.rolling", { name: player.name }));
 
             await sleep(880);
 
-            setStatusText(`${player.name} obtient ${roll} !`);
+            setStatusText(t("status.rolled", { name: player.name, roll }));
             await movePlayerSteps(player, roll, false);
         }
 
@@ -2373,7 +3362,7 @@
 
                 if (prevCase === TOTAL_CASES && direction === 1) {
                     direction = -1;
-                    setStatusText("Rebond sur la case 69 !");
+                    setStatusText(t("status.bounce"));
                     playSoundEffect("bounce");
                     triggerLandingRipple(TOTAL_CASES, "#fb7185");
                     await sleep(220);
@@ -2418,7 +3407,7 @@
             const arrow = BOARD_ARROWS.find(a => a.from === currentCase);
             if (arrow) {
                 const isPlus = arrow.type === "plus";
-                setStatusText(isPlus ? `Flèche Élan (${arrow.delta}) !` : `Flèche Frisson (${arrow.delta}) !`);
+                setStatusText(t(isPlus ? "status.arrowPlus" : "status.arrowMinus", { delta: arrow.delta }));
                 await sleep(320);
 
                 playSoundEffect(isPlus ? "plus" : "minus");
@@ -2438,7 +3427,7 @@
             // 3. Oie Coquine (double le lancer)
             const special = SPECIAL_NODES[currentCase];
             if (special && special.type === "goose" && !alreadyDoubled) {
-                setStatusText(`🦢 L'Oie double le lancer (+${lastRoll}) !`);
+                setStatusText(t("status.goose", { roll: lastRoll }));
                 triggerLandingRipple(currentCase, "#f0abfc");
                 playSoundEffect("plus");
                 await sleep(750);
@@ -2462,7 +3451,7 @@
             saveStateToLocal();
 
             const nextPlayer = state.players[state.currentPlayerIdx];
-            setStatusText(`Tour de ${nextPlayer.name} (${nextPlayer.avatar})`);
+            setStatusText(turnText(nextPlayer));
         }
 
         // --- 9. AFFICHAGE DES GAGES & TIROIR BOTTOM SHEET IPHONE ---
@@ -2522,10 +3511,10 @@
                 const txt = document.createElement("span");
                 txt.className = "flex-1";
                 const what = pendingTenue.changes.map(c => `${c.player.name} : ${c.keys.map(k => itemShort(c.player, k)).join(" + ")}`).join(" • ");
-                txt.textContent = (pendingTenue.applied ? "👕 Noté — " : "👕 À noter si c'est fait — ") + what;
+                txt.textContent = (pendingTenue.applied ? t("tenue.noted") : t("tenue.toNote")) + what;
                 const btn = document.createElement("button");
                 btn.className = "tenue-btn" + (pendingTenue.applied ? "" : " on");
-                btn.textContent = pendingTenue.applied ? "Annuler" : "Noter ✓";
+                btn.textContent = pendingTenue.applied ? t("tenue.undo") : t("tenue.mark");
                 btn.onclick = togglePendingTenue;
                 el.append(txt, btn);
             });
@@ -2544,6 +3533,8 @@
             return partner;
         }
 
+        let currentCard = null; // gage affiché : { caseNum, category, challenge, performer, partner, resolved }
+
         function displayChallengeForCase(caseNum, category = "default", activePlayer = null, keepPartner = false, landing = false) {
             lastDisplayedCase = caseNum;
             lastDisplayedCategory = category;
@@ -2553,7 +3544,7 @@
             lastPerformerId = performer.id;
             const partner = pickPartner(performer, keepPartner);
             const challenge = pickChallenge(category, performer, partner);
-            const resolved = resolveTenue(challenge, performer, partner) || { text: challenge.desc.replace(TENUE_TOKEN, "un vêtement"), changes: [] };
+            const resolved = resolveTenue(challenge, performer, partner) || { subs: {}, changes: [] };
             if (landing) {
                 const key = gageKey(challenge);
                 if (!state.usedGages.includes(key)) state.usedGages.push(key);
@@ -2564,26 +3555,54 @@
             }
             renderTenueNote();
 
-            const special = SPECIAL_NODES[caseNum];
-            const arrow = BOARD_ARROWS.find(a => a.from === caseNum);
+            currentCard = { caseNum, category, challenge, performer, partner, resolved };
 
-            let badgeLabel = `Case ${caseNum}`;
+            // Minuteur intégré
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            state.timerRemaining = challenge.time > 0 ? challenge.time : 0;
+            renderChallengeCard();
+            updateTimerDisplay();
+
+            // Sur iPhone Portrait, ouvrir automatiquement le tiroir de gage après un déplacement
+            if (window.innerWidth < 768 && caseNum > 1) {
+                openChallengeSheet();
+            }
+        }
+
+        // Libellé du bouton du minuteur selon son état
+        function timerLabel() {
+            if (state.timerInterval) return t("timer.pause");
+            if (state.timerRemaining <= 0) return t("timer.done");
+            const full = currentCard && currentCard.challenge.time;
+            return state.timerRemaining < full ? t("timer.resume") : t("timer.start");
+        }
+
+        // Affiche (ou réaffiche, après un changement de langue) le gage courant sans en tirer un autre
+        function renderChallengeCard() {
+            if (!currentCard) return;
+            const { caseNum, category, challenge, performer, partner, resolved } = currentCard;
+            const special = SPECIAL_NODES[caseNum];
+            const txt = challengeText(challenge);
+
+            let badgeLabel = t("card.case", { n: caseNum });
             let icon = "🌹";
 
             if (category === "plus") {
-                badgeLabel += ` • Flèche Élan`;
+                badgeLabel += ` • ${t("card.arrowPlus")}`;
                 icon = "↗️";
             } else if (category === "minus") {
-                badgeLabel += ` • Flèche Frisson`;
+                badgeLabel += ` • ${t("card.arrowMinus")}`;
                 icon = "↙️";
             } else if (special) {
-                badgeLabel += ` • ${special.label}`;
+                badgeLabel += ` • ${t(special.labelKey)}`;
                 icon = special.icon;
             }
 
             // Mise à jour synchrone Mobile (Bottom Sheet) & iPad (Split View)
             document.getElementById("dock-challenge-icon").textContent = icon;
 
+            const desc = formatArrowText(fillTenueTokens(txt.desc, resolved.subs), category, txt.lang);
             ["mobile", "ipad"].forEach(view => {
                 const badgeEl = document.getElementById(`challenge-badge-${view}`);
                 const iconEl = document.getElementById(`challenge-icon-${view}`);
@@ -2591,38 +3610,30 @@
                 const descEl = document.getElementById(`challenge-desc-${view}`);
                 if (badgeEl) badgeEl.textContent = `${badgeLabel} • ${performer.name}`;
                 if (iconEl) iconEl.textContent = icon;
-                if (titleEl) titleEl.textContent = challenge.title;
-                if (descEl) descEl.textContent = formatArrowText(resolved.text, category);
+                if (titleEl) titleEl.textContent = txt.title;
+                if (descEl) descEl.textContent = desc;
             });
 
-            const pairText = partner ? `${performer.avatar} ${performer.name}  ➜  avec ${partner.avatar} ${partner.name}` : "";
+            const pairText = partner ? t("card.pair", { performer: `${performer.avatar} ${performer.name}`, partner: `${partner.avatar} ${partner.name}` }) : "";
             ["mobile", "ipad"].forEach(view => {
                 const pairEl = document.getElementById(`challenge-pair-${view}`);
                 if (pairEl) pairEl.textContent = pairText;
             });
             const pTagIpad = document.getElementById("challenge-player-tag-ipad");
-            if (pTagIpad) pTagIpad.textContent = partner ? `Pour : ${performer.name} ${performer.avatar} • avec ${partner.name}` : `Pour : ${performer.name} ${performer.avatar}`;
+            if (pTagIpad) pTagIpad.textContent = partner
+                ? t("card.forWith", { name: performer.name, avatar: performer.avatar, partner: partner.name })
+                : t("card.for", { name: performer.name, avatar: performer.avatar });
 
-            // Minuteur intégré
-            clearInterval(state.timerInterval);
-            state.timerInterval = null;
             ["mobile", "ipad"].forEach(view => {
                 const box = document.getElementById(`timer-box-${view}`);
                 const btn = document.getElementById(`btn-timer-toggle-${view}`);
                 if (challenge.time && challenge.time > 0) {
-                    state.timerRemaining = challenge.time;
-                    if (btn) btn.textContent = "Démarrer";
+                    if (btn) btn.textContent = timerLabel();
                     if (box) box.classList.remove("hidden");
                 } else if (box) {
                     box.classList.add("hidden");
                 }
             });
-            updateTimerDisplay();
-
-            // Sur iPhone Portrait, ouvrir automatiquement le tiroir de gage après un déplacement
-            if (window.innerWidth < 768 && caseNum > 1) {
-                openChallengeSheet();
-            }
         }
 
         function previewCaseChallenge(caseNum) {
@@ -2676,12 +3687,12 @@
                 state.timerInterval = null;
                 ["mobile", "ipad"].forEach(v => {
                     const b = document.getElementById(`btn-timer-toggle-${v}`);
-                    if (b) b.textContent = "Reprendre";
+                    if (b) b.textContent = t("timer.resume");
                 });
             } else {
                 ["mobile", "ipad"].forEach(v => {
                     const b = document.getElementById(`btn-timer-toggle-${v}`);
-                    if (b) b.textContent = "Pause";
+                    if (b) b.textContent = t("timer.pause");
                 });
                 state.timerInterval = setInterval(() => {
                     state.timerRemaining--;
@@ -2691,7 +3702,7 @@
                         state.timerInterval = null;
                         ["mobile", "ipad"].forEach(v => {
                             const b = document.getElementById(`btn-timer-toggle-${v}`);
-                            if (b) b.textContent = "Terminé ✨";
+                            if (b) b.textContent = t("timer.done");
                         });
                         playSoundEffect("bell");
                     }
@@ -2747,7 +3758,7 @@
                 nm.textContent = p.name;
                 const ps = document.createElement("div");
                 ps.className = "text-[10px] text-rose-200/80 font-medium mt-0.5";
-                ps.textContent = compact ? `C. ${p.pos}` : `Case ${p.pos}`;
+                ps.textContent = t(compact ? "card.caseShort" : "card.case", { n: p.pos });
                 box.append(nm, ps);
                 btn.append(av, box);
                 wrap.appendChild(btn);
@@ -2755,7 +3766,7 @@
 
             const activeP = state.players[state.currentPlayerIdx];
             const rollLabel = document.getElementById("btn-roll-label-mobile");
-            if (rollLabel) rollLabel.textContent = `Lancer • ${activeP.name}`;
+            if (rollLabel) rollLabel.textContent = t("dice.rollShort", { name: activeP.name });
         }
 
         function renderTenuesModal() {
@@ -2847,13 +3858,12 @@
         function setSetupSex(i, sex) {
             readSetupInputs();
             const p = setupDraft.players[i];
-            // Si le prénom est encore celui par défaut, on l'accorde au sexe choisi
-            const defaults = { f: ["Elle", `Joueuse ${i + 1}`], h: ["Lui", `Joueur ${i + 1}`] };
-            const isDefault = [...defaults.f, ...defaults.h].includes(p.name.trim()) || !p.name.trim();
+            // Si le prénom est encore celui par défaut (dans n'importe quelle langue), on l'accorde au sexe choisi
+            const isDefault = isDefaultPlayerName(p.name, i);
             p.sex = sex;
-            if (isDefault) p.name = (i < 2 ? defaults[sex][0] : defaults[sex][1]);
+            if (isDefault) p.name = defaultPlayerName(i, sex);
             if (i < 2 && isDefault && setupDraft.players.filter((q, k) => k < setupDraft.count && q.name === p.name).length > 1) {
-                p.name = defaults[sex][1];
+                p.name = (sex === "f" ? t("name.fN") : t("name.hN")).replace("{n}", i + 1);
             }
             renderSetup();
         }
@@ -2884,13 +3894,13 @@
                 top.className = "flex items-center gap-2 mb-2";
                 const lbl = document.createElement("span");
                 lbl.className = "text-[11px] uppercase tracking-wider text-[#f3d5b5] shrink-0";
-                lbl.textContent = `Joueur ${i + 1}`;
+                lbl.textContent = t("setup.playerN", { n: i + 1 });
                 const sexWrap = document.createElement("div");
                 sexWrap.className = "ml-auto flex items-center bg-[#2b0815] rounded-full p-0.5 border border-[#f3d5b5]/25 text-xs";
                 ["f", "h"].forEach(sx => {
                     const b = document.createElement("button");
                     b.type = "button";
-                    b.textContent = SEX_LABELS[sx];
+                    b.textContent = sexLabel(sx);
                     b.className = "px-3 py-1 rounded-full transition font-semibold whitespace-nowrap " + (p.sex === sx ? "bg-[#b81d43] text-white" : "text-rose-200/70");
                     b.onclick = () => setSetupSex(i, sx);
                     sexWrap.appendChild(b);
@@ -2926,7 +3936,7 @@
 
             const countChanged = d.count !== state.players.length;
             document.getElementById("setup-warning").classList.toggle("hidden", !(countChanged && gameInProgress() && !d.firstLaunch));
-            document.getElementById("btn-setup-save").textContent = (d.firstLaunch || (countChanged && gameInProgress())) ? "Commencer la partie" : "Enregistrer";
+            document.getElementById("btn-setup-save").textContent = (d.firstLaunch || (countChanged && gameInProgress())) ? t("setup.start") : t("setup.save");
         }
 
         function saveSetup(forceNewGame) {
@@ -2935,7 +3945,7 @@
             const countChanged = d.count !== state.players.length;
             const newPlayers = d.players.slice(0, d.count).map((p, i) => ({
                 id: i + 1,
-                name: (p.name || "").trim() || PLAYER_DEFAULTS[i].name,
+                name: (p.name || "").trim() || defaultPlayerName(i, p.sex),
                 sex: p.sex,
                 avatar: p.avatar,
                 pos: state.players[i] && !countChanged && !forceNewGame ? state.players[i].pos : 1,
@@ -2950,25 +3960,26 @@
                 updateUIPlayers();
                 renderTokens();
                 saveStateToLocal();
-                setStatusText(`Tour de ${state.players[state.currentPlayerIdx].name} (${state.players[state.currentPlayerIdx].avatar})`);
+                setStatusText(turnText(state.players[state.currentPlayerIdx]));
             }
         }
 
         function showVictoryModal(winner) {
             const others = state.players.filter(p => p.id !== winner.id);
             const loser = others[Math.floor(Math.random() * others.length)];
-            document.getElementById("victory-winner-text").textContent = others.length > 1
-                ? `${winner.avatar} ${winner.name} a atteint la Case 69 en premier ! ${loser.avatar} ${loser.name} est désigné(e) pour le gage ultime.`
-                : `${winner.avatar} ${winner.name} a atteint la Case 69 avant ${loser.name} !`;
-
-            const ultimateGages = {
-                doux: `${winner.name} remporte un massage intégral de 15 minutes à la lumière tamisée, accompagné de tendres baisers partout où il/elle le souhaite.`,
-                coquin: `${winner.name} devient le maître ou la maîtresse du jeu pendant 15 minutes : ${loser.name} doit exaucer tous ses désirs et fantasmes sans dire non.`,
-                torride: `L'Extase absolue : ${loser.name} doit offrir à ${winner.name} un plaisir total et sans limite pendant 20 minutes, entièrement dédié à son orgasme.`
-            };
-
-            document.getElementById("victory-gage-text").textContent = ultimateGages[state.intensity];
+            lastVictory = { winner, loser, many: others.length > 1 };
+            renderVictory();
             openModal("modal-victory");
+        }
+
+        let lastVictory = null;
+        function renderVictory() {
+            if (!lastVictory) return;
+            const { winner, loser, many } = lastVictory;
+            document.getElementById("victory-winner-text").textContent = many
+                ? t("victory.many", { winner: `${winner.avatar} ${winner.name}`, loser: `${loser.avatar} ${loser.name}` })
+                : t("victory.two", { winner: `${winner.avatar} ${winner.name}`, loser: loser.name });
+            document.getElementById("victory-gage-text").textContent = t("ultimate." + state.intensity, { winner: winner.name, loser: loser.name });
         }
 
         function resetGame() {
@@ -3007,8 +4018,84 @@
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
+        function turnText(p) { return t("status.turn", { name: p.name, avatar: p.avatar }); }
+
+        // --- 12. CHOIX DE LA LANGUE ---
+        function isModalOpen(id) { const el = document.getElementById(id); return el && !el.classList.contains("hidden"); }
+
+        let langPickerFirstLaunch = false;
+        function openLanguagePicker(firstLaunch) {
+            langPickerFirstLaunch = !!firstLaunch;
+            document.getElementById("btn-lang-close").style.visibility = firstLaunch ? "hidden" : "visible";
+            renderLanguagePicker();
+            const el = document.getElementById("modal-lang");
+            el.classList.remove("hidden");
+            el.classList.add("flex");
+        }
+
+        function renderLanguagePicker() {
+            const wrap = document.getElementById("lang-list");
+            wrap.innerHTML = "";
+            availableLangs().forEach(code => {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.className = "menu-row lang-row" + (code === currentLang ? " on" : "");
+                b.lang = code;
+                const c = document.createElement("span");
+                c.className = "lang-code";
+                c.textContent = code.toUpperCase();
+                const n = document.createElement("span");
+                n.className = "flex-1 text-left";
+                n.textContent = LANG_PACKS[code].name;
+                b.append(c, n);
+                if (code === currentLang) {
+                    const ok = document.createElement("span");
+                    ok.className = "text-[#f3d5b5]";
+                    ok.textContent = "✓";
+                    b.append(ok);
+                }
+                b.onclick = () => chooseLanguage(code);
+                wrap.appendChild(b);
+            });
+        }
+
+        function chooseLanguage(code) {
+            setLanguage(code);
+            closeModal("modal-lang");
+            if (langPickerFirstLaunch && !gameInProgress()) openNewGameSetup();
+            langPickerFirstLaunch = false;
+        }
+
+        // Change la langue de toute l'app, y compris le gage affiché (le même gage, traduit), sans toucher à la partie
+        function setLanguage(code) {
+            if (!LANG_PACKS[code]) code = "fr";
+            currentLang = code;
+            try { localStorage.setItem(LANG_KEY, code); } catch (e) {}
+            applyStaticI18n();
+            localizeDefaultNames(state.players);
+            saveStateToLocal();
+            renderBoard();
+            if (typeof refreshCaseInteractivity === "function") refreshCaseInteractivity();
+            renderTokens();
+            updateUIPlayers();
+            refreshMenu();
+            renderTenuesModal();
+            renderTenueNote();
+            renderChallengeCard();
+            renderVictory();
+            cam.globalLabel = null;
+            updateGlobalViewButton();
+            if (isModalOpen("modal-setup")) { readSetupInputs(); localizeDefaultNames(setupDraft.players); renderSetup(); }
+            if (isModalOpen("modal-lang")) renderLanguagePicker();
+            if (!state.isMoving) setStatusText(turnText(state.players[state.currentPlayerIdx]));
+        }
+
         window.onload = function () {
             loadStateFromLocal();
+            const savedLang = loadSavedLang();
+            currentLang = savedLang || detectDeviceLang();
+            applyStaticI18n();
+            localizeDefaultNames(state.players);
             spawnRosePetals();
             renderBoard();
             updateUIPlayers();
@@ -3025,8 +4112,10 @@
             loadGagesFromSheet();
 
             const activeP = state.players[state.currentPlayerIdx];
-            setStatusText(`Tour de ${activeP.name} (${activeP.avatar})`);
-            if (!gameInProgress()) openNewGameSetup();
+            setStatusText(turnText(activeP));
+            // Premier lancement : on choisit d'abord la langue, puis les joueurs
+            if (!savedLang) openLanguagePicker(true);
+            else if (!gameInProgress()) openNewGameSetup();
             if (activeP.pos > 1) {
                 setTimeout(() => focusCameraOnCase(activeP.pos), 500);
             }
